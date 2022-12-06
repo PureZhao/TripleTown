@@ -1,0 +1,3 @@
+local ResConst = {}
+
+return ResConst
