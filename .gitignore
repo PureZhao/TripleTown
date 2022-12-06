@@ -1,0 +1,17 @@
+
+.vs/
+.vsconfig
+Assembly-CSharp-Editor.csproj
+Assembly-CSharp-firstpass.csproj
+Assembly-CSharp.csproj
+*.sln
+*.vsidx
+Library/
+Logs/
+obj/
+Temp/
+*.csproj
+Packages/
+UserSettings/
+BundleVersionControl.txt
+.vs/TripleTown/v17/.suo
