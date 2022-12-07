@@ -1,5 +1,6 @@
 local Class = require("Core.Class")
 local CSType = require("Core.CSType")
+local UnityUtils = require('Game.Util.UnityUtils')
 
 ---@class LuaBehaviour
 local LuaBehaviour = Class("LuaBehaviour")
@@ -39,9 +40,12 @@ function LuaBehaviour:Define()
     end
 end
 
-
-function LuaBehaviour.GetLua(obj)
-
+function LuaBehaviour.GetLua(objOrTrans)
+    local comp = UnityUtils.GetComponent(objOrTrans, CSType.LuaBehaviour)
+    if comp then
+        return comp.Table
+    end
+    return nil
 end
 
 return LuaBehaviour

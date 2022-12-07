@@ -45,8 +45,13 @@ CSType.Int64 = CSType[CSO.Int64]
 CSType.Vector2 = CSType[CSE.Vector2]
 CSType.Vector3 = CSType[CSE.Vector3]
 CSType.Vector4 = CSType[CSE.Vector4]
-CSType.ListInt32 = CSType[List(CSType.Int32)]
 
+CSType.Sprite = CSType[CSE.Sprite]
+CSType.SpriteRenderer = CSType[CSE.SpriteRenderer]
 CSType.LuaBehaviour = CSType[CS.GameCore.LuaBehaviour]
+
+-- Collections
+CSType.ListInt32 = CSType[List(CSType.Int32)]
+CSType.ListSprite = CSType[List(CSType.Sprite)]
 
 return CSType

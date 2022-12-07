@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 1614244068
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d5dc1ab929723eef5332e1efa6b8971d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 23e106817fb9d6c078e0dc7e080da833
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 93687c32e6a689d4fa3395dca5eca9bb, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Assembly-CSharp
+  ClassName: GameCore.LuaBehaviour/ValueWrap
+Assets:
+- Assets/Res/Container.prefab
+- Assets/Res/AssetMapping.json
+Dependencies: []

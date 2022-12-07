@@ -1,9 +1,10 @@
 _G.CSE = CS.UnityEngine
 _G.IS_EDITOR = CSE.Application.isEditor
+_G.Scheduler = CS.GameCore.Scheduler.Instance
 
 _G.logInfo = print
 
-function bind(func, this, ...)
+function _G.bind(func, this, ...)
     if this then
         return function (...)
             func(this, ...)
@@ -15,7 +16,7 @@ function bind(func, this, ...)
     end
 end
 
-function extendClass(target, base)
+function _G.extendClass(target, base)
     if base then
         for k, v in pairs(base) do
             target[k] = v

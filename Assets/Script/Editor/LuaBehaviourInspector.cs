@@ -81,10 +81,11 @@ public class LuaBehaviourInspector : Editor
         if (behaviour.luaScript != null)
         {
             string path = AssetDatabase.GetAssetPath(behaviour.luaScript).Replace('\\', '/');
-            string luaDir = "Assets/Scripts/Lua/";
+            string luaDir = "Assets/Res/Lua/";
             string requirePath = path.Substring(luaDir.Length).Remove(".lua").Replace('/', '.');
             string cmd = string.Format("local t = require('{0}'); return t;", requirePath);
             behaviour.requirePath = requirePath;
+            ProjectLuaEnv.Instance.Dispose();  // 直接销毁 不然还是用的原来的table 属性不会变
             object[] r = ProjectLuaEnv.Instance.DoString(cmd);
 
             LuaTable table = (LuaTable)r[0];
@@ -158,6 +159,7 @@ public class LuaBehaviourInspector : Editor
                 {
                     wrap.obj = EditorGUILayout.ObjectField(wrap.name, wrap.obj, Assembly.Load(wrap.assembly).GetType(wrap.typeName));
                 }
+                
             }
             for (int k = 0; k < behaviour.values.Count; k++)
             {

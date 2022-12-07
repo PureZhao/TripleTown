@@ -93,9 +93,6 @@ namespace GameCore
             {typeof(List<Vector3>), typeof(ObjWrap<List<Vector3>>)},
             {typeof(List<Color>), typeof(ObjWrap<List<Color>>)},
 
-            //测试类型
-            //{typeof(List<StringAndColor>), typeof(ObjWrap<List<StringAndColor>>)},
-            //{typeof(Season), typeof(ObjWrap<Season>)},
         };
         [Serializable]
         public class ObjectWrap
@@ -133,21 +130,20 @@ namespace GameCore
 #endif
         }
 
+#if UNITY_EDITOR
         public DefaultAsset luaScript;
-
+#endif
         public string requirePath;
 
-        internal static LuaEnv luaEnv = new LuaEnv(); //all lua behaviour shared one luaenv only!
+        //internal static LuaEnv luaEnv = new LuaEnv(); //all lua behaviour shared one luaenv only!
         internal static float lastGCTime = 0;
-        internal const float GCInterval = 1;//1 second 
+        internal const float GCInterval = 1; //1 second 
         
-        private Action luaStart;
-        private Action luaUpdate;
-        private Action luaLateUpdate;
-        private Action luaOnDestroy;
+        private LuaFunction luaUpdate;
+        private LuaFunction luaOnDestroy;
 
         private LuaTable table;
-
+        public LuaTable Table { get => table; }
         [SerializeField]
         public List<ObjectWrap> objects = new List<ObjectWrap>();
         [SerializeField]
@@ -155,46 +151,50 @@ namespace GameCore
 
         void Awake()
         {
-            table = ProjectLuaEnv.Instance.NewTable();
-
+            string cmd = string.Format("local t = require('{0}'); return t;", requirePath);
+            table = (LuaTable)ProjectLuaEnv.Instance.DoString(cmd)[0];
+            // 注入值类型 必须在wrapTypeDict中有
+            for (int i = 0; i < values.Count; i++)
+            {
+                table.Set(values[i].name, JsonToValue(values[i].jsonStr, Type.GetType(values[i].typeName)));
+            }
+            // 注入其他类型
+            for (int i = 0; i < objects.Count; i++)
+            {
+                table.Set(objects[i].name, objects[i].obj);
+            }
+            table.Set("gameObject", gameObject);
+            table.Set("transform", transform);
             table.Set("host", this);
-            
-            //ProjectLuaEnv.Instance.DoString(LuaScript.text);
+            LuaFunction luaAwake = table.Get<LuaFunction>("__init");
 
-            Action luaAwake = table.Get<Action>("__init");
-            table.Get("Start", out luaStart);
-            table.Get("Update", out luaUpdate);
-            table.Get("OnDestroy", out luaOnDestroy);
+            table.Get("Update", out luaUpdate);  
+            if(TryGetComponent(out LuaBehaviourMouse mouseEvent))
+            {
+                mouseEvent.BindEvent(table);
+            }
 
-            luaAwake?.Invoke();
+            luaAwake?.Call(table);
         }
 
-        // Use this for initialization
-        void Start()
-        {
-            luaStart?.Invoke();
-        }
-
-
+        
         // Update is called once per frame
         void Update()
         {
-            luaUpdate?.Invoke();
+            luaUpdate?.Call(table);
             if (Time.time - LuaBehaviour.lastGCTime > GCInterval)
             {
-                luaEnv.Tick();
+                ProjectLuaEnv.Instance.Tick();
                 LuaBehaviour.lastGCTime = Time.time;
             }
         }
 
         void OnDestroy()
         {
-            luaOnDestroy?.Invoke();
+            luaOnDestroy?.Call(table);
 
             luaOnDestroy = null;
             luaUpdate = null;
-            luaStart = null;
-            luaEnv.Dispose();
         }
     }
 }

@@ -1,3 +1,4 @@
+local TestClass = require('Game.TestClass')
 
-local str = "strstr"
-print(str)
+
+local t = TestClass.New()

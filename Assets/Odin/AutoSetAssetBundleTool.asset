@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d82bd50000df4d4e827271f7a83d51e, type: 3}
   m_Name: AutoSetAssetBundleTool
   m_EditorClassIdentifier: 
-  assetRootPath: E:/Unity Project/BattleCityRemix/Assets/Res
+  assetRootPath: E:/Unity Project/TripleTown/Assets/Res

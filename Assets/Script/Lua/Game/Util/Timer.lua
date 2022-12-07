@@ -1,5 +1,6 @@
 local Class = require("Core.Class")
 
+
 ---@class Timer
 local Timer = Class("Timer")
 
