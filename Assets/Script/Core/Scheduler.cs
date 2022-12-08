@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using XLua;
 
 namespace GameCore
 {
@@ -13,13 +14,13 @@ namespace GameCore
         Delay,
         DelayFrame,
     }
-
+    //[LuaCallCSharp]
     public class ListenerIndentity
     {
         public ListenerType type;
         public Listener listener;
     }
-
+    [LuaCallCSharp]
     public class Scheduler : MonoBehaviour
     {
         private static Scheduler instance;
@@ -126,6 +127,21 @@ namespace GameCore
             {
                 listener = update,
                 type = ListenerType.Update,
+            };
+            return indentity;
+        }
+
+        public ListenerIndentity ListenLateUpdate(Action action)
+        {
+            Listener lateUpdate = new Listener()
+            {
+                action = action,
+            };
+            lateUpdates.Add(lateUpdate);
+            ListenerIndentity indentity = new ListenerIndentity()
+            {
+                listener = lateUpdate,
+                type = ListenerType.LateUpdate,
             };
             return indentity;
         }

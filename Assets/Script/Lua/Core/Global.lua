@@ -1,6 +1,5 @@
 _G.CSE = CS.UnityEngine
 _G.IS_EDITOR = CSE.Application.isEditor
-_G.Scheduler = CS.GameCore.Scheduler.Instance
 
 _G.logInfo = print
 

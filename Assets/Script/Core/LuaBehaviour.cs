@@ -92,7 +92,6 @@ namespace GameCore
             {typeof(List<string>), typeof(ObjWrap<List<string>>)},
             {typeof(List<Vector3>), typeof(ObjWrap<List<Vector3>>)},
             {typeof(List<Color>), typeof(ObjWrap<List<Color>>)},
-
         };
         [Serializable]
         public class ObjectWrap
@@ -151,7 +150,7 @@ namespace GameCore
 
         void Awake()
         {
-            string cmd = string.Format("local t = require('{0}'); return t;", requirePath);
+            string cmd = string.Format("require('Core.Global'); local t = require('{0}'); return t;", requirePath);
             table = (LuaTable)ProjectLuaEnv.Instance.DoString(cmd)[0];
             // 注入值类型 必须在wrapTypeDict中有
             for (int i = 0; i < values.Count; i++)

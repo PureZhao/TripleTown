@@ -27,4 +27,10 @@ function ResManager.LoadGameObject(assetPath, position, rotation, onSuccess)
         end
     end)
 end
+
+---@param UnityEngine.Object
+function ResManager.FreeObject(obj)
+    AssetsManager:FreeObject(obj)
+end
+
 return ResManager
