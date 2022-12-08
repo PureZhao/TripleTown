@@ -5,9 +5,11 @@ using System;
 using System.IO;
 using LitJson;
 using UnityEngine.SceneManagement;
+using XLua;
 
 namespace GameCore
 {
+    [LuaCallCSharp]
     public class AssetsManager : MonoBehaviour
     {
         private static AssetsManager instance;

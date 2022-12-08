@@ -16,6 +16,7 @@ function Element:__init()
     self.spriteCount = self.sprites.Count
     self.index = 0
     self.timer = 0.5
+    self.type = 1
 end
 
 function Element:SetPos(row, col)
