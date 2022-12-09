@@ -12,21 +12,21 @@ function Container:__Define()
 end
 
 function Container:__init()
+    -- x -4.5 ~ 2.5
+    -- y -4.5 ~ 2.5
     self.elements = nil
     self.timer = Timer.New()
     self.timer:Delay(5, bind(self.Generate, self))
     self._townRowCheckList = {}
     self._townColCheckList = {}
-    -- x -4.5 ~ 2.5
-    -- y -4.5 ~ 2.5
 end
 
 function Container:Generate()
     self.elements = {}
     for row = 1, self.row do
         table.insert(self.elements, {})
+        local rowElements = self.elements[row]
         for col = 1, self.col do
-            local rowElements = self.elements[row]
             local element = col + 1  -- 后面换成游戏对象
             local type = LuaBehaviour.GetLua(element).type
             table.insert(rowElements, {obj = element, type = type, canTown = false})
@@ -37,21 +37,20 @@ end
 function Container:CheckAndTown()
     for row = 1, self.row do
         for col = 1, self.col do
-            -- 检查前先将行、列检查表分别置空
-            self._townRowCheckList = {}
-            self._townColCheckList = {}
-            -- 将此刻该位置加入列表
-            table.insert(self._townRowCheckList, self.elements[row][col])
-            table.insert(self._townColCheckList, self.elements[row][col])
             -- 开始检查
             self:_CheckUnit(row, col)
             -- 检查完毕，开始标记
-            
         end
     end
 end
 
+---@param row number
+---@param col number
+---@return table rowCheckList, table colCheckList
 function Container:_CheckUnit(row, col)
+    -- 初始化checkList
+    local rowCheckList = {{r = row, c = col}}
+    local colCheckList = {{r = row, c = col}}
     local curElementType = self.elements[row][col].type
     local up = row - 1
     local down = row + 1
@@ -61,7 +60,7 @@ function Container:_CheckUnit(row, col)
     while up > 0 do
         local element = self.elements[up][col]
         if element.type == curElementType then
-            table.insert(self._townColCheckList, element)
+            table.insert(colCheckList, {r = up, c = col})
         else
             break
         end
@@ -71,7 +70,7 @@ function Container:_CheckUnit(row, col)
     while down < self.row + 1 do
         local element = self.elements[down][col]
         if element.type == curElementType then
-            table.insert(self._townColCheckList, element)
+            table.insert(colCheckList, {r = down, c = col})
         else
             break
         end
@@ -81,7 +80,7 @@ function Container:_CheckUnit(row, col)
     while left > 0 do
         local element = self.elements[row][left]
         if element.type == curElementType then
-            table.insert(self._townColCheckList, element)
+            table.insert(rowCheckList, {r = row, c = left})
         else
             break
         end
@@ -91,12 +90,29 @@ function Container:_CheckUnit(row, col)
     while right < self.col + 1 do
         local element = self.elements[row][right]
         if element.type == curElementType then
-            table.insert(self._townColCheckList, element)
+            table.insert(rowCheckList, {r = row, c = right})
         else
             break
         end
         right = right + 1
     end
+    return rowCheckList, colCheckList
+end
+
+---@param checkList table
+function Container:_CheckTown(checkList)
+    if not checkList then return end
+    -- 标记
+    local len = table.len(checkList)
+    if len >= 3 then
+        for _, v in pairs(checkList) do
+            self.elements[v.r][v.c].canTown = true
+        end
+    end
+end
+
+function Container:_IsDead()
+    
 end
 
 function Container:Shuffle()

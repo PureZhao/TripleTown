@@ -190,5 +190,16 @@ function table.clear(t)
         end
         -- t = {}
     end
+end
 
+---@param t table
+---@return number
+function table.len(t)
+    local len = 0
+    if t then
+        for k, v in pairs(t) do
+            len = len + 1
+        end
+    end
+    return len
 end
