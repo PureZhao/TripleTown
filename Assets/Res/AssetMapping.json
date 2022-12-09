@@ -11,21 +11,5 @@
     "Assets/Res/Elements/Red/Red.png"                 : "elements/red",
     "Assets/Res/Elements/Red/RedElement.prefab"       : "elements/red",
     "Assets/Res/Elements/Yellow/Yellow.png"           : "elements/yellow",
-    "Assets/Res/Elements/Yellow/YellowElement.prefab" : "elements/yellow",
-    "Assets/Res/Lua/Boot.lua"                         : "lua",
-    "Assets/Res/Lua/Test.lua"                         : "lua",
-    "Assets/Res/Lua/Core/Class.lua"                   : "lua",
-    "Assets/Res/Lua/Core/CSType.lua"                  : "lua",
-    "Assets/Res/Lua/Core/EventListener.lua"           : "lua",
-    "Assets/Res/Lua/Core/Global.lua"                  : "lua",
-    "Assets/Res/Lua/Core/IsNull.lua"                  : "lua",
-    "Assets/Res/Lua/Core/LuaBehaviour.lua"            : "lua",
-    "Assets/Res/Lua/Core/polyfill.lua"                : "lua",
-    "Assets/Res/Lua/Game/Container.lua"               : "lua",
-    "Assets/Res/Lua/Game/Element.lua"                 : "lua",
-    "Assets/Res/Lua/Game/TestClass.lua"               : "lua",
-    "Assets/Res/Lua/Game/Const/ResConst.lua"          : "lua",
-    "Assets/Res/Lua/Game/Manager/ResManager.lua"      : "lua",
-    "Assets/Res/Lua/Game/Util/Timer.lua"              : "lua",
-    "Assets/Res/Lua/Game/Util/UnityUtils.lua"         : "lua"
+    "Assets/Res/Elements/Yellow/YellowElement.prefab" : "elements/yellow"
 }

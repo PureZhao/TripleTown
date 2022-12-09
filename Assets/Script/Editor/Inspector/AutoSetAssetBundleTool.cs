@@ -221,11 +221,6 @@ namespace PureOdinTools {
             string jsonStorePath = Path.Combine(GlobalConfig.AssetBundleDir, "BundleList.json");
             JsonHelper.WriteJson2File(data, jsonStorePath);
         }
-        [Button("Export LuaBundle", ButtonSizes.Large)]
-        public void ExportLuaBundle()
-        {
-
-        }
 
     }
 }

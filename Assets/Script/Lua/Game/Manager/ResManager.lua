@@ -1,5 +1,6 @@
 local AssetsManager = CS.GameCore.AssetsManager.Instance
 
+---@class ResManager
 local ResManager = {}
 
 

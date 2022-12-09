@@ -2,6 +2,8 @@ local Class = require('Core.Class')
 local CSType = require('Core.CSType')
 local LuaBehaviour = require('Core.LuaBehaviour')
 local Timer = require('Game.Util.Timer')
+local ResManager = require('Game.Manager.ResManager')
+local ResConst = require('Game.Const.ResConst')
 
 ---@class Container : LuaBehaviour
 local Container = Class('Container', LuaBehaviour)
@@ -27,7 +29,7 @@ function Container:Generate()
         table.insert(self.elements, {})
         local rowElements = self.elements[row]
         for col = 1, self.col do
-            local element = col + 1  -- 后面换成游戏对象
+            local elementLua = col + 1  -- 后面换成游戏对象
             local type = LuaBehaviour.GetLua(element).type
             table.insert(rowElements, {obj = element, type = type, canTown = false})
         end
@@ -38,8 +40,19 @@ function Container:CheckAndTown()
     for row = 1, self.row do
         for col = 1, self.col do
             -- 开始检查
-            self:_CheckUnit(row, col)
+            local rowCheckList, colCheckList = self:_CheckUnit(row, col)
             -- 检查完毕，开始标记
+            self:_CheckTown(rowCheckList)
+            self:_CheckTown(colCheckList)
+        end
+    end
+    -- 开始播放Town效果
+    for row = 1, self.row do
+        for col = 1, self.col do
+            local element = self.elements[row][col]
+            if element.canTown then
+                element:PlayTown()
+            end
         end
     end
 end

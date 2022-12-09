@@ -2,16 +2,16 @@ local Class = require('Core.Class')
 local CSType = require('Core.CSType')
 local LuaBehaviour = require('Core.LuaBehaviour')
 
+---@class Element : LuaBehaviour
 local Element = Class('Element', LuaBehaviour)
 
 function Element:__Define()
-    self.sprites = CSType.ListSprite
+    self.spriteCount = CSType.Int32
 end
 
 function Element:__init()
     self.row = 1
     self.col = 1
-    self.canTown = false
     self.renderer = self.transform:GetComponent(CSType.SpriteRenderer)
     self.spriteCount = self.sprites.Count
     self.index = 0
@@ -37,6 +37,10 @@ function Element:Update()
         end
         self.timer = 0.1
     end
+end
+
+function Element:PlayTown()
+    
 end
 
 function Element:OnMouseEnter()

@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Text;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using static System.Net.WebRequestMethods;
 
 namespace CSObjectWrapEditor
 {
@@ -1470,6 +1471,11 @@ namespace CSObjectWrapEditor
 
             BlackList = new List<List<string>>()
             {
+                new List<string>(){"GameCore.LuaBehaviour", "luaScript" },
+                new List<string>(){"UnityEngine.Light", "shadowRadius"},
+                new List<string>(){"UnityEngine.Light", "SetLightDirty"},
+                new List<string>(){"UnityEngine.Light", "shadowAngle"},
+                new List<string>(){"UnityEngine.Light", "shadowAngle"}
             };
 
             HotfixCfg = new Dictionary<Type, HotfixFlag>();

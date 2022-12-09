@@ -21,19 +21,17 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(GameCore.LuaBehaviour);
-			Utils.BeginObjectRegister(type, L, translator, 0, 1, 5, 4);
+			Utils.BeginObjectRegister(type, L, translator, 0, 1, 4, 3);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Rebuild", _m_Rebuild);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "Table", _g_get_Table);
-            Utils.RegisterFunc(L, Utils.GETTER_IDX, "luaScript", _g_get_luaScript);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "requirePath", _g_get_requirePath);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "objects", _g_get_objects);
             Utils.RegisterFunc(L, Utils.GETTER_IDX, "values", _g_get_values);
             
-			Utils.RegisterFunc(L, Utils.SETTER_IDX, "luaScript", _s_set_luaScript);
-            Utils.RegisterFunc(L, Utils.SETTER_IDX, "requirePath", _s_set_requirePath);
+			Utils.RegisterFunc(L, Utils.SETTER_IDX, "requirePath", _s_set_requirePath);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "objects", _s_set_objects);
             Utils.RegisterFunc(L, Utils.SETTER_IDX, "values", _s_set_values);
             
@@ -183,20 +181,6 @@ namespace XLua.CSObjectWrap
         }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _g_get_luaScript(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                GameCore.LuaBehaviour gen_to_be_invoked = (GameCore.LuaBehaviour)translator.FastGetCSObj(L, 1);
-                translator.Push(L, gen_to_be_invoked.luaScript);
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 1;
-        }
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _g_get_requirePath(RealStatePtr L)
         {
 		    try {
@@ -239,21 +223,6 @@ namespace XLua.CSObjectWrap
         }
         
         
-        
-        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-        static int _s_set_luaScript(RealStatePtr L)
-        {
-		    try {
-                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
-			
-                GameCore.LuaBehaviour gen_to_be_invoked = (GameCore.LuaBehaviour)translator.FastGetCSObj(L, 1);
-                gen_to_be_invoked.luaScript = (UnityEditor.DefaultAsset)translator.GetObject(L, 2, typeof(UnityEditor.DefaultAsset));
-            
-            } catch(System.Exception gen_e) {
-                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
-            }
-            return 0;
-        }
         
         [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
         static int _s_set_requirePath(RealStatePtr L)

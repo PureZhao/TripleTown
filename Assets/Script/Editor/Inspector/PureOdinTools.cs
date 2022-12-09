@@ -23,6 +23,7 @@ namespace PureOdinTools
             {
                 { "Temporary", TemporaryTool.Instance, EditorIcons.Clock },
                 { "Auto Set Asset Bundle", AutoSetAssetBundleTool.Instance, EditorIcons.Airplane },
+                { "Lua Bundle" ,LuaBundleTool.Instance, EditorIcons.Bell},
             };
 
             tree.SortMenuItemsByName();

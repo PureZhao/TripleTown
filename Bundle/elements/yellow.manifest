@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3629186236
+CRC: 1884453061
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9eea5556b74b6687d756aadfe118307f
+    Hash: 010018d7111591913d0585457bc2ef37
   TypeTreeHash:
     serializedVersion: 2
-    Hash: cac3018039817b0e0a2f221b87d7820a
+    Hash: ed6b09b81672d0477645d4218a228166
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -22,9 +22,9 @@ ClassTypes:
 - Class: 61
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: 93687c32e6a689d4fa3395dca5eca9bb, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 47aca9dda8899394f9d5968e807af66e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 93687c32e6a689d4fa3395dca5eca9bb, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 212
@@ -35,6 +35,6 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Assembly-CSharp
   ClassName: GameCore.LuaBehaviour/ValueWrap
 Assets:
-- Assets/Res/Elements/Yellow/Yellow.png
 - Assets/Res/Elements/Yellow/YellowElement.prefab
+- Assets/Res/Elements/Yellow/Yellow.png
 Dependencies: []

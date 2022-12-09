@@ -7,6 +7,7 @@ public static class GlobalConfig
 {
 
     public static string AssetBundleDir { get; } = Application.dataPath + "/../Bundle";
+    public static string LuaBundleDir { get; } = Application.dataPath + "/../LuaBundle";
     public static string AssetDir { get; } = Application.dataPath + "/Res";
     public static string GameCacheDir { get; } = Application.dataPath + "/../GameCache";
     public static string LuaScriptDir { get; } = Application.dataPath + "/Script/Lua/";
