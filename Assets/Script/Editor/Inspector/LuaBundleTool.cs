@@ -1,8 +1,10 @@
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 namespace PureOdinTools
 {
@@ -19,8 +21,30 @@ namespace PureOdinTools
         [Button("Export LuaBundle", ButtonSizes.Large)]
         public void ExportLuaBundle()
         {
-            
 
+            List<string> paths = new List<string>();
+            GetAllFile(GlobalConfig.LuaScriptDir, ref paths);
+            if (Directory.Exists(GlobalConfig.LuaBundleDir))
+            {
+                Directory.Delete(GlobalConfig.LuaBundleDir, true);
+            }
+            Directory.CreateDirectory(GlobalConfig.LuaBundleDir);
+            foreach(string path in paths)
+            {
+                string relativePath = path.Remove("Assets\\Script\\Lua\\");
+                string filepath = Path.Combine(GlobalConfig.LuaBundleDir, relativePath + ".bytes");
+                string dir = Path.GetDirectoryName(filepath);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+                //Debug.Log(dir);
+                byte[] bytes = File.ReadAllBytes(path);
+                FileStream stream = File.Create(filepath);
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
+                stream.Dispose();
+            }
         }
 
 

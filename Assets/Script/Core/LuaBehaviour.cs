@@ -141,46 +141,54 @@ namespace GameCore
         private LuaFunction luaUpdate;
         private LuaFunction luaOnDestroy;
 
-        private LuaTable table;
-        public LuaTable Table { get => table; }
         [SerializeField]
         public List<ObjectWrap> objects = new List<ObjectWrap>();
         [SerializeField]
         public List<ValueWrap> values = new List<ValueWrap>();
+        private LuaTable luaClass;
+
+        public LuaTable GetLuaClass()
+        {
+            return luaClass;
+        }
 
         void Awake()
         {
-            string cmd = string.Format("require('Core.Global'); local t = require('{0}'); return t;", requirePath);
-            table = (LuaTable)ProjectLuaEnv.Instance.DoString(cmd)[0];
+            string cmd = string.Format("local t = require('{0}'); return t;", requirePath);
+            LuaTable table = (LuaTable)ProjectLuaEnv.Instance.DoString(cmd)[0];
+            LuaFunction newFunc = table.Get<LuaFunction>("NewFromCS");
+
+            luaClass = (LuaTable)newFunc.Call(this)[0];
+            Debug.Log(luaClass == null);
             // 注入值类型 必须在wrapTypeDict中有
             for (int i = 0; i < values.Count; i++)
             {
-                table.Set(values[i].name, JsonToValue(values[i].jsonStr, Type.GetType(values[i].typeName)));
+                luaClass.Set(values[i].name, JsonToValue(values[i].jsonStr, Type.GetType(values[i].typeName)));
             }
             // 注入其他类型
             for (int i = 0; i < objects.Count; i++)
             {
-                table.Set(objects[i].name, objects[i].obj);
+                luaClass.Set(objects[i].name, objects[i].obj);
             }
-            table.Set("gameObject", gameObject);
-            table.Set("transform", transform);
-            table.Set("host", this);
-            LuaFunction luaAwake = table.Get<LuaFunction>("__init");
+            //luaClass.Set("gameObject", gameObject);
+            //luaClass.Set("transform", transform);
+            //luaClass.Set("host", this);
+            LuaFunction luaAwake = luaClass.Get<LuaFunction>("__init");
 
-            table.Get("Update", out luaUpdate);  
+            luaClass.Get("Update", out luaUpdate);  
             if(TryGetComponent(out LuaBehaviourMouse mouseEvent))
             {
-                mouseEvent.BindEvent(table);
+                mouseEvent.BindEvent(luaClass);
             }
 
-            luaAwake?.Call(table);
+            luaAwake?.Call(luaClass);
         }
 
         
         // Update is called once per frame
         void Update()
         {
-            luaUpdate?.Call(table);
+            luaUpdate?.Call(luaClass);
             if (Time.time - LuaBehaviour.lastGCTime > GCInterval)
             {
                 ProjectLuaEnv.Instance.Tick();
@@ -190,7 +198,7 @@ namespace GameCore
 
         void OnDestroy()
         {
-            luaOnDestroy?.Call(table);
+            luaOnDestroy?.Call(luaClass);
 
             luaOnDestroy = null;
             luaUpdate = null;

@@ -166,24 +166,31 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(GameCore.AssetsManager), GameCoreAssetsManagerWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(GameCore.ElementType), GameCoreElementTypeWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(GameCore.LuaBehaviour), GameCoreLuaBehaviourWrap.__Register);
         
         
             translator.DelayWrapLoader(typeof(GameCore.Scheduler), GameCoreSchedulerWrap.__Register);
         
+        }
+        
+        static void wrapInit1(LuaEnv luaenv, ObjectTranslator translator)
+        {
         
             translator.DelayWrapLoader(typeof(Tutorial.DerivedClass.TestEnumInner), TutorialDerivedClassTestEnumInnerWrap.__Register);
         
+        
+        
         }
-        
-        
-        
-        
         
         static void Init(LuaEnv luaenv, ObjectTranslator translator)
         {
             
             wrapInit0(luaenv, translator);
+            
+            wrapInit1(luaenv, translator);
             
             
             translator.AddInterfaceBridgeCreator(typeof(System.Collections.IEnumerator), SystemCollectionsIEnumeratorBridge.__Create);

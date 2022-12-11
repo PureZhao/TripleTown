@@ -54,6 +54,51 @@ local function BaseClass(classname, super)
 		return obj
 	end
 
+	---@param host CS.GameCore.LuaBehaviour
+	class_type.NewFromCS = function(host)
+		-- 生成一个类对象
+		local obj = {}
+		-- 先注册gameObject、transform、host 便于好在__init函数中使用GetComponent
+		obj.gameObject = host.gameObject
+		obj.transform = host.transform
+		obj.host = host
+
+		obj._class_type = class_type
+
+		-- 在初始化之前注册基类方法
+		setmetatable(obj, {
+			__index = _class[class_type],
+		})
+		-- 调用初始化方法__init
+		-- 此处因为从CS端进行初始化，__init不要任何参数(暂时)
+		do
+			local create
+			create = function(c)
+				if c.super then
+					create(c.super)
+				end
+				if c.__init then
+					c.__init(obj)
+				end
+			end
+
+			create(class_type)
+		end
+
+		-- 注册一个delete方法
+		obj.Delete = function(self)
+			local now_super = self._class_type
+			while now_super ~= nil do
+				if now_super.__delete then
+					now_super.__delete(self)
+				end
+				now_super = now_super.super
+			end
+		end
+
+		return obj
+	end
+	
 	local vtbl = {}
 	_class[class_type] = vtbl
 

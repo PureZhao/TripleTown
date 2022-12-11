@@ -6,7 +6,7 @@ using XLua;
 namespace GameCore
 {
     [LuaCallCSharp]
-    enum ElementType
+    public enum ElementType
     {
         Blue,
         Brown,

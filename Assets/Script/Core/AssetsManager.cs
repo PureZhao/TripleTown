@@ -6,6 +6,7 @@ using System.IO;
 using LitJson;
 using UnityEngine.SceneManagement;
 using XLua;
+using UnityObject = UnityEngine.Object;
 
 namespace GameCore
 {
@@ -114,7 +115,7 @@ namespace GameCore
             }
             else
             {
-                LoadAsset(assetPath, (obj) =>
+                LoadAsset<UnityObject>(assetPath, (obj) =>
                 {
                     g = GameObject.Instantiate(obj) as GameObject;
                     g.transform.position = Vector3.zero;
@@ -129,7 +130,7 @@ namespace GameCore
             }
         }
 
-        public void LoadAsset(string assetPath, Action<UnityEngine.Object> onLoaded = null)
+        public void LoadAsset(string assetPath, Type type, Action<UnityObject> onLoaded = null)
         {
             if (string.IsNullOrEmpty(assetPath) || string.IsNullOrWhiteSpace(assetPath))
             {
@@ -140,13 +141,28 @@ namespace GameCore
                 LoadAssetBundle(bundleName, (bundle) =>
                 {
                     FileInfo file = new FileInfo(assetPath);
-                    List<object> parameters = new List<object>()
-                    {
-                        file.Name,
-                        bundle,
-                        onLoaded,
-                    };
-                    StartCoroutine(nameof(LoadAssetAsync), parameters);
+                    StartCoroutine(LoadAssetAsync(file.Name, bundle, type, onLoaded));
+                });
+
+            }
+            else
+            {
+                throw new DirectoryNotFoundException("Bad Key: " + assetPath + " is not a key of bundle dictionary");
+            }
+        }
+
+        public void LoadAsset<T>(string assetPath, Action<T> onLoaded = null) where T : UnityObject
+        {
+            if (string.IsNullOrEmpty(assetPath) || string.IsNullOrWhiteSpace(assetPath))
+            {
+                throw new ArgumentException("Bad Argument: It was NULL , Empty or WhiteSpace");
+            }
+            if (path2bundle.TryGetValue(assetPath, out string bundleName))
+            {
+                LoadAssetBundle(bundleName, (bundle) =>
+                {
+                    FileInfo file = new FileInfo(assetPath);
+                    StartCoroutine(LoadAssetAsync<T>(file.Name, bundle, onLoaded));
                 });
 
             }
@@ -157,14 +173,18 @@ namespace GameCore
         }
 
         // 调用之前保证Bundle都有
-        IEnumerator LoadAssetAsync(List<object> list)
+        IEnumerator LoadAssetAsync(string assetName, AssetBundle bundle, Type t, Action<UnityObject> onLoaded)
         {
-            string assetName = (string)list[0];
-            AssetBundle bundle = (AssetBundle)list[1];
-            Action<UnityEngine.Object> onLoaded = (Action<UnityEngine.Object>)list[2];
-            AssetBundleRequest request = bundle.LoadAssetAsync<UnityEngine.Object>(assetName);
+            AssetBundleRequest request = bundle.LoadAssetAsync(assetName, t);
             yield return request;
             onLoaded?.Invoke(request.asset);
+        }
+
+        IEnumerator LoadAssetAsync<T>(string assetName, AssetBundle bundle, Action<T> onLoaded) where T : UnityObject
+        {
+            AssetBundleRequest request = bundle.LoadAssetAsync<UnityObject>(assetName);
+            yield return request;
+            onLoaded?.Invoke(request.asset as T);
         }
 
         private List<string> CheckNoneExistedDependencies(string bundleName)

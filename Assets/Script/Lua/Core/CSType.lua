@@ -50,6 +50,8 @@ CSType.Sprite = CSType[CSE.Sprite]
 CSType.SpriteRenderer = CSType[CSE.SpriteRenderer]
 CSType.LuaBehaviour = CSType[CS.GameCore.LuaBehaviour]
 
+CSType.SpriteAtlas = CSType[CSE.U2D.SpriteAtlas]
+
 -- Collections
 CSType.ListInt32 = CSType[List(CSType.Int32)]
 CSType.ListSprite = CSType[List(CSType.Sprite)]

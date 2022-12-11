@@ -31,10 +31,9 @@ public class AudioManager
     }
     public static void Play(string clipPath, AudioSource source = null)
     {
-        AssetsManager.Instance.LoadAsset(clipPath, (obj) =>
+        AssetsManager.Instance.LoadAsset<AudioClip>(clipPath, (clip) =>
         {
             
-            AudioClip clip = (AudioClip)obj;
             if (source == null)
             {
                 GameObject g = GameObject.Instantiate(Instance.sourceTemplate, Vector3.zero, Quaternion.identity);

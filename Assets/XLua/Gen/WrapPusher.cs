@@ -39,6 +39,7 @@ namespace XLua
 				translator.RegisterPushAndGetAndUpdate<XLuaTest.PushAsTableStruct>(translator.PushXLuaTestPushAsTableStruct, translator.Get, translator.UpdateXLuaTestPushAsTableStruct);
 				translator.RegisterPushAndGetAndUpdate<Tutorial.TestEnum>(translator.PushTutorialTestEnum, translator.Get, translator.UpdateTutorialTestEnum);
 				translator.RegisterPushAndGetAndUpdate<XLuaTest.MyEnum>(translator.PushXLuaTestMyEnum, translator.Get, translator.UpdateXLuaTestMyEnum);
+				translator.RegisterPushAndGetAndUpdate<GameCore.ElementType>(translator.PushGameCoreElementType, translator.Get, translator.UpdateGameCoreElementType);
 				translator.RegisterPushAndGetAndUpdate<Tutorial.DerivedClass.TestEnumInner>(translator.PushTutorialDerivedClassTestEnumInner, translator.Get, translator.UpdateTutorialDerivedClassTestEnumInner);
 			
 			}
@@ -939,6 +940,90 @@ namespace XLua
             }
         }
         
+        int GameCoreElementType_TypeID = -1;
+		int GameCoreElementType_EnumRef = -1;
+        
+        public void PushGameCoreElementType(RealStatePtr L, GameCore.ElementType val)
+        {
+            if (GameCoreElementType_TypeID == -1)
+            {
+			    bool is_first;
+                GameCoreElementType_TypeID = getTypeId(L, typeof(GameCore.ElementType), out is_first);
+				
+				if (GameCoreElementType_EnumRef == -1)
+				{
+				    Utils.LoadCSTable(L, typeof(GameCore.ElementType));
+				    GameCoreElementType_EnumRef = LuaAPI.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+				}
+				
+            }
+			
+			if (LuaAPI.xlua_tryget_cachedud(L, (int)val, GameCoreElementType_EnumRef) == 1)
+            {
+			    return;
+			}
+			
+            IntPtr buff = LuaAPI.xlua_pushstruct(L, 4, GameCoreElementType_TypeID);
+            if (!CopyByValue.Pack(buff, 0, (int)val))
+            {
+                throw new Exception("pack fail fail for GameCore.ElementType ,value="+val);
+            }
+			
+			LuaAPI.lua_getref(L, GameCoreElementType_EnumRef);
+			LuaAPI.lua_pushvalue(L, -2);
+			LuaAPI.xlua_rawseti(L, -2, (int)val);
+			LuaAPI.lua_pop(L, 1);
+			
+        }
+		
+        public void Get(RealStatePtr L, int index, out GameCore.ElementType val)
+        {
+		    LuaTypes type = LuaAPI.lua_type(L, index);
+            if (type == LuaTypes.LUA_TUSERDATA )
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != GameCoreElementType_TypeID)
+				{
+				    throw new Exception("invalid userdata for GameCore.ElementType");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+				int e;
+                if (!CopyByValue.UnPack(buff, 0, out e))
+                {
+                    throw new Exception("unpack fail for GameCore.ElementType");
+                }
+				val = (GameCore.ElementType)e;
+                
+            }
+            else
+            {
+                val = (GameCore.ElementType)objectCasters.GetCaster(typeof(GameCore.ElementType))(L, index, null);
+            }
+        }
+		
+        public void UpdateGameCoreElementType(RealStatePtr L, int index, GameCore.ElementType val)
+        {
+		    
+            if (LuaAPI.lua_type(L, index) == LuaTypes.LUA_TUSERDATA)
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != GameCoreElementType_TypeID)
+				{
+				    throw new Exception("invalid userdata for GameCore.ElementType");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+                if (!CopyByValue.Pack(buff, 0,  (int)val))
+                {
+                    throw new Exception("pack fail for GameCore.ElementType ,value="+val);
+                }
+            }
+			
+            else
+            {
+                throw new Exception("try to update a data with lua type:" + LuaAPI.lua_type(L, index));
+            }
+        }
+        
         int TutorialDerivedClassTestEnumInner_TypeID = -1;
 		int TutorialDerivedClassTestEnumInner_EnumRef = -1;
         
@@ -1112,6 +1197,12 @@ namespace XLua
 				translator.PushXLuaTestMyEnum(L, array[index]);
 				return true;
 			}
+			else if (type == typeof(GameCore.ElementType[]))
+			{
+			    GameCore.ElementType[] array = obj as GameCore.ElementType[];
+				translator.PushGameCoreElementType(L, array[index]);
+				return true;
+			}
 			else if (type == typeof(Tutorial.DerivedClass.TestEnumInner[]))
 			{
 			    Tutorial.DerivedClass.TestEnumInner[] array = obj as Tutorial.DerivedClass.TestEnumInner[];
@@ -1199,6 +1290,12 @@ namespace XLua
 			else if (type == typeof(XLuaTest.MyEnum[]))
 			{
 			    XLuaTest.MyEnum[] array = obj as XLuaTest.MyEnum[];
+				translator.Get(L, obj_idx, out array[array_idx]);
+				return true;
+			}
+			else if (type == typeof(GameCore.ElementType[]))
+			{
+			    GameCore.ElementType[] array = obj as GameCore.ElementType[];
 				translator.Get(L, obj_idx, out array[array_idx]);
 				return true;
 			}

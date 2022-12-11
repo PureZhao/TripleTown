@@ -1,6 +1,8 @@
 local Class = require('Core.Class')
 local CSType = require('Core.CSType')
 local LuaBehaviour = require('Core.LuaBehaviour')
+local ResManager = require('Game.Manager.ResManager')
+local ResConst = require('Game.Const.ResConst')
 
 ---@class Element : LuaBehaviour
 local Element = Class('Element', LuaBehaviour)
@@ -13,9 +15,7 @@ function Element:__init()
     self.row = 1
     self.col = 1
     self.renderer = self.transform:GetComponent(CSType.SpriteRenderer)
-    self.spriteCount = self.sprites.Count
-    self.index = 0
-    self.timer = 0.5
+    
     self.type = 1
 end
 
@@ -27,18 +27,6 @@ function Element:SetPos(row, col)
     self.transform.position = CSE.Vector2(x, y)
 end
 
-function Element:Update()
-    self.timer = self.timer - CSE.Time.deltaTime
-    if self.timer <= 0 then
-        self.renderer.sprite = self.sprites[self.index]
-        self.index = self.index + 1
-        if self.index >= self.spriteCount then
-            self.index = 0
-        end
-        self.timer = 0.1
-    end
-end
-
 function Element:PlayTown()
     
 end
@@ -48,7 +36,13 @@ function Element:OnMouseEnter()
 end
 
 function Element:OnMouseDown()
-    
+    logInfo(self.gameObject.name .. " Down")
+    logInfo(self.transform.position)
+end
+
+function Element:OnMouseDrag()
+    logInfo(self.gameObject.name .. " Drag")
+    logInfo(self.transform.position)
 end
 
 return Element

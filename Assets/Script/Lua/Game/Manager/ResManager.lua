@@ -3,11 +3,14 @@ local AssetsManager = CS.GameCore.AssetsManager.Instance
 ---@class ResManager
 local ResManager = {}
 
-
-function ResManager.LoadAsset(assetPath, onSuccess)
-    AssetsManager:LoadAsset(assetPath, 
+---@param assetPath string
+---@param type CSType
+---@param onSuccess function
+function ResManager.LoadAsset(assetPath, type, onSuccess)
+    AssetsManager:LoadAsset(assetPath, type,
     ---@param obj UnityEngine.Object
     function (obj)
+        logInfo(obj)
         if onSuccess then
             onSuccess(obj)
         end

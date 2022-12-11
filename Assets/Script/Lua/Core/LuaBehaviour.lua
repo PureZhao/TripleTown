@@ -43,7 +43,7 @@ end
 function LuaBehaviour.GetLua(objOrTrans)
     local comp = UnityUtils.GetComponent(objOrTrans, CSType.LuaBehaviour)
     if comp then
-        return comp.Table
+        return comp:GetLuaClass()
     end
     return nil
 end

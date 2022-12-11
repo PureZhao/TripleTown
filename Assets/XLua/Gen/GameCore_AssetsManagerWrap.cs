@@ -132,22 +132,24 @@ namespace XLua.CSObjectWrap
             
 			    int gen_param_count = LuaAPI.lua_gettop(L);
             
-                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<System.Action<UnityEngine.Object>>(L, 3)) 
+                if(gen_param_count == 4&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<System.Type>(L, 3)&& translator.Assignable<System.Action<UnityEngine.Object>>(L, 4)) 
                 {
                     string _assetPath = LuaAPI.lua_tostring(L, 2);
-                    System.Action<UnityEngine.Object> _onLoaded = translator.GetDelegate<System.Action<UnityEngine.Object>>(L, 3);
+                    System.Type _type = (System.Type)translator.GetObject(L, 3, typeof(System.Type));
+                    System.Action<UnityEngine.Object> _onLoaded = translator.GetDelegate<System.Action<UnityEngine.Object>>(L, 4);
                     
-                    gen_to_be_invoked.LoadAsset( _assetPath, _onLoaded );
+                    gen_to_be_invoked.LoadAsset( _assetPath, _type, _onLoaded );
                     
                     
                     
                     return 0;
                 }
-                if(gen_param_count == 2&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)) 
+                if(gen_param_count == 3&& (LuaAPI.lua_isnil(L, 2) || LuaAPI.lua_type(L, 2) == LuaTypes.LUA_TSTRING)&& translator.Assignable<System.Type>(L, 3)) 
                 {
                     string _assetPath = LuaAPI.lua_tostring(L, 2);
+                    System.Type _type = (System.Type)translator.GetObject(L, 3, typeof(System.Type));
                     
-                    gen_to_be_invoked.LoadAsset( _assetPath );
+                    gen_to_be_invoked.LoadAsset( _assetPath, _type );
                     
                     
                     
