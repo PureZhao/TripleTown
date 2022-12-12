@@ -21,9 +21,10 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(GameCore.LuaBehaviour);
-			Utils.BeginObjectRegister(type, L, translator, 0, 1, 3, 3);
+			Utils.BeginObjectRegister(type, L, translator, 0, 2, 3, 3);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "GetLuaClass", _m_GetLuaClass);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ActivateMouseEvent", _m_ActivateMouseEvent);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "requirePath", _g_get_requirePath);
@@ -155,6 +156,34 @@ namespace XLua.CSObjectWrap
                     
                     
                     return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_ActivateMouseEvent(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                GameCore.LuaBehaviour gen_to_be_invoked = (GameCore.LuaBehaviour)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    bool _state = LuaAPI.lua_toboolean(L, 2);
+                    
+                    gen_to_be_invoked.ActivateMouseEvent( _state );
+                    
+                    
+                    
+                    return 0;
                 }
                 
             } catch(System.Exception gen_e) {

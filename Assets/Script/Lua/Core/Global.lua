@@ -14,11 +14,3 @@ function _G.bind(func, this, ...)
         end
     end
 end
-
-function _G.extendClass(target, base)
-    if base then
-        for k, v in pairs(base) do
-            target[k] = v
-        end
-    end
-end

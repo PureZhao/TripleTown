@@ -3,20 +3,36 @@ local CSType = require('Core.CSType')
 local LuaBehaviour = require('Core.LuaBehaviour')
 local ResManager = require('Game.Manager.ResManager')
 local ResConst = require('Game.Const.ResConst')
+local DataConst = require('Game.Const.DataConst')
+local Coroutine = require('Core.Corountine')
+local Timer = require('Game.Util.Timer')
 
 ---@class Element : LuaBehaviour
 local Element = Class('Element', LuaBehaviour)
 
 function Element:__Define()
-    self.spriteCount = CSType.Int32
+    self.type = CSType.ElementType
 end
 
 function Element:__init()
     self.row = 1
     self.col = 1
     self.renderer = self.transform:GetComponent(CSType.SpriteRenderer)
-    
-    self.type = 1
+    self.sprites = {}
+    ResManager.LoadAsset(ResConst.ElementSprites[self.type], CSType.Texture2D, function (texture)
+
+        local rect = CSE.Rect(0, 0, 100, 100)
+        local pivot = CSE.Vector2(0.5, 0.5)
+        local sprites = {}
+        for k, v in pairs(DataConst.ElementSpriteSplitPos) do
+            rect.position = CSE.Vector2(v.x, v.y)
+            sprites[k] = CSE.Sprite.Create(texture, rect, pivot)
+        end
+        self.sprites = sprites
+        self.renderer.sprite = sprites[1]
+    end)
+    self.timer = Timer.New()
+    self.timer:Delay(5, bind(self.PlayTown, self))
 end
 
 function Element:SetPos(row, col)
@@ -28,7 +44,14 @@ function Element:SetPos(row, col)
 end
 
 function Element:PlayTown()
-    
+    local routine = Coroutine.Create(function ()
+        for _, v in pairs(self.sprites) do
+            self.renderer.sprite = v
+            coroutine.yield(CSE.WaitForSeconds(1))
+        end
+        self.renderer.sprite = 
+    end)
+    self.host:StartCoroutine(routine)
 end
 
 function Element:OnMouseEnter()

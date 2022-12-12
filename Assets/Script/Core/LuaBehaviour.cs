@@ -92,6 +92,8 @@ namespace GameCore
             {typeof(List<string>), typeof(ObjWrap<List<string>>)},
             {typeof(List<Vector3>), typeof(ObjWrap<List<Vector3>>)},
             {typeof(List<Color>), typeof(ObjWrap<List<Color>>)},
+            {typeof(ElementType), typeof(ObjWrap<ElementType>)},
+
         };
         [Serializable]
         public class ObjectWrap
@@ -146,7 +148,7 @@ namespace GameCore
         [SerializeField]
         public List<ValueWrap> values = new List<ValueWrap>();
         private LuaTable luaClass;
-
+        private LuaBehaviourMouse mouseBehaviour;
         public LuaTable GetLuaClass()
         {
             return luaClass;
@@ -154,31 +156,34 @@ namespace GameCore
 
         void Awake()
         {
-            string cmd = string.Format("local t = require('{0}'); return t;", requirePath);
-            LuaTable table = (LuaTable)ProjectLuaEnv.Instance.DoString(cmd)[0];
-            LuaFunction newFunc = table.Get<LuaFunction>("NewFromCS");
-
-            luaClass = (LuaTable)newFunc.Call(this)[0];
-            Debug.Log(luaClass == null);
+            // 将需要提前注册的变量放到这个表
+            LuaTable injections = ProjectLuaEnv.Instance.NewTable();
             // 注入值类型 必须在wrapTypeDict中有
             for (int i = 0; i < values.Count; i++)
             {
-                luaClass.Set(values[i].name, JsonToValue(values[i].jsonStr, Type.GetType(values[i].typeName)));
+                injections.Set(values[i].name, JsonToValue(values[i].jsonStr, Type.GetType(values[i].typeName)));
             }
             // 注入其他类型
             for (int i = 0; i < objects.Count; i++)
             {
-                luaClass.Set(objects[i].name, objects[i].obj);
+                injections.Set(objects[i].name, objects[i].obj);
             }
-            //luaClass.Set("gameObject", gameObject);
-            //luaClass.Set("transform", transform);
-            //luaClass.Set("host", this);
+            // 将自己的一些东西注册进去
+            injections.Set("host", this);
+            injections.Set("gameObject", gameObject);
+            injections.Set("transform", transform);
+            
+            string cmd = string.Format("local t = require('{0}'); return t;", requirePath);
+            LuaTable table = (LuaTable)ProjectLuaEnv.Instance.DoString(cmd)[0];
+            LuaFunction newFunc = table.Get<LuaFunction>("NewFromCS");
+            // 初始化类
+            luaClass = (LuaTable)newFunc.Call(injections)[0];
             LuaFunction luaAwake = luaClass.Get<LuaFunction>("__init");
 
-            luaClass.Get("Update", out luaUpdate);  
-            if(TryGetComponent(out LuaBehaviourMouse mouseEvent))
+            luaClass.Get("Update", out luaUpdate);
+            if(TryGetComponent(out mouseBehaviour))
             {
-                mouseEvent.BindEvent(luaClass);
+                mouseBehaviour.BindEvent(luaClass);
             }
 
             luaAwake?.Call(luaClass);
@@ -202,6 +207,11 @@ namespace GameCore
 
             luaOnDestroy = null;
             luaUpdate = null;
+        }
+
+        public void ActivateMouseEvent(bool state)
+        {
+            mouseBehaviour?.ActivateEvent(state);
         }
     }
 }

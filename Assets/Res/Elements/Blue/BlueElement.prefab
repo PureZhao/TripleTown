@@ -82,7 +82,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &3853245216306518305
@@ -128,10 +128,10 @@ MonoBehaviour:
   objects: []
   values:
   - index: 1
-    name: spriteCount
+    name: type
     jsonStr: '{"obj":0}'
-    typeName: System.Int32
-    assembly: mscorlib
+    typeName: GameCore.ElementType
+    assembly: Assembly-CSharp
 --- !u!114 &5464683895458471281
 MonoBehaviour:
   m_ObjectHideFlags: 0

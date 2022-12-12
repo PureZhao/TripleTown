@@ -47,11 +47,12 @@ CSType.Vector3 = CSType[CSE.Vector3]
 CSType.Vector4 = CSType[CSE.Vector4]
 
 CSType.Sprite = CSType[CSE.Sprite]
+CSType.Texture2D = CSType[CSE.Texture2D]
 CSType.SpriteRenderer = CSType[CSE.SpriteRenderer]
 CSType.LuaBehaviour = CSType[CS.GameCore.LuaBehaviour]
 
-CSType.SpriteAtlas = CSType[CSE.U2D.SpriteAtlas]
-
+CSType.ElementType = CSType[CS.GameCore.ElementType]
+CSType.SimpleCoroutineRunner = CSType[CS.GameCore.SimpleCoroutineRunner]
 -- Collections
 CSType.ListInt32 = CSType[List(CSType.Int32)]
 CSType.ListSprite = CSType[List(CSType.Sprite)]

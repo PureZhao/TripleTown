@@ -70,21 +70,12 @@ namespace GameCore
             else
             {
                 // “Ï≤Ωº”‘ÿ
-                List<object> parameters = new List<object>()
-                {
-                    deps,
-                    bundleName,
-                    onLoaded,
-                };
-                StartCoroutine(nameof(LoadAssetBundlesAsync), parameters);
+                StartCoroutine(LoadAssetBundlesAsync(deps, bundleName, onLoaded));
             }
         }
 
-        IEnumerator LoadAssetBundlesAsync(List<object> obj)
+        IEnumerator LoadAssetBundlesAsync(List<string> deps, string targetBundleName, Action<AssetBundle> onLoaded)
         {
-            List<string> deps = (List<string>)obj[0];
-            string targetBundleName = (string)obj[1];
-            Action<AssetBundle> onLoaded = (Action<AssetBundle>)obj[2];
             for (int i = 0; i < deps.Count; i++)
             {
                 if (bundles.ContainsKey(deps[i]))
@@ -218,7 +209,7 @@ namespace GameCore
         }
 
 
-        public void FreeObject(UnityEngine.Object obj, bool useObjectPool = true)
+        public void FreeObject(UnityObject obj, bool useObjectPool = true)
         {
             if (useObjectPool)
             {

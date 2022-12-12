@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using XLua;
+
+[LuaCallCSharp]
 public static class GameObjectEx
 {
     public static T GetOrAddComponent<T>(this GameObject obj, Action<T> onGet = null) where T : Component

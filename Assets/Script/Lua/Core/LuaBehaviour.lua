@@ -5,6 +5,14 @@ local UnityUtils = require('Game.Util.UnityUtils')
 ---@class LuaBehaviour
 local LuaBehaviour = Class("LuaBehaviour")
 
+function LuaBehaviour.GetLua(objOrTrans)
+    local comp = UnityUtils.GetComponent(objOrTrans, CSType.LuaBehaviour)
+    if comp then
+        return comp:GetLuaClass()
+    end
+    return nil
+end 
+
 local function CallDefine(classType, defineSelf)
     if classType.super then
         CallDefine(classType.super, defineSelf)
@@ -38,14 +46,6 @@ function LuaBehaviour:Define()
     for key, value in ipairs(defineStore) do
         table.insert(self._DefineList, { name = value.name, type = value.value})
     end
-end
-
-function LuaBehaviour.GetLua(objOrTrans)
-    local comp = UnityUtils.GetComponent(objOrTrans, CSType.LuaBehaviour)
-    if comp then
-        return comp:GetLuaClass()
-    end
-    return nil
 end
 
 return LuaBehaviour

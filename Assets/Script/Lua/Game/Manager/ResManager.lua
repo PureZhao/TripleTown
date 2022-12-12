@@ -10,7 +10,6 @@ function ResManager.LoadAsset(assetPath, type, onSuccess)
     AssetsManager:LoadAsset(assetPath, type,
     ---@param obj UnityEngine.Object
     function (obj)
-        logInfo(obj)
         if onSuccess then
             onSuccess(obj)
         end

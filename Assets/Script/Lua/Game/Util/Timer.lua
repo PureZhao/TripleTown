@@ -5,7 +5,7 @@ local Scheduler = CS.GameCore.Scheduler.Instance
 local Timer = Class("Timer")
 
 function Timer:__init()
-    logInfo(Scheduler == nil)
+    
 end
 
 function Timer:Delay(time, func)

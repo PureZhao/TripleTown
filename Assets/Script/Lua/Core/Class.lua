@@ -55,13 +55,15 @@ local function BaseClass(classname, super)
 	end
 
 	---@param host CS.GameCore.LuaBehaviour
-	class_type.NewFromCS = function(host)
+	class_type.NewFromCS = function(injections)
 		-- 生成一个类对象
 		local obj = {}
-		-- 先注册gameObject、transform、host 便于好在__init函数中使用GetComponent
-		obj.gameObject = host.gameObject
-		obj.transform = host.transform
-		obj.host = host
+		
+		-- 根据injections表先注册东西
+		-- 如gameObject、transform、host，便于在__init函数中使用GetComponent
+		for k, v in pairs(injections) do
+			obj[k] = v
+		end
 
 		obj._class_type = class_type
 
