@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XLua;
-
-public static class XLuaRequireType
+using System;
+using DG.Tweening;
+public static class XLuaLuaCallCSharpType
 {
     [LuaCallCSharp]
     public static List<Type> LuaCallCharp = new List<Type>()
@@ -13,5 +13,7 @@ public static class XLuaRequireType
         typeof(WaitUntil),
         typeof(Rect),
         typeof(Sprite),
+        typeof(ShortcutExtensions),
+        typeof(TweenSettingsExtensions),
     };
 }

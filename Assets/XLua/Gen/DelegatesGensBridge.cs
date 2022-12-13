@@ -326,7 +326,28 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp14(object p0)
+		public bool __Gen_Delegate_Imp14()
+		{
+#if THREAD_SAFE || HOTFIX_ENABLE
+            lock (luaEnv.luaEnvLock)
+            {
+#endif
+                RealStatePtr L = luaEnv.rawL;
+                int errFunc = LuaAPI.pcall_prepare(L, errorFuncRef, luaReference);
+                
+                
+                PCall(L, 0, 1, errFunc);
+                
+                
+                bool __gen_ret = LuaAPI.lua_toboolean(L, errFunc + 1);
+                LuaAPI.lua_settop(L, errFunc - 1);
+                return  __gen_ret;
+#if THREAD_SAFE || HOTFIX_ENABLE
+            }
+#endif
+		}
+        
+		public void __Gen_Delegate_Imp15(object p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -348,7 +369,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp15(object p0, int p1, int p2)
+		public int __Gen_Delegate_Imp16(object p0, int p1, int p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -372,7 +393,7 @@ namespace XLua
 #endif
 		}
         
-		public UnityEngine.Vector3 __Gen_Delegate_Imp16(object p0, UnityEngine.Vector3 p1, UnityEngine.Vector3 p2)
+		public UnityEngine.Vector3 __Gen_Delegate_Imp17(object p0, UnityEngine.Vector3 p1, UnityEngine.Vector3 p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -396,7 +417,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp17(object p0, int p1, out double p2, ref string p3)
+		public int __Gen_Delegate_Imp18(object p0, int p1, out double p2, ref string p3)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -422,7 +443,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp18(object p0, int p1, out double p2, ref string p3, object p4)
+		public int __Gen_Delegate_Imp19(object p0, int p1, out double p2, ref string p3, object p4)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -449,7 +470,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp19(object p0, int p1)
+		public void __Gen_Delegate_Imp20(object p0, int p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -472,7 +493,7 @@ namespace XLua
 #endif
 		}
         
-		public string __Gen_Delegate_Imp20(object p0)
+		public string __Gen_Delegate_Imp21(object p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -494,7 +515,7 @@ namespace XLua
 #endif
 		}
         
-		public UnityEngine.GameObject __Gen_Delegate_Imp21(XLuaTest.StructTest p0, int p1, object p2)
+		public UnityEngine.GameObject __Gen_Delegate_Imp22(XLuaTest.StructTest p0, int p1, object p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -518,7 +539,7 @@ namespace XLua
 #endif
 		}
         
-		public string __Gen_Delegate_Imp22(XLuaTest.StructTest p0)
+		public string __Gen_Delegate_Imp23(XLuaTest.StructTest p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -540,7 +561,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp23(XLuaTest.StructTest p0, object p1)
+		public void __Gen_Delegate_Imp24(XLuaTest.StructTest p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -563,7 +584,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp24(object p0)
+		public int __Gen_Delegate_Imp25(object p0)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -585,7 +606,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp25(object p0, object p1)
+		public void __Gen_Delegate_Imp26(object p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -608,7 +629,7 @@ namespace XLua
 #endif
 		}
         
-		public int __Gen_Delegate_Imp26(object p0, object p1)
+		public int __Gen_Delegate_Imp27(object p0, object p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -631,7 +652,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp27(object p0, object p1, int p2)
+		public void __Gen_Delegate_Imp28(object p0, object p1, int p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -655,7 +676,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp28(int p0, int p1)
+		public void __Gen_Delegate_Imp29(int p0, int p1)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -678,7 +699,7 @@ namespace XLua
 #endif
 		}
         
-		public void __Gen_Delegate_Imp29(object p0, int p1, int p2)
+		public void __Gen_Delegate_Imp30(object p0, int p1, int p2)
 		{
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -784,6 +805,11 @@ namespace XLua
 		    if (type == typeof(XLuaTest.InvokeLua.CalcNew))
 			{
 			    return new XLuaTest.InvokeLua.CalcNew(__Gen_Delegate_Imp13);
+			}
+		
+		    if (type == typeof(System.Func<bool>))
+			{
+			    return new System.Func<bool>(__Gen_Delegate_Imp14);
 			}
 		
 		    return null;

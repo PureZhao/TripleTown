@@ -26,7 +26,6 @@
 		<type fullname="GameCore.ElementType" preserve="all"/>
 		<type fullname="GameCore.LuaBehaviour" preserve="all"/>
 		<type fullname="GameCore.Scheduler" preserve="all"/>
-		<type fullname="GameCore.SimpleCoroutineRunner" preserve="all"/>
 		<type fullname="Tutorial.DerivedClass+TestEnumInner" preserve="all"/>
 		
 	</assembly>
@@ -76,6 +75,12 @@
 
 	<assembly fullname="UnityEngine.ParticleSystemModule">
 	    <type fullname="UnityEngine.ParticleSystem" preserve="all"/>
+		
+	</assembly>
+
+	<assembly fullname="DOTween">
+	    <type fullname="DG.Tweening.ShortcutExtensions" preserve="all"/>
+		<type fullname="DG.Tweening.TweenSettingsExtensions" preserve="all"/>
 		
 	</assembly>
 

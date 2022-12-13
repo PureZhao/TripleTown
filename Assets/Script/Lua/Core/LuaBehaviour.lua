@@ -3,6 +3,9 @@ local CSType = require("Core.CSType")
 local UnityUtils = require('Game.Util.UnityUtils')
 
 ---@class LuaBehaviour
+---@field host UnityEngine.Component
+---@field gameObject UnityEngine.GameObject
+---@field transform UnityEngine.Transform
 local LuaBehaviour = Class("LuaBehaviour")
 
 function LuaBehaviour.GetLua(objOrTrans)
@@ -11,7 +14,7 @@ function LuaBehaviour.GetLua(objOrTrans)
         return comp:GetLuaClass()
     end
     return nil
-end 
+end
 
 local function CallDefine(classType, defineSelf)
     if classType.super then

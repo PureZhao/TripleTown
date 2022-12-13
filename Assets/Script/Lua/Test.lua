@@ -1,7 +1,11 @@
 local ResManager = require('Game.Manager.ResManager')
 local ResConst = require('Game.Const.ResConst')
 local CSType = require('Core.CSType')
+local Coroutine = require('Core.Coroutine')
+local DataConst = require('Game.Const.DataConst')
+local LuaBehaviour = require('Core.LuaBehaviour')
 
-ResManager.LoadAsset(ResConst.BlueSprite, CSType.Sprite, function (obj)
-    logInfo(obj.name)
+ResManager.LoadGameObject(ResConst.Container, CSE.Vector3.zero, CSE.Quaternion.identity, function (go)
+    local lua = LuaBehaviour.GetLua(go)
+    lua:Generate()
 end)

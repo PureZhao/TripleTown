@@ -3,11 +3,20 @@ local ResConst = {}
 local AssetsDir = "Assets/Res/"
 
 local ElementDir = AssetsDir .. "Elements/"
-ResConst.BlueElement = ElementDir .. "Blue/BlueElement.prefab"
-ResConst.RedElement = ElementDir .. "Red/RedElement.prefab"
-ResConst.YellowElement = ElementDir .. "Yellow/YellowElement.prefab"
-ResConst.BrownElement = ElementDir .. "Brown/BrownElement.prefab"
-ResConst.PurpleElement = ElementDir .. "Purple/PurpleElement.prefab"
+local BlueElement = ElementDir .. "Blue/BlueElement.prefab"
+local RedElement = ElementDir .. "Red/RedElement.prefab"
+local YellowElement = ElementDir .. "Yellow/YellowElement.prefab"
+local BrownElement = ElementDir .. "Brown/BrownElement.prefab"
+local PurpleElement = ElementDir .. "Purple/PurpleElement.prefab"
+
+ResConst.Elements = {
+    BlueElement,
+    RedElement,
+    YellowElement,
+    BrownElement,
+    PurpleElement,
+}
+
 
 ResConst.ElementSprites = {
     [CS.GameCore.ElementType.Blue] = "Assets/Res/Elements/Blue/Blue.png",

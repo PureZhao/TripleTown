@@ -179,9 +179,6 @@ namespace XLua.CSObjectWrap
         static void wrapInit1(LuaEnv luaenv, ObjectTranslator translator)
         {
         
-            translator.DelayWrapLoader(typeof(GameCore.SimpleCoroutineRunner), GameCoreSimpleCoroutineRunnerWrap.__Register);
-        
-        
             translator.DelayWrapLoader(typeof(Tutorial.DerivedClass.TestEnumInner), TutorialDerivedClassTestEnumInnerWrap.__Register);
         
         
@@ -195,6 +192,12 @@ namespace XLua.CSObjectWrap
         
         
             translator.DelayWrapLoader(typeof(UnityEngine.Sprite), UnityEngineSpriteWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(DG.Tweening.ShortcutExtensions), DGTweeningShortcutExtensionsWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(DG.Tweening.TweenSettingsExtensions), DGTweeningTweenSettingsExtensionsWrap.__Register);
         
         
         
@@ -238,11 +241,1172 @@ namespace XLua
 	internal partial class InternalGlobals
     {
 	    
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE0( UnityEngine.Camera target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE1( UnityEngine.Camera target,  UnityEngine.Color endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE2( UnityEngine.Camera target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE3( UnityEngine.Camera target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE4( UnityEngine.Camera target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE5( UnityEngine.Camera target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Rect, UnityEngine.Rect, DG.Tweening.Plugins.Options.RectOptions> __GEN_DELEGATE6( UnityEngine.Camera target,  UnityEngine.Rect endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Rect, UnityEngine.Rect, DG.Tweening.Plugins.Options.RectOptions> __GEN_DELEGATE7( UnityEngine.Camera target,  UnityEngine.Rect endValue,  float duration);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE8( UnityEngine.Camera target,  float duration,  float strength,  int vibrato,  float randomness,  bool fadeOut,  DG.Tweening.ShakeRandomnessMode randomnessMode);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE9( UnityEngine.Camera target,  float duration,  UnityEngine.Vector3 strength,  int vibrato,  float randomness,  bool fadeOut,  DG.Tweening.ShakeRandomnessMode randomnessMode);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE10( UnityEngine.Camera target,  float duration,  float strength,  int vibrato,  float randomness,  bool fadeOut,  DG.Tweening.ShakeRandomnessMode randomnessMode);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE11( UnityEngine.Camera target,  float duration,  UnityEngine.Vector3 strength,  int vibrato,  float randomness,  bool fadeOut,  DG.Tweening.ShakeRandomnessMode randomnessMode);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE12( UnityEngine.LineRenderer target,  DG.Tweening.Color2 startValue,  DG.Tweening.Color2 endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE13( UnityEngine.Material target,  UnityEngine.Color endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE14( UnityEngine.Material target,  UnityEngine.Color endValue,  string property,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE15( UnityEngine.Material target,  UnityEngine.Color endValue,  int propertyID,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE16( UnityEngine.Material target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE17( UnityEngine.Material target,  float endValue,  string property,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE18( UnityEngine.Material target,  float endValue,  int propertyID,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE19( UnityEngine.Material target,  float endValue,  string property,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE20( UnityEngine.Material target,  float endValue,  int propertyID,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.Options.VectorOptions> __GEN_DELEGATE21( UnityEngine.Material target,  UnityEngine.Vector2 endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.Options.VectorOptions> __GEN_DELEGATE22( UnityEngine.Material target,  UnityEngine.Vector2 endValue,  string property,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.Options.VectorOptions> __GEN_DELEGATE23( UnityEngine.Material target,  UnityEngine.Vector2 endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.Options.VectorOptions> __GEN_DELEGATE24( UnityEngine.Material target,  UnityEngine.Vector2 endValue,  string property,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector4, UnityEngine.Vector4, DG.Tweening.Plugins.Options.VectorOptions> __GEN_DELEGATE25( UnityEngine.Material target,  UnityEngine.Vector4 endValue,  string property,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector4, UnityEngine.Vector4, DG.Tweening.Plugins.Options.VectorOptions> __GEN_DELEGATE26( UnityEngine.Material target,  UnityEngine.Vector4 endValue,  int propertyID,  float duration);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE27( UnityEngine.TrailRenderer target,  float toStartWidth,  float toEndWidth,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE28( UnityEngine.TrailRenderer target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> __GEN_DELEGATE29( DG.Tweening.Tween target,  float endValue,  float duration);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE30( UnityEngine.Material target,  UnityEngine.Color endValue,  float duration);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE31( UnityEngine.Material target,  UnityEngine.Color endValue,  string property,  float duration);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE32( UnityEngine.Material target,  UnityEngine.Color endValue,  int propertyID,  float duration);
+		
+		delegate int __GEN_DELEGATE33( UnityEngine.Material target,  bool withCallbacks);
+		
+		delegate int __GEN_DELEGATE34( UnityEngine.Material target,  bool complete);
+		
+		delegate int __GEN_DELEGATE35( UnityEngine.Material target);
+		
+		delegate int __GEN_DELEGATE36( UnityEngine.Material target,  float to,  bool andPlay);
+		
+		delegate int __GEN_DELEGATE37( UnityEngine.Material target);
+		
+		delegate int __GEN_DELEGATE38( UnityEngine.Material target);
+		
+		delegate int __GEN_DELEGATE39( UnityEngine.Material target);
+		
+		delegate int __GEN_DELEGATE40( UnityEngine.Material target);
+		
+		delegate int __GEN_DELEGATE41( UnityEngine.Material target,  bool includeDelay);
+		
+		delegate int __GEN_DELEGATE42( UnityEngine.Material target,  bool includeDelay);
+		
+		delegate int __GEN_DELEGATE43( UnityEngine.Material target);
+		
+		delegate int __GEN_DELEGATE44( UnityEngine.Material target);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE45( DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE46( DG.Tweening.Tween t,  bool autoKillOnCompletion);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE47( DG.Tweening.Tween t,  object objectId);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE48( DG.Tweening.Tween t,  string stringId);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE49( DG.Tweening.Tween t,  int intId);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE50( DG.Tweening.Tween t,  UnityEngine.GameObject gameObject);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE51( DG.Tweening.Tween t,  UnityEngine.GameObject gameObject,  DG.Tweening.LinkBehaviour behaviour);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE52( DG.Tweening.Tween t,  object target);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE53( DG.Tweening.Tween t,  int loops);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE54( DG.Tweening.Tween t,  int loops,  DG.Tweening.LoopType loopType);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE55( DG.Tweening.Tween t,  DG.Tweening.Ease ease);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE56( DG.Tweening.Tween t,  DG.Tweening.Ease ease,  float overshoot);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE57( DG.Tweening.Tween t,  DG.Tweening.Ease ease,  float amplitude,  float period);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE58( DG.Tweening.Tween t,  UnityEngine.AnimationCurve animCurve);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE59( DG.Tweening.Tween t,  DG.Tweening.EaseFunction customEase);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE60( DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE61( DG.Tweening.Tween t,  bool recyclable);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE62( DG.Tweening.Tween t,  bool isIndependentUpdate);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE63( DG.Tweening.Tween t,  DG.Tweening.UpdateType updateType);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE64( DG.Tweening.Tween t,  DG.Tweening.UpdateType updateType,  bool isIndependentUpdate);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE65( DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE66( DG.Tweening.Tween t,  bool inverted);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE67( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE68( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE69( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE70( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE71( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE72( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE73( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE74( DG.Tweening.Tween t,  DG.Tweening.TweenCallback action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE75( DG.Tweening.Tween t,  DG.Tweening.TweenCallback<int> action);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE76( DG.Tweening.Tween t,  DG.Tweening.Tween asTween);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE77( DG.Tweening.Tween t,  DG.Tweening.TweenParams tweenParams);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE78( DG.Tweening.Sequence s,  DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE79( DG.Tweening.Sequence s,  DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE80( DG.Tweening.Sequence s,  DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE81( DG.Tweening.Sequence s,  float atPosition,  DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE82( DG.Tweening.Sequence s,  float interval);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE83( DG.Tweening.Sequence s,  float interval);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE84( DG.Tweening.Sequence s,  DG.Tweening.TweenCallback callback);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE85( DG.Tweening.Sequence s,  DG.Tweening.TweenCallback callback);
+		
+		delegate DG.Tweening.Sequence __GEN_DELEGATE86( DG.Tweening.Sequence s,  float atPosition,  DG.Tweening.TweenCallback callback);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE87( DG.Tweening.Tweener t);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE88( DG.Tweening.Tweener t,  bool isRelative);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE89( DG.Tweening.Tweener t,  bool setImmediately,  bool isRelative);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> __GEN_DELEGATE90( DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> t,  float fromAlphaValue,  bool setImmediately,  bool isRelative);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3, DG.Tweening.Plugins.Options.VectorOptions> __GEN_DELEGATE91( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3, DG.Tweening.Plugins.Options.VectorOptions> t,  float fromValue,  bool setImmediately,  bool isRelative);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.CircleOptions> __GEN_DELEGATE92( DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.CircleOptions> t,  float fromValueDegrees,  bool setImmediately,  bool isRelative);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE93( DG.Tweening.Tween t,  float delay);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE94( DG.Tweening.Tween t,  float delay,  bool asPrependedIntervalIfSequence);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE95( DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE96( DG.Tweening.Tween t,  bool isRelative);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE97( DG.Tweening.Tween t);
+		
+		delegate DG.Tweening.Tween __GEN_DELEGATE98( DG.Tweening.Tween t,  bool isSpeedBased);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE99( DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> t,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE100( DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.Options.VectorOptions> t,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE101( DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.Options.VectorOptions> t,  DG.Tweening.AxisConstraint axisConstraint,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE102( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3, DG.Tweening.Plugins.Options.VectorOptions> t,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE103( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3, DG.Tweening.Plugins.Options.VectorOptions> t,  DG.Tweening.AxisConstraint axisConstraint,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE104( DG.Tweening.Core.TweenerCore<UnityEngine.Vector4, UnityEngine.Vector4, DG.Tweening.Plugins.Options.VectorOptions> t,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE105( DG.Tweening.Core.TweenerCore<UnityEngine.Vector4, UnityEngine.Vector4, DG.Tweening.Plugins.Options.VectorOptions> t,  DG.Tweening.AxisConstraint axisConstraint,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE106( DG.Tweening.Core.TweenerCore<UnityEngine.Quaternion, UnityEngine.Vector3, DG.Tweening.Plugins.Options.QuaternionOptions> t,  bool useShortest360Route);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE107( DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions> t,  bool alphaOnly);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE108( DG.Tweening.Core.TweenerCore<UnityEngine.Rect, UnityEngine.Rect, DG.Tweening.Plugins.Options.RectOptions> t,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE109( DG.Tweening.Core.TweenerCore<string, string, DG.Tweening.Plugins.Options.StringOptions> t,  bool richTextEnabled,  DG.Tweening.ScrambleMode scrambleMode,  string scrambleChars);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE110( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3[], DG.Tweening.Plugins.Options.Vector3ArrayOptions> t,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE111( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3[], DG.Tweening.Plugins.Options.Vector3ArrayOptions> t,  DG.Tweening.AxisConstraint axisConstraint,  bool snapping);
+		
+		delegate DG.Tweening.Tweener __GEN_DELEGATE112( DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.CircleOptions> t,  float endValueDegrees,  bool relativeCenter,  bool snapping);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE113( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  DG.Tweening.AxisConstraint lockPosition,  DG.Tweening.AxisConstraint lockRotation);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE114( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  bool closePath,  DG.Tweening.AxisConstraint lockPosition,  DG.Tweening.AxisConstraint lockRotation);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE115( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  UnityEngine.Vector3 lookAtPosition,  System.Nullable<UnityEngine.Vector3> forwardDirection,  System.Nullable<UnityEngine.Vector3> up);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE116( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  UnityEngine.Vector3 lookAtPosition,  bool stableZRotation);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE117( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  UnityEngine.Transform lookAtTransform,  System.Nullable<UnityEngine.Vector3> forwardDirection,  System.Nullable<UnityEngine.Vector3> up);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE118( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  UnityEngine.Transform lookAtTransform,  bool stableZRotation);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE119( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  float lookAhead,  System.Nullable<UnityEngine.Vector3> forwardDirection,  System.Nullable<UnityEngine.Vector3> up);
+		
+		delegate DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> __GEN_DELEGATE120( DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions> t,  float lookAhead,  bool stableZRotation);
+		
 	    static InternalGlobals()
 		{
 		    extensionMethodMap = new Dictionary<Type, IEnumerable<MethodInfo>>()
 			{
 			    
+				{typeof(UnityEngine.Camera), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE0(DG.Tweening.ShortcutExtensions.DOAspect)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE1(DG.Tweening.ShortcutExtensions.DOColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE2(DG.Tweening.ShortcutExtensions.DOFarClipPlane)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE3(DG.Tweening.ShortcutExtensions.DOFieldOfView)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE4(DG.Tweening.ShortcutExtensions.DONearClipPlane)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE5(DG.Tweening.ShortcutExtensions.DOOrthoSize)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE6(DG.Tweening.ShortcutExtensions.DOPixelRect)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE7(DG.Tweening.ShortcutExtensions.DORect)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE8(DG.Tweening.ShortcutExtensions.DOShakePosition)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE9(DG.Tweening.ShortcutExtensions.DOShakePosition)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE10(DG.Tweening.ShortcutExtensions.DOShakeRotation)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE11(DG.Tweening.ShortcutExtensions.DOShakeRotation)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(UnityEngine.LineRenderer), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE12(DG.Tweening.ShortcutExtensions.DOColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(UnityEngine.Material), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE13(DG.Tweening.ShortcutExtensions.DOColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE14(DG.Tweening.ShortcutExtensions.DOColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE15(DG.Tweening.ShortcutExtensions.DOColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE16(DG.Tweening.ShortcutExtensions.DOFade)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE17(DG.Tweening.ShortcutExtensions.DOFade)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE18(DG.Tweening.ShortcutExtensions.DOFade)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE19(DG.Tweening.ShortcutExtensions.DOFloat)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE20(DG.Tweening.ShortcutExtensions.DOFloat)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE21(DG.Tweening.ShortcutExtensions.DOOffset)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE22(DG.Tweening.ShortcutExtensions.DOOffset)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE23(DG.Tweening.ShortcutExtensions.DOTiling)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE24(DG.Tweening.ShortcutExtensions.DOTiling)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE25(DG.Tweening.ShortcutExtensions.DOVector)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE26(DG.Tweening.ShortcutExtensions.DOVector)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE30(DG.Tweening.ShortcutExtensions.DOBlendableColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE31(DG.Tweening.ShortcutExtensions.DOBlendableColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE32(DG.Tweening.ShortcutExtensions.DOBlendableColor)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE33(DG.Tweening.ShortcutExtensions.DOComplete)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE34(DG.Tweening.ShortcutExtensions.DOKill)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE35(DG.Tweening.ShortcutExtensions.DOFlip)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE36(DG.Tweening.ShortcutExtensions.DOGoto)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE37(DG.Tweening.ShortcutExtensions.DOPause)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE38(DG.Tweening.ShortcutExtensions.DOPlay)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE39(DG.Tweening.ShortcutExtensions.DOPlayBackwards)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE40(DG.Tweening.ShortcutExtensions.DOPlayForward)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE41(DG.Tweening.ShortcutExtensions.DORestart)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE42(DG.Tweening.ShortcutExtensions.DORewind)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE43(DG.Tweening.ShortcutExtensions.DOSmoothRewind)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE44(DG.Tweening.ShortcutExtensions.DOTogglePause)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(UnityEngine.TrailRenderer), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE27(DG.Tweening.ShortcutExtensions.DOResize)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE28(DG.Tweening.ShortcutExtensions.DOTime)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Tween), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE29(DG.Tweening.ShortcutExtensions.DOTimeScale)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE45(DG.Tweening.TweenSettingsExtensions.SetAutoKill)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE46(DG.Tweening.TweenSettingsExtensions.SetAutoKill)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE47(DG.Tweening.TweenSettingsExtensions.SetId)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE48(DG.Tweening.TweenSettingsExtensions.SetId)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE49(DG.Tweening.TweenSettingsExtensions.SetId)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE50(DG.Tweening.TweenSettingsExtensions.SetLink)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE51(DG.Tweening.TweenSettingsExtensions.SetLink)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE52(DG.Tweening.TweenSettingsExtensions.SetTarget)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE53(DG.Tweening.TweenSettingsExtensions.SetLoops)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE54(DG.Tweening.TweenSettingsExtensions.SetLoops)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE55(DG.Tweening.TweenSettingsExtensions.SetEase)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE56(DG.Tweening.TweenSettingsExtensions.SetEase)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE57(DG.Tweening.TweenSettingsExtensions.SetEase)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE58(DG.Tweening.TweenSettingsExtensions.SetEase)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE59(DG.Tweening.TweenSettingsExtensions.SetEase)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE60(DG.Tweening.TweenSettingsExtensions.SetRecyclable)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE61(DG.Tweening.TweenSettingsExtensions.SetRecyclable)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE62(DG.Tweening.TweenSettingsExtensions.SetUpdate)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE63(DG.Tweening.TweenSettingsExtensions.SetUpdate)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE64(DG.Tweening.TweenSettingsExtensions.SetUpdate)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE65(DG.Tweening.TweenSettingsExtensions.SetInverted)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE66(DG.Tweening.TweenSettingsExtensions.SetInverted)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE67(DG.Tweening.TweenSettingsExtensions.OnStart)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE68(DG.Tweening.TweenSettingsExtensions.OnPlay)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE69(DG.Tweening.TweenSettingsExtensions.OnPause)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE70(DG.Tweening.TweenSettingsExtensions.OnRewind)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE71(DG.Tweening.TweenSettingsExtensions.OnUpdate)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE72(DG.Tweening.TweenSettingsExtensions.OnStepComplete)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE73(DG.Tweening.TweenSettingsExtensions.OnComplete)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE74(DG.Tweening.TweenSettingsExtensions.OnKill)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE75(DG.Tweening.TweenSettingsExtensions.OnWaypointChange)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE76(DG.Tweening.TweenSettingsExtensions.SetAs)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE77(DG.Tweening.TweenSettingsExtensions.SetAs)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE93(DG.Tweening.TweenSettingsExtensions.SetDelay)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE94(DG.Tweening.TweenSettingsExtensions.SetDelay)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE95(DG.Tweening.TweenSettingsExtensions.SetRelative)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE96(DG.Tweening.TweenSettingsExtensions.SetRelative)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE97(DG.Tweening.TweenSettingsExtensions.SetSpeedBased)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE98(DG.Tweening.TweenSettingsExtensions.SetSpeedBased)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Sequence), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE78(DG.Tweening.TweenSettingsExtensions.Append)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE79(DG.Tweening.TweenSettingsExtensions.Prepend)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE80(DG.Tweening.TweenSettingsExtensions.Join)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE81(DG.Tweening.TweenSettingsExtensions.Insert)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE82(DG.Tweening.TweenSettingsExtensions.AppendInterval)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE83(DG.Tweening.TweenSettingsExtensions.PrependInterval)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE84(DG.Tweening.TweenSettingsExtensions.AppendCallback)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE85(DG.Tweening.TweenSettingsExtensions.PrependCallback)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE86(DG.Tweening.TweenSettingsExtensions.InsertCallback)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Tweener), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE87(DG.Tweening.TweenSettingsExtensions.From)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE88(DG.Tweening.TweenSettingsExtensions.From)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE89(DG.Tweening.TweenSettingsExtensions.From)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Color, UnityEngine.Color, DG.Tweening.Plugins.Options.ColorOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE90(DG.Tweening.TweenSettingsExtensions.From)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE107(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3, DG.Tweening.Plugins.Options.VectorOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE91(DG.Tweening.TweenSettingsExtensions.From)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE102(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE103(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.CircleOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE92(DG.Tweening.TweenSettingsExtensions.From)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE112(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE99(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Vector2, UnityEngine.Vector2, DG.Tweening.Plugins.Options.VectorOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE100(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE101(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Vector4, UnityEngine.Vector4, DG.Tweening.Plugins.Options.VectorOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE104(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE105(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Quaternion, UnityEngine.Vector3, DG.Tweening.Plugins.Options.QuaternionOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE106(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Rect, UnityEngine.Rect, DG.Tweening.Plugins.Options.RectOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE108(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<string, string, DG.Tweening.Plugins.Options.StringOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE109(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, UnityEngine.Vector3[], DG.Tweening.Plugins.Options.Vector3ArrayOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE110(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE111(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(DG.Tweening.Core.TweenerCore<UnityEngine.Vector3, DG.Tweening.Plugins.Core.PathCore.Path, DG.Tweening.Plugins.Options.PathOptions>), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE113(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE114(DG.Tweening.TweenSettingsExtensions.SetOptions)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE115(DG.Tweening.TweenSettingsExtensions.SetLookAt)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE116(DG.Tweening.TweenSettingsExtensions.SetLookAt)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE117(DG.Tweening.TweenSettingsExtensions.SetLookAt)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE118(DG.Tweening.TweenSettingsExtensions.SetLookAt)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE119(DG.Tweening.TweenSettingsExtensions.SetLookAt)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				  new __GEN_DELEGATE120(DG.Tweening.TweenSettingsExtensions.SetLookAt)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
 			};
 			
 			genTryArrayGetPtr = StaticLuaCallbacks.__tryArrayGet;

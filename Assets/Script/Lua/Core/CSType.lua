@@ -52,7 +52,6 @@ CSType.SpriteRenderer = CSType[CSE.SpriteRenderer]
 CSType.LuaBehaviour = CSType[CS.GameCore.LuaBehaviour]
 
 CSType.ElementType = CSType[CS.GameCore.ElementType]
-CSType.SimpleCoroutineRunner = CSType[CS.GameCore.SimpleCoroutineRunner]
 -- Collections
 CSType.ListInt32 = CSType[List(CSType.Int32)]
 CSType.ListSprite = CSType[List(CSType.Sprite)]

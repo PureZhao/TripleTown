@@ -4,8 +4,8 @@ local LuaBehaviour = require('Core.LuaBehaviour')
 local ResManager = require('Game.Manager.ResManager')
 local ResConst = require('Game.Const.ResConst')
 local DataConst = require('Game.Const.DataConst')
-local Coroutine = require('Core.Corountine')
-local Timer = require('Game.Util.Timer')
+local Coroutine = require('Core.Coroutine')
+local Container = require('Game.Container')
 
 ---@class Element : LuaBehaviour
 local Element = Class('Element', LuaBehaviour)
@@ -31,41 +31,48 @@ function Element:__init()
         self.sprites = sprites
         self.renderer.sprite = sprites[1]
     end)
-    self.timer = Timer.New()
-    self.timer:Delay(5, bind(self.PlayTown, self))
 end
 
 function Element:SetPos(row, col)
+    -- x -4.5 ~ 2.5
+    -- y -4.5 ~ 2.5
     self.row = row
     self.col = col
-    local x = -4.5 + (row - 1) * 0.5
-    local y = -4.5 + (col - 1) * 0.5
-    self.transform.position = CSE.Vector2(x, y)
+    local x = -4.5 + (row - 1)
+    local y = -4.5 + (col - 1)
+    self.transform.position = CSE.Vector3(x, y, 0)
 end
 
 function Element:PlayTown()
-    local routine = Coroutine.Create(function ()
-        for _, v in pairs(self.sprites) do
-            self.renderer.sprite = v
-            coroutine.yield(CSE.WaitForSeconds(1))
-        end
-        self.renderer.sprite = 
-    end)
+    local routine = Coroutine.Create(bind(self._TownCoroutine, self))
     self.host:StartCoroutine(routine)
 end
 
-function Element:OnMouseEnter()
-    
+function Element:BeOnSeleted(isSelected)
+    if isSelected then
+        self.renderer.sprite = self.sprites[2]
+    else
+        self.renderer.sprite = self.sprites[1]
+    end
+end
+
+function Element:_TownCoroutine()
+    for _, v in pairs(self.sprites) do
+        self.renderer.sprite = v
+        coroutine.yield(CSE.WaitForSeconds(1))
+    end
+    self.renderer.sprite = nil
 end
 
 function Element:OnMouseDown()
-    logInfo(self.gameObject.name .. " Down")
-    logInfo(self.transform.position)
+    logInfo(self.gameObject.name .. " " .. tostring(self.row ) .. " " .. tostring(self.col))
+    self:BeOnSeleted(true)
+    Container.Instance:AddToSelect(self.row, self.col)
 end
 
-function Element:OnMouseDrag()
-    logInfo(self.gameObject.name .. " Drag")
-    logInfo(self.transform.position)
+---@param state boolean
+function Element:EnableMouseClick(state)
+    self.host:ActivateMouseEvent(state)
 end
 
 return Element

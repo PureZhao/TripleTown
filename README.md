@@ -1,5 +1,31 @@
 # TripleTown
 
+---
+
+#### 2022.12.13 Update
+
+- Modified `XLuaRequireType.cs` name to `XLuaLuaCallCSharpType.cs`
+
+- Modified `XLuaCSharpCallLua.cs` name to `XLuaCSharpCallLuaType.cs`
+
+- Modified `AssetsManager.cs` to stop all coroutine when destroy but some assets load coroutine is still running
+
+- Added DOTween APIs to XLua Wrap
+
+- Added Coroutines to swap elements and play town animations in `Container.lua` and `Element.lua`
+
+- Added some comments
+
+- Added some lua table extension in `polyfill.lua`
+
+- Added basic logic of generate elements , swap and town in `Container.lua`
+
+- Put `Container.lua` to use Singleton mode
+
+- Removed `SimpleCoroutineRunner.cs` and its Wrap
+
+---
+
 #### 2022.12.12 Update
 
 - Modified sprites' mode of elements from `Multiple` to `Single`
@@ -8,30 +34,34 @@
 
 - Modified `AssetsManager.cs` to cancel pack/unpack when call function `LoadAssetBundle`
 
-- Add LuaScript `Coroutine.lua` to create `IEnumerator` in lua
+- Added LuaScript `Coroutine.lua` to create `IEnumerator` in lua
 
-- Add lua generate configuration file `XLuaBlackList.cs` and `XLuaRequireType.cs`
+- Added lua generate configuration file `XLuaBlackList.cs` and `XLuaRequireType.cs`
 
-- Update asset bundles
+- Updated asset bundles
 
-- Remove Xlua Docs
+- Removed XLua Docs
 
 ---
 
 #### 2022.12.11 Update
 
-- Update `AssetsManager.cs` to be fit to call function `LoadAsset` in XLua
+- Modified `AssetsManager.cs` to be fit to call function `LoadAsset` in lua
 
-- Modified `Boot.cs` for `AssetsManager.Instance != null`
+- Modified `Boot.cs` to wait for `AssetsManager.Instance != null`
 
-- Add Ignored fields and functions into `Generator.cs` field `BlackList`
+- Added Ignored fields and functions into `Generator.cs` field `BlackList`
 
-- Add new function `NewFromCS` for `Class.lua` to use to create LuaClass with `UnityEngine.Object`
+- Added new function `NewFromCS` for `Class.lua` to use to create LuaClass with `UnityEngine.Object`
 
  ---
 
 #### Before 2022.12.10 Update
 
-- Add base assets, scripts, project settings
+- Added base assets, scripts, project settings
 
-- Add asset bundles
+- Added asset bundles
+
+#### Implements
+
+[Tencent/xLua](https://github.com/Tencent/xLua)

@@ -203,3 +203,54 @@ function table.len(t)
     end
     return len
 end
+
+---@param t table
+---@param value any
+---@return boolean
+function table.exist(t, value)
+    if t then
+        for _, v in pairs(t) do
+            if v == value then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+---@param t table
+---@param value any
+---@return any key if not exist, return nil
+function table.index(t, value)
+    if t then
+        for k, v in pairs(t) do
+            if v == value then
+                return k
+            end
+        end
+    end
+    return nil
+end
+
+---@param t1 table
+---@param t2 table
+---@return table
+function table.merge(t1, t2)
+    if not t1 then
+        return t2
+    end
+    if not t2 then
+        return t1
+    end
+    if not t1 and not t2 then
+        return {}
+    end
+    local merge = {}
+    for _, v in pairs(t1) do
+        table.insert(merge, v)
+    end
+    for _, v in pairs(t2) do
+        table.insert(merge, v)
+    end
+    return merge
+end

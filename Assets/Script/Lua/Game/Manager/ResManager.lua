@@ -20,7 +20,7 @@ end
 function ResManager.LoadGameObject(assetPath, position, rotation, onSuccess)
     position = position or CSE.Vector3.zero
     rotation = rotation or CSE.Quaternion.identity
-    AssetsManager:LoadGameObject(assetPath, 
+    AssetsManager:LoadGameObject(assetPath,
     ---@param go UnityEngine.GameObject
     function (go)
         go.transform.position = position

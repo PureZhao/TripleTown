@@ -1,3 +1,4 @@
+---@class Coroutine
 local Coroutine = {}
 
 local move_end = {}
@@ -20,6 +21,7 @@ local co_mt = {
     }
 }
 
+---@return CS.System.IEnumerator
 function Coroutine.Create(ienumerator, ...)
     local params = {...}
     local routine = setmetatable({

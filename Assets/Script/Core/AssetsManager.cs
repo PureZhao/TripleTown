@@ -53,6 +53,7 @@ namespace GameCore
 
         private void OnDestroy()
         {
+            StopAllCoroutines();
             AssetBundle.UnloadAllAssetBundles(true);
             path2bundle.Clear();
             bundles.Clear();
