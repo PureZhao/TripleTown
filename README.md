@@ -1,5 +1,27 @@
 # TripleTown
 
+### Project Environment
+
+**Unity Version**: 2020.3.33f1
+
+---
+
+#### 2022.12.14 Update
+
+Modified `Element.lua:_TownCoroutine()` to send elements' game objects to ObjectTool after town animation ending
+
+Modified `Element.lua:SetPos()` to make row and column settings of elements conform to human habits
+
+Added `TownCountMinus() ` and Modified `_SwapCoroutine()` to wait town play over in `Container.lua`
+
+Added function `_ResetColumnLack()` to make a table record count of town in columns
+
+Updated `Container.lua` to check all elements for town
+
+Added `Container.lua:_DoTown()` to play town
+
+Added `Vector2.lua`
+
 ---
 
 #### 2022.12.13 Update
@@ -53,8 +75,8 @@
 - Added Ignored fields and functions into `Generator.cs` field `BlackList`
 
 - Added new function `NewFromCS` for `Class.lua` to use to create LuaClass with `UnityEngine.Object`
-
- ---
+  
+  ---
 
 #### Before 2022.12.10 Update
 

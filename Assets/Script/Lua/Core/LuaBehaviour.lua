@@ -3,7 +3,7 @@ local CSType = require("Core.CSType")
 local UnityUtils = require('Game.Util.UnityUtils')
 
 ---@class LuaBehaviour
----@field host UnityEngine.Component
+---@field host CS.GameCore.LuaBehaviour
 ---@field gameObject UnityEngine.GameObject
 ---@field transform UnityEngine.Transform
 local LuaBehaviour = Class("LuaBehaviour")

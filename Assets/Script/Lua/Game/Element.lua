@@ -38,12 +38,13 @@ function Element:SetPos(row, col)
     -- y -4.5 ~ 2.5
     self.row = row
     self.col = col
-    local x = -4.5 + (row - 1)
-    local y = -4.5 + (col - 1)
+    local x = -4.5 + (col - 1)
+    local y = -4.5 + (row - 1)
     self.transform.position = CSE.Vector3(x, y, 0)
 end
 
 function Element:PlayTown()
+    logInfo("Play Town" .. self.row .. ' ' .. self.col)
     local routine = Coroutine.Create(bind(self._TownCoroutine, self))
     self.host:StartCoroutine(routine)
 end
@@ -59,9 +60,11 @@ end
 function Element:_TownCoroutine()
     for _, v in pairs(self.sprites) do
         self.renderer.sprite = v
-        coroutine.yield(CSE.WaitForSeconds(1))
+        coroutine.yield(CSE.WaitForSeconds(0.1))
     end
     self.renderer.sprite = nil
+    Container.Instance:TownCountMinus()
+    ResManager.FreeObject(self.gameObject)
 end
 
 function Element:OnMouseDown()
