@@ -203,6 +203,7 @@ namespace GameCore
 
         void OnDestroy()
         {
+            StopAllCoroutines();
             luaOnDestroy?.Call(luaClass);
 
             luaOnDestroy = null;

@@ -6,6 +6,24 @@
 
 ---
 
+#### 2022.12.15 Update
+
+Fixed bug when element did not move down after town over
+
+Fixed bug when new elements for one column did not set to table `Conatainer.lua:elements`
+
+Modified `Container.lua` to continuously check town, restore elements
+
+Added function to check wether game is dead in `Container.lua` 
+
+Set elements' parent to container
+
+Set `LuaBehaviour.cs` to stop all coroutine when game object destroyed
+
+Removed `TestClass.lua`
+
+---
+
 #### 2022.12.14 Update
 
 Modified `Element.lua:_TownCoroutine()` to send elements' game objects to ObjectTool after town animation ending

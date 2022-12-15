@@ -44,8 +44,19 @@ function Element:SetPos(row, col)
 end
 
 function Element:PlayTown()
-    logInfo("Play Town" .. self.row .. ' ' .. self.col)
     local routine = Coroutine.Create(bind(self._TownCoroutine, self))
+    self.host:StartCoroutine(routine)
+end
+
+function Element:MoveTo(row, col)
+    -- 如果位置没变就不动
+    if row == self.row and col == self.col then return end
+    self.row = row
+    self.col = col
+    local x = -4.5 + (col - 1)
+    local y = -4.5 + (row - 1)
+    local pos = CSE.Vector3(x, y, 0)
+    local routine = Coroutine.Create(bind(self._MoveCoroutine, self), pos)
     self.host:StartCoroutine(routine)
 end
 
@@ -63,12 +74,18 @@ function Element:_TownCoroutine()
         coroutine.yield(CSE.WaitForSeconds(0.1))
     end
     self.renderer.sprite = nil
-    Container.Instance:TownCountMinus()
+    Container.Instance:TweenCountMinus()
     ResManager.FreeObject(self.gameObject)
 end
 
+function Element:_MoveCoroutine(pos)
+    self.transform:DOMove(pos, 1)
+    coroutine.yield(CSE.WaitForSeconds(1.1))
+    Container.Instance:TweenCountMinus()
+end
+
 function Element:OnMouseDown()
-    logInfo(self.gameObject.name .. " " .. tostring(self.row ) .. " " .. tostring(self.col))
+    -- logInfo("Element Pos :" .. self.row .. " " .. self.col)
     self:BeOnSeleted(true)
     Container.Instance:AddToSelect(self.row, self.col)
 end

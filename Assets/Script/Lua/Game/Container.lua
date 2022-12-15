@@ -4,6 +4,7 @@ local LuaBehaviour = require('Core.LuaBehaviour')
 local ResManager = require('Game.Manager.ResManager')
 local ResConst = require('Game.Const.ResConst')
 local Coroutine = require('Core.Coroutine')
+local yield = coroutine.yield
 
 ---@class Container : LuaBehaviour
 local Container = Class('Container', LuaBehaviour)
@@ -25,12 +26,12 @@ function Container:__init()
     ---@type table<number, table<number, Element>>
     self.elements = {}
     self.lastSelected = nil
-    self.townCount = 0
+    self.tweenCount = 0
     self:_ResetColumnLack()
 end
 
-function Container:TownCountMinus()
-    self.townCount = self.townCount - 1
+function Container:TweenCountMinus()
+    self.tweenCount = self.tweenCount - 1
 end
 
 function Container:_ResetColumnLack()
@@ -51,6 +52,7 @@ function Container:Generate()
             for col = 1, self.col do
                 local assetPath, id = table.randomIn(ResConst.Elements)
                 ResManager.LoadGameObject(assetPath, nil, nil, function (go)
+                    go:SetParent(self.transform)
                     ---@type Element
                     local elementLua = LuaBehaviour.GetLua(go)
                     elementLua:SetPos(row, col)
@@ -60,43 +62,36 @@ function Container:Generate()
             end
         end
         -- 等待加载完成
-        coroutine.yield(CSE.WaitUntil(function ()
-            return counter == self.row * self.col
-        end))
+        yield(CSE.WaitUntil(function () return counter == self.row * self.col end))
         logInfo("Generate Over")
         -- 再等两秒 等待所有Element初始化完成
-        coroutine.yield(CSE.WaitForSeconds(2))
-        -- self:_CheckAll()
-
+        yield(CSE.WaitForSeconds(2))
     end)
     self.host:StartCoroutine(routine)
 end
 
 function Container:AddToSelect(row, col)
     if not self.lastSelected then
-        logInfo("Insert")
         -- 没有就直接插入
-        self.lastSelected = {r = row, c = col}
+        self.lastSelected = {row, col}
     else
-        local r = self.lastSelected.r
-        local c = self.lastSelected.c
+        local r = self.lastSelected[1]
+        local c = self.lastSelected[2]
         if r == row and c == col then
-            logInfo("Resume")
             -- 相同就置空，并回到初始状态
             self.elements[r][c]:BeOnSeleted(false)
             self.lastSelected = nil
-        elseif (r == row and c ~= col and math.abs(c - col) == 1) or (r ~= row and c == col and math.abs(r - row) == 1) then
-            logInfo("Swap")
+        -- elseif (r == row and c ~= col and math.abs(c - col) == 1) or (r ~= row and c == col and math.abs(r - row) == 1) then
+        elseif (r == row and math.abs(c - col) == 1) or (c == col and math.abs(r - row) == 1) then
             -- 相邻就交换，并检查是否可以消除
             local routine = Coroutine.Create(bind(self._SwapCoroutine, self), r, c, row, col)
             self.host:StartCoroutine(routine)
             self.lastSelected = nil
         else
-            logInfo("Click Far")
             -- 恢复上一个的状态
             self.elements[r][c]:BeOnSeleted(false)
             -- 将该加入
-            self.lastSelected = {r = row, c = col}
+            self.lastSelected = {row, col}
             self.elements[row][col]:BeOnSeleted(true)
         end
     end
@@ -113,37 +108,79 @@ end
 function Container:_SwapCoroutine(r1, c1, r2, c2)
     local e1 = self.elements[r1][c1]
     local e2 = self.elements[r2][c2]
-    local pos1 = e1.transform.position
-    local pos2 = e2.transform.position
-    -- 播放交换动画
-    e2.transform:DOMove(pos1, 1)
-    e1.transform:DOMove(pos2, 1)
+    self.elements[r1][c1] = e2
+    self.elements[r2][c2] = e1
+    e1:BeOnSeleted(false)
+    e2:BeOnSeleted(false)
+    self.tweenCount = 2
+    e1:MoveTo(r2, c2)
+    e2:MoveTo(r1, c1)
     -- 等待播放完毕
-    coroutine.yield(CSE.WaitForSeconds(1.1))
-    -- 交换
-    self.elements[r1][c1], self.elements[r2][c2] = e2, e1
+    yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
     -- 检查并执行消除
-    self:_ResetColumnLack()
-    self.townCount = 0
-    local townList, count = self:_CheckUnit(r1, c1, self.elements[r1][c1].type)
-    self.townCount = self.townCount + count
-    self:_DoTown(townList)
-    townList, count = self:_CheckUnit(r2, c2, self.elements[r2][c2].type)
-    self.townCount = self.townCount + count
-    self:_DoTown(townList)
-    -- 等待动画播放完毕
-    coroutine.yield(CSE.WaitUntil(function ()
-        return self.townCount == 0
-    end))
-    logInfo("ppppppppppppppppppppppp")
+    local list1, count1 = self:_CheckUnit(r1, c1)
+    local list2, count2 = self:_CheckUnit(r2, c2)
+    self.tweenCount = count1 + count2
+    if self.tweenCount == 0 then
+        -- 没有消除就交换回去
+        self.elements[r1][c1] = e1
+        self.elements[r2][c2] = e2
+        self.tweenCount = 2
+        e1:MoveTo(r1, c1)
+        e2:MoveTo(r2, c2)
+        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+    else
+        local townList = table.merge(list1, list2)
+        self:_ResetColumnLack()
+        self:_DoTown(townList)
+        -- 等待动画播放完毕
+        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+        -- 检查每列缺少的元素个数并补齐
+        self:_ResumeElementMatrix()
+        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+        self.tweenCount = 0
+        for _, count in pairs(self.columnLacks) do
+            self.tweenCount = self.tweenCount + count
+        end
+        math.randomseed(os.time())
+        for col, count in pairs(self.columnLacks) do
+            self:_RestoreColumn(col, count)
+        end
+        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+        -- 开始循环检查 自动消除
+        while true do
+            townList = self:_CheckAll()
+            self.tweenCount = table.len(townList)
+            if self.tweenCount == 0 then
+                break
+            end
+            self:_ResetColumnLack()
+            self:_DoTown(townList)
+            yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+            self:_ResumeElementMatrix()
+            yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+            self.tweenCount = 0
+            for _, count in pairs(self.columnLacks) do
+                self.tweenCount = self.tweenCount + count
+            end
+            math.randomseed(os.time())
+            for col, count in pairs(self.columnLacks) do
+                self:_RestoreColumn(col, count)
+            end
+            yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+        end
+        logInfo("Check Over")
+        local isDead = self:_CheckIsDead()
+        logInfo("dead : " .. tostring(isDead))
+    end
 end
 
 ---@param row number
 ---@param col number
----@param type CS.GameCore.ElementType
 ---@return table, number
-function Container:_CheckUnit(row, col, type)
+function Container:_CheckUnit(row, col)
     local townList = {}
+    local type = self.elements[row][col].type
     local rowCount = 0
     local rowCheckList = {}
     local colCount = 0
@@ -216,7 +253,6 @@ function Container:_CheckAll()
         end
         return false
     end
-    logInfo("Check All")
     local rowCheckList = {}
     local colCheckList = {}
     for r = 1, self.row do
@@ -226,14 +262,14 @@ function Container:_CheckAll()
     for c = 1, self.col do
         colCheckList = table.merge(colCheckList, self:_CheckCol(c))
     end
-
+    -- 去重合并
     for _, v in pairs(rowCheckList) do
         if not find(colCheckList, v) then
             table.insert(colCheckList, v)
         end
     end
 
-    self:_DoTown(colCheckList)
+    return colCheckList
 
 end
 
@@ -300,7 +336,105 @@ function Container:_DoTown(elements)
         local c = v[2]
         local element = self.elements[r][c]
         self.elements[r][c] = nil
+        self.columnLacks[c] = self.columnLacks[c] + 1
         element:PlayTown()
     end
 end
+
+function Container:_ResumeElementMatrix()
+    self.tweenCount = 0
+    local needMove = {}
+    for col, count in pairs(self.columnLacks) do
+        if count ~= 0 then
+            local exists = {}
+            -- 收集列所有还存在的元素，并置空该列
+            for r = 1, self.row do
+                local element = self.elements[r][col]
+                self.elements[r][col] = nil
+                if element then
+                    table.insert(exists, element)
+                end
+            end
+            -- 计算需要播放移动动画的元素个数
+            for k, v in pairs(exists) do
+                self.elements[k][col] = v
+                if v.row ~= k then
+                    self.tweenCount = self.tweenCount + 1
+                    table.insert(needMove, {k, col, v})
+                end
+            end
+        end
+    end
+    for _, t in pairs(needMove) do
+        local r = t[1]
+        local c = t[2]
+        local e = t[3]
+        e:MoveTo(r, c)
+    end
+end
+
+function Container:_RestoreColumn(col, count)
+    for i = 1, count do
+        local assetPath = table.randomIn(ResConst.Elements)
+        local x = -4.5 + (col - 1)
+        local pos = CSE.Vector3(x, 6, 0)
+        local row = self.row - count + i
+        ResManager.LoadGameObject(assetPath, pos, CSE.Quaternion.identity, function (go)
+            ---@type Element
+            local lua = LuaBehaviour.GetLua(go)
+            if lua then
+                lua.row = -1
+                lua.col = -1
+                lua:BeOnSeleted(false)
+                self.elements[row][col] = lua
+                lua:MoveTo(row, col)
+            end
+        end)
+    end
+end
+
+---@return boolean
+function Container:_CheckIsDead()
+    for i = 1, self.row do
+        for j = 1, self.col do
+            -- 上
+            if self:_CheckPreTown({i, j}, {i - 1, j}, {{i - 2, j - 1}, {i - 3, j}, {i - 2, j + 1}}) then return false end
+            -- 下
+            if self:_CheckPreTown({i, j}, {i + 1, j}, {{i + 2, j - 1}, {i + 3, j}, {i + 2, j + 1}}) then return false end
+            -- 左
+            if self:_CheckPreTown({i, j}, {i, j - 1}, {{i + 1, j - 2}, {i, j - 3}, {i - 1, j - 2}}) then return false end
+            -- 右
+            if self:_CheckPreTown({i, j}, {i, j + 1}, {{i + 1, j + 2}, {i, j + 3}, {i - 1, j + 2}}) then return false end
+        end
+    end
+    return true
+end
+
+---@param cur table
+---@param next table
+---@param threeCheckPos table<any, table>
+---@return boolean
+function Container:_CheckPreTown(cur, next, threeCheckPos)
+    local type = self.elements[cur[1]][cur[2]].type
+    -- 检查相邻
+    local nextRow = self.elements[next[1]]
+    if not nextRow then return false end
+    local nextElement = nextRow[next[2]]
+    -- 相邻不存在 或者 相邻的元素类型不同 则不能消除
+    if not nextElement or nextElement.type ~= type then return false end
+    for _, v in pairs(threeCheckPos) do
+        local r = v[1]
+        local c = v[2]
+        local element = self.elements[r][c]
+        if element and element.type == type then
+            return true
+        end
+    end
+    return false
+end
+
+function Container:_Shuffle()
+    
+end
+
 return Container
