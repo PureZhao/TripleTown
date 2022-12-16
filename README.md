@@ -6,6 +6,16 @@
 
 ---
 
+#### 2022.12.16 Update
+
+- Added lua extension `table.shuffle()`
+
+- Added functions to shuffle elements when game is dead
+
+- Added nodes for Canvas
+
+---
+
 #### 2022.12.15 Update
 
 - Fixed bug when element did not move down after town over
@@ -105,3 +115,7 @@
 #### Implements
 
 [Tencent/xLua](https://github.com/Tencent/xLua)
+
+[XINCGer/LitJson4Unity](https://github.com/XINCGer/LitJson4Unity)
+
+[DOTween](http://dotween.demigiant.com/)

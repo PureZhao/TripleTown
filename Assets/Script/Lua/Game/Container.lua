@@ -4,6 +4,7 @@ local LuaBehaviour = require('Core.LuaBehaviour')
 local ResManager = require('Game.Manager.ResManager')
 local ResConst = require('Game.Const.ResConst')
 local Coroutine = require('Core.Coroutine')
+
 local yield = coroutine.yield
 
 ---@class Container : LuaBehaviour
@@ -70,7 +71,7 @@ function Container:Generate()
     self.host:StartCoroutine(routine)
 end
 
-function Container:AddToSelect(row, col)
+function Container:DOJudge(row, col)
     if not self.lastSelected then
         -- 没有就直接插入
         self.lastSelected = {row, col}
@@ -81,7 +82,6 @@ function Container:AddToSelect(row, col)
             -- 相同就置空，并回到初始状态
             self.elements[r][c]:BeOnSeleted(false)
             self.lastSelected = nil
-        -- elseif (r == row and c ~= col and math.abs(c - col) == 1) or (r ~= row and c == col and math.abs(r - row) == 1) then
         elseif (r == row and math.abs(c - col) == 1) or (c == col and math.abs(r - row) == 1) then
             -- 相邻就交换，并检查是否可以消除
             local routine = Coroutine.Create(bind(self._SwapCoroutine, self), r, c, row, col)
@@ -95,10 +95,6 @@ function Container:AddToSelect(row, col)
             self.elements[row][col]:BeOnSeleted(true)
         end
     end
-end
-
-function Container:Shuffle()
-    
 end
 
 ---@param r1 number
@@ -170,8 +166,10 @@ function Container:_SwapCoroutine(r1, c1, r2, c2)
             yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
         end
         logInfo("Check Over")
-        local isDead = self:_CheckIsDead()
-        logInfo("dead : " .. tostring(isDead))
+        if self:_CheckIsDead() then
+            local routine = Coroutine.Create(bind(self._ShuffleCoroutine, self))
+            self.host:StartCoroutine(routine)
+        end
     end
 end
 
@@ -398,9 +396,9 @@ function Container:_CheckIsDead()
     for i = 1, self.row do
         for j = 1, self.col do
             -- 上
-            if self:_CheckPreTown({i, j}, {i - 1, j}, {{i - 2, j - 1}, {i - 3, j}, {i - 2, j + 1}}) then return false end
-            -- 下
             if self:_CheckPreTown({i, j}, {i + 1, j}, {{i + 2, j - 1}, {i + 3, j}, {i + 2, j + 1}}) then return false end
+            -- 下
+            if self:_CheckPreTown({i, j}, {i - 1, j}, {{i - 2, j - 1}, {i - 3, j}, {i - 2, j + 1}}) then return false end
             -- 左
             if self:_CheckPreTown({i, j}, {i, j - 1}, {{i + 1, j - 2}, {i, j - 3}, {i - 1, j - 2}}) then return false end
             -- 右
@@ -415,6 +413,9 @@ end
 ---@param threeCheckPos table<any, table>
 ---@return boolean
 function Container:_CheckPreTown(cur, next, threeCheckPos)
+    local function IsValid(pos)
+        return pos[1] >= 1 and pos[1] <= self.row and pos[2] >= 1 and pos[2] <= self.col
+    end
     local type = self.elements[cur[1]][cur[2]].type
     -- 检查相邻
     local nextRow = self.elements[next[1]]
@@ -423,18 +424,130 @@ function Container:_CheckPreTown(cur, next, threeCheckPos)
     -- 相邻不存在 或者 相邻的元素类型不同 则不能消除
     if not nextElement or nextElement.type ~= type then return false end
     for _, v in pairs(threeCheckPos) do
-        local r = v[1]
-        local c = v[2]
-        local element = self.elements[r][c]
-        if element and element.type == type then
-            return true
+        if IsValid(v) then
+            local r = v[1]
+            local c = v[2]
+            local element = self.elements[r][c]
+            if element and element.type == type then
+                return true
+            end
         end
     end
     return false
 end
 
-function Container:_Shuffle()
-    
+function Container:_ShuffleCoroutine()
+    math.randomseed(os.time())
+    -- 保证至少有一处可以消除
+    local r = math.random(self.row)
+    local c = math.random(self.col)
+    local targetType = self.elements[r][c].type
+    local ensure = {self.elements[r][c]}
+    self.elements[r][c] = nil
+    local left = {}
+    local count = 2
+    -- 找其他两个相同类型的元素
+    for i = 1, self.row do
+        for j = 1, self.col do
+            local element = self.elements[i][j]
+            if element then
+                if count > 0 and element.type == targetType then
+                    table.insert(ensure, element)
+                    count = count - 1
+                else
+                    table.insert(left, element)
+                end
+            end
+        end
+    end
+    local ensureLen = table.len(ensure)
+    local leftLen = table.len(left)
+    -- 计算位置
+    local ensurePos, othersPos = self:_CalcPos()
+    -- 生成一个新矩阵
+    local matrix = {}
+    for row = 1, self.row do
+        matrix[row] = {}
+    end
+    self.tweenCount = self.row * self.col
+    for i = 1, ensureLen do
+        local pos = ensurePos[i]
+        local element = ensure[i]
+        matrix[pos[1]][pos[2]] = element
+        element:MoveTo(pos[1], pos[2])
+    end
+    for i = 1, leftLen do
+        local pos = othersPos[i]
+        local element = left[i]
+        matrix[pos[1]][pos[2]] = element
+        element:MoveTo(pos[1], pos[2])
+    end
+    self.elements = matrix
+    yield(CSE.WaitUntil(function() return self.tweenCount == 0 end))
+end
+
+function Container:_CalcPos()
+    local function exist(t, item)
+        for _, v in pairs(t) do
+            if v[1] == item[1] and v[2] == item[2] then
+                return true
+            end
+        end
+        return false
+    end
+    local ensurePos = self:_CalcThreePos()
+    local positions = {}
+    for i = 1, self.row do
+        for j = 1, self.col do
+            if not exist(ensurePos, {i, j}) then
+                table.insert(positions, {i, j})
+            end
+        end
+    end
+    positions = table.shuffle(positions)
+    return ensurePos, positions
+end
+
+function Container:_CalcThreePos()
+    local function IsValid(pos)
+        return pos[1] >= 1 and pos[1] <= self.row and pos[2] >= 1 and pos[2] <= self.col
+    end
+    math.randomseed(os.time())
+    -- 保证一定有位置可以消除
+    local r = math.random(self.row)
+    local c = math.random(self.col)
+    local options = {
+        -- 上
+        {{r + 1, c}, {r + 2, c - 1}, {r + 3, c}, {r + 2, c + 1}},
+        -- 下
+        {{r - 1, c}, {r - 2, c - 1}, {r - 3, c}, {r - 2, c + 1}},
+        -- 左
+        {{r, c - 1}, {r - 1, c - 2}, {r, c - 3}, {r + 1, c - 2}},
+        -- 右
+        {{r, c + 1}, {r - 1, c + 2}, {r, c + 3}, {r + 1, c + 2}}
+    }
+    local candidates = {}
+    for _, option in pairs(options) do
+        local next = option[1]
+        local count = 0
+        local points = {}
+        if IsValid(next) then
+            for i = 2, 4 do
+                if IsValid(option[i]) then
+                    count = count + 1
+                    table.insert(points, option[i])
+                end
+            end
+        end
+        if count > 0 then
+            local elect = table.randomIn(points)
+            points= {elect}
+            table.insert(points, {r, c})
+            table.insert(points, option[1])
+            table.insert(candidates, points)
+        end
+    end
+    return table.randomIn(candidates)
 end
 
 return Container

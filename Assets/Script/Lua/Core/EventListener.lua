@@ -15,10 +15,6 @@ function EventListener:__init()
     }
 end
 
-function EventListener:__delete()
-    
-end
-
 function EventListener:_CreateHandler()
     
 end

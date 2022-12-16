@@ -158,6 +158,7 @@ end
 ---@param t table
 ---@return any
 function table.randomRemove(t)
+    math.randomseed(os.time())
     if not t or #t < 1 then
         return nil
     end
@@ -253,4 +254,28 @@ function table.merge(t1, t2)
         table.insert(merge, v)
     end
     return merge
+end
+
+---@param t table
+---@return table
+function table.shuffle(t)
+    math.randomseed(os.time())
+    local arr = {}
+    local cache = {}
+    local count = 0
+    local res ={}
+    for k, v in pairs(t) do
+        count = count + 1
+        arr[count] = count
+        cache[count] = {key = k, value = v}
+    end
+    -- 洗牌
+    for i = 1, count do
+        local j = math.random(i, count)
+        arr[i], arr[j] = arr[j], arr[i]
+    end
+    for _, v in pairs(arr) do
+        table.insert(res, cache[v].value)
+    end
+    return res
 end
