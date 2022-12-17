@@ -6,6 +6,12 @@
 
 ---
 
+#### 2022.12.17 Update
+
+- Added documents
+
+---
+
 #### 2022.12.16 Update
 
 - Added lua extension `table.shuffle()`

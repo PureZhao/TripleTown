@@ -15,3 +15,5 @@ Packages/
 UserSettings/
 BundleVersionControl.txt
 .vs/TripleTown/v17/.suo
+*.vsdx
+*.~vsdx
