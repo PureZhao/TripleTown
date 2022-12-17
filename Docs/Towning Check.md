@@ -10,7 +10,7 @@
 
 思路：以交换位置为中心，分别在列方向和行方向进行扩散
 
-![1.jpg](Towning%20Check%20Figs\1.jpg)
+![1.jpg](https://github.com/PureZhao/TripleTown/raw/main/Docs/Towning%20Check%20Figs/1.jpg)
 
 ### 步骤（以行方向扫描为例）
 

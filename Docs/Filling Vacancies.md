@@ -14,15 +14,15 @@
 
 1. 统计每一列缺少的元素个数
    
-   ![1.jpg](Filling%20Vacancies%20Figs\1.jpg)
+   ![1.jpg](https://github.com/PureZhao/TripleTown/raw/main/Docs/Filling%20Vacancies%20Figs/1.jpg)
 
 2. 将每一列还存在元素填充到列头，留出列尾位置
    
-   ![2.jpg](E:\Unity%20Project\TripleTown\Docs\Filling%20Vacancies%20Figs\2.jpg)
+   ![2.jpg](https://github.com/PureZhao/TripleTown/raw/main/Docs/Filling%20Vacancies%20Figs/2.jpg)
 
 3. 根据每列缺少的元素个数，随机生成不同类型的元素，填补到列尾空缺位置
    
-   ![3.jpg](Filling%20Vacancies%20Figs\3.jpg)
+   ![3.jpg](https://github.com/PureZhao/TripleTown/raw/main/Docs/Filling%20Vacancies%20Figs/3.jpg)
 
 ### 不足
 

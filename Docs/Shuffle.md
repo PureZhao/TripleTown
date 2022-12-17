@@ -14,13 +14,13 @@
 
 1. 随机选出三个同一类型的元素，保证在位置变换后，一定有可以消除的地方
    
-   ![1.jpg](Shuffle%20Figs\1.jpg)
+   ![1.jpg](https://github.com/PureZhao/TripleTown/raw/main/Docs/Shuffle%20Figs/1.jpg)
 
 2. 将剩下的其他元素保存到另一个列表中
 
 3. 随机选出三个点，这三个点对应了步骤1中三个元素的位置，保证一定有位置可以消除，防止打乱后出现死局，如图
    
-   ![2.jpg](Shuffle%20Figs\2.jpg)
+   ![2.jpg](https://github.com/PureZhao/TripleTown/raw/main/Docs/Shuffle%20Figs/2.jpg)
 - 基于中心点（红色）有四个方向可供选择
 
 - 蓝色位置就为与中心点相邻，要判断相邻位置是否超出了矩阵范围
