@@ -93,6 +93,7 @@ namespace GameCore
             {typeof(List<Vector3>), typeof(ObjWrap<List<Vector3>>)},
             {typeof(List<Color>), typeof(ObjWrap<List<Color>>)},
             {typeof(ElementType), typeof(ObjWrap<ElementType>)},
+            {typeof(ToolType), typeof(ObjWrap<ToolType>)},
 
         };
         [Serializable]
@@ -173,13 +174,14 @@ namespace GameCore
             injections.Set("gameObject", gameObject);
             injections.Set("transform", transform);
             
-            string cmd = string.Format("local t = require('{0}'); return t;", requirePath);
+            string cmd = string.Format("require('Core.Global'); local t = require('{0}'); return t;", requirePath);
             LuaTable table = (LuaTable)ProjectLuaEnv.Instance.DoString(cmd)[0];
             LuaFunction newFunc = table.Get<LuaFunction>("NewFromCS");
             // ≥ı ºªØ¿‡
             luaClass = (LuaTable)newFunc.Call(injections)[0];
             LuaFunction luaAwake = luaClass.Get<LuaFunction>("__init");
 
+            luaClass.Get("Delete", out luaOnDestroy);
             luaClass.Get("Update", out luaUpdate);
             if(TryGetComponent(out mouseBehaviour))
             {

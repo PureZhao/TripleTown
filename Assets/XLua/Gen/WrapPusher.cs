@@ -40,6 +40,7 @@ namespace XLua
 				translator.RegisterPushAndGetAndUpdate<Tutorial.TestEnum>(translator.PushTutorialTestEnum, translator.Get, translator.UpdateTutorialTestEnum);
 				translator.RegisterPushAndGetAndUpdate<XLuaTest.MyEnum>(translator.PushXLuaTestMyEnum, translator.Get, translator.UpdateXLuaTestMyEnum);
 				translator.RegisterPushAndGetAndUpdate<GameCore.ElementType>(translator.PushGameCoreElementType, translator.Get, translator.UpdateGameCoreElementType);
+				translator.RegisterPushAndGetAndUpdate<GameCore.ToolType>(translator.PushGameCoreToolType, translator.Get, translator.UpdateGameCoreToolType);
 				translator.RegisterPushAndGetAndUpdate<Tutorial.DerivedClass.TestEnumInner>(translator.PushTutorialDerivedClassTestEnumInner, translator.Get, translator.UpdateTutorialDerivedClassTestEnumInner);
 			
 			}
@@ -1024,6 +1025,90 @@ namespace XLua
             }
         }
         
+        int GameCoreToolType_TypeID = -1;
+		int GameCoreToolType_EnumRef = -1;
+        
+        public void PushGameCoreToolType(RealStatePtr L, GameCore.ToolType val)
+        {
+            if (GameCoreToolType_TypeID == -1)
+            {
+			    bool is_first;
+                GameCoreToolType_TypeID = getTypeId(L, typeof(GameCore.ToolType), out is_first);
+				
+				if (GameCoreToolType_EnumRef == -1)
+				{
+				    Utils.LoadCSTable(L, typeof(GameCore.ToolType));
+				    GameCoreToolType_EnumRef = LuaAPI.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+				}
+				
+            }
+			
+			if (LuaAPI.xlua_tryget_cachedud(L, (int)val, GameCoreToolType_EnumRef) == 1)
+            {
+			    return;
+			}
+			
+            IntPtr buff = LuaAPI.xlua_pushstruct(L, 4, GameCoreToolType_TypeID);
+            if (!CopyByValue.Pack(buff, 0, (int)val))
+            {
+                throw new Exception("pack fail fail for GameCore.ToolType ,value="+val);
+            }
+			
+			LuaAPI.lua_getref(L, GameCoreToolType_EnumRef);
+			LuaAPI.lua_pushvalue(L, -2);
+			LuaAPI.xlua_rawseti(L, -2, (int)val);
+			LuaAPI.lua_pop(L, 1);
+			
+        }
+		
+        public void Get(RealStatePtr L, int index, out GameCore.ToolType val)
+        {
+		    LuaTypes type = LuaAPI.lua_type(L, index);
+            if (type == LuaTypes.LUA_TUSERDATA )
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != GameCoreToolType_TypeID)
+				{
+				    throw new Exception("invalid userdata for GameCore.ToolType");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+				int e;
+                if (!CopyByValue.UnPack(buff, 0, out e))
+                {
+                    throw new Exception("unpack fail for GameCore.ToolType");
+                }
+				val = (GameCore.ToolType)e;
+                
+            }
+            else
+            {
+                val = (GameCore.ToolType)objectCasters.GetCaster(typeof(GameCore.ToolType))(L, index, null);
+            }
+        }
+		
+        public void UpdateGameCoreToolType(RealStatePtr L, int index, GameCore.ToolType val)
+        {
+		    
+            if (LuaAPI.lua_type(L, index) == LuaTypes.LUA_TUSERDATA)
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != GameCoreToolType_TypeID)
+				{
+				    throw new Exception("invalid userdata for GameCore.ToolType");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+                if (!CopyByValue.Pack(buff, 0,  (int)val))
+                {
+                    throw new Exception("pack fail for GameCore.ToolType ,value="+val);
+                }
+            }
+			
+            else
+            {
+                throw new Exception("try to update a data with lua type:" + LuaAPI.lua_type(L, index));
+            }
+        }
+        
         int TutorialDerivedClassTestEnumInner_TypeID = -1;
 		int TutorialDerivedClassTestEnumInner_EnumRef = -1;
         
@@ -1203,6 +1288,12 @@ namespace XLua
 				translator.PushGameCoreElementType(L, array[index]);
 				return true;
 			}
+			else if (type == typeof(GameCore.ToolType[]))
+			{
+			    GameCore.ToolType[] array = obj as GameCore.ToolType[];
+				translator.PushGameCoreToolType(L, array[index]);
+				return true;
+			}
 			else if (type == typeof(Tutorial.DerivedClass.TestEnumInner[]))
 			{
 			    Tutorial.DerivedClass.TestEnumInner[] array = obj as Tutorial.DerivedClass.TestEnumInner[];
@@ -1296,6 +1387,12 @@ namespace XLua
 			else if (type == typeof(GameCore.ElementType[]))
 			{
 			    GameCore.ElementType[] array = obj as GameCore.ElementType[];
+				translator.Get(L, obj_idx, out array[array_idx]);
+				return true;
+			}
+			else if (type == typeof(GameCore.ToolType[]))
+			{
+			    GameCore.ToolType[] array = obj as GameCore.ToolType[];
 				translator.Get(L, obj_idx, out array[array_idx]);
 				return true;
 			}

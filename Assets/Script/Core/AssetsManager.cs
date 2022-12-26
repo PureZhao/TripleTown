@@ -98,7 +98,7 @@ namespace GameCore
         }
         public void LoadGameObject(string assetPath, Action<GameObject> onLoaded = null)
         {
-            GameObject g = GameObjectPool.Instane.PushOutPull(assetPath);
+            GameObject g = GameObjectPool.Instane.PullOutPool(assetPath);
             if(g != null)
             {
                 g.transform.parent = null;

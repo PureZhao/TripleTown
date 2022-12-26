@@ -54,7 +54,7 @@ local function BaseClass(classname, super)
 		return obj
 	end
 
-	---@param host CS.GameCore.LuaBehaviour
+	---@param host CS.XLua.LuaTable
 	class_type.NewFromCS = function(injections)
 		-- 生成一个类对象
 		local obj = {}

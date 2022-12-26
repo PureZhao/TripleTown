@@ -155,6 +155,15 @@ function table.randomIn(t)
     return t[index], index
 end
 
+function table.randomInPair(t)
+    local clone = {}
+    for k, v in pairs(t) do
+        table.insert(clone, {k, v})
+    end
+    local item = table.randomIn(clone)
+    return item[2], item[1]
+end
+
 ---@param t table
 ---@return any
 function table.randomRemove(t)
@@ -248,10 +257,15 @@ function table.merge(t1, t2)
     end
     local merge = {}
     for _, v in pairs(t1) do
-        table.insert(merge, v)
+        if v then
+            table.insert(merge, v)
+        end
+
     end
     for _, v in pairs(t2) do
-        table.insert(merge, v)
+        if v then
+            table.insert(merge, v)
+        end
     end
     return merge
 end

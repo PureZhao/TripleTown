@@ -24,6 +24,7 @@
 		<type fullname="XLuaTest.FooExtension" preserve="all"/>
 		<type fullname="GameCore.AssetsManager" preserve="all"/>
 		<type fullname="GameCore.ElementType" preserve="all"/>
+		<type fullname="GameCore.ToolType" preserve="all"/>
 		<type fullname="GameCore.LuaBehaviour" preserve="all"/>
 		<type fullname="GameCore.Scheduler" preserve="all"/>
 		<type fullname="Tutorial.DerivedClass+TestEnumInner" preserve="all"/>

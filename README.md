@@ -6,6 +6,28 @@
 
 ---
 
+#### 2020.12.26 Update
+
+- Tided `Container.lua`
+
+Added simple base data structure List.lua with some methods
+
+Added repeat function in Scheduler.cs to repeat call method with intervals
+
+Added GameConst.lua to declare some constant variables
+
+Added a simple Inventory System
+
+    Data: InventoryManager.lua, Inventory.lua
+
+    UI: UIBtnItem.lua, UIBtnInventory.lua
+
+Updated bundles
+
+Deleted scene menu.uinty
+
+---
+
 #### 2022.12.17 Update
 
 - Added documents

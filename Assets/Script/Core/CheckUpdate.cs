@@ -1,3 +1,4 @@
+using GameCore;
 using LitJson;
 using System;
 using System.Collections;
@@ -15,7 +16,13 @@ public class CheckUpdate : MonoBehaviour
         {
             Directory.CreateDirectory(GlobalConfig.AssetBundleDir);
         }
-        yield return StartCoroutine(DownloadBundleList());
+        //yield return StartCoroutine(DownloadBundleList());
+        yield return new WaitUntil(() =>
+        {
+            return AssetsManager.Instance != null
+            && GameObjectPool.Instane != null
+            && Scheduler.Instance != null;
+        });
         SceneManager.LoadScene("Game");
     }
 

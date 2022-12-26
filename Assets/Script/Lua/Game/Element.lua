@@ -6,6 +6,7 @@ local ResConst = require('Game.Const.ResConst')
 local DataConst = require('Game.Const.DataConst')
 local Coroutine = require('Core.Coroutine')
 local Container = require('Game.Container')
+local Timer = require('Game.Util.Timer')
 
 ---@class Element : LuaBehaviour
 local Element = Class('Element', LuaBehaviour)
@@ -15,8 +16,8 @@ function Element:__Define()
 end
 
 function Element:__init()
-    self.row = 1
-    self.col = 1
+    self.row = -1
+    self.col = -1
     self.renderer = self.transform:GetComponent(CSType.SpriteRenderer)
     self.sprites = {}
     ResManager.LoadAsset(ResConst.ElementSprites[self.type], CSType.Texture2D, function (texture)
@@ -34,29 +35,21 @@ function Element:__init()
 end
 
 function Element:SetPos(row, col)
+    -- 如果位置没变就不动
+    if row == self.row and col == self.col then return end
     -- x -4.5 ~ 2.5
     -- y -4.5 ~ 2.5
     self.row = row
     self.col = col
     local x = -4.5 + (col - 1)
     local y = -4.5 + (row - 1)
-    self.transform.position = CSE.Vector3(x, y, 0)
+    local pos = CSE.Vector3(x, y, 0)
+    local routine = Coroutine.Create(bind(self._MoveCoroutine, self), pos)
+    self.host:StartCoroutine(routine)
 end
 
 function Element:PlayTown()
     local routine = Coroutine.Create(bind(self._TownCoroutine, self))
-    self.host:StartCoroutine(routine)
-end
-
-function Element:MoveTo(row, col)
-    -- 如果位置没变就不动
-    if row == self.row and col == self.col then return end
-    self.row = row
-    self.col = col
-    local x = -4.5 + (col - 1)
-    local y = -4.5 + (row - 1)
-    local pos = CSE.Vector3(x, y, 0)
-    local routine = Coroutine.Create(bind(self._MoveCoroutine, self), pos)
     self.host:StartCoroutine(routine)
 end
 
@@ -85,9 +78,8 @@ function Element:_MoveCoroutine(pos)
 end
 
 function Element:OnMouseDown()
-    -- logInfo("Element Pos :" .. self.row .. " " .. self.col)
     self:BeOnSeleted(true)
-    Container.Instance:AddToSelect(self.row, self.col)
+    Container.Instance:DOJudge(self.row, self.col)
 end
 
 ---@param state boolean

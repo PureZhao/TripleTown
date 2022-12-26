@@ -13,8 +13,8 @@ namespace GameCore
         LateUpdate,
         Delay,
         DelayFrame,
+        Repeat,
     }
-    //[LuaCallCSharp]
     public class ListenerIndentity
     {
         public ListenerType type;
@@ -33,6 +33,7 @@ namespace GameCore
         List<Listener> curFrame = new List<Listener>();
         List<Listener> lastFrame = new List<Listener>();
         List<Listener> delaies = new List<Listener>();
+        List<Listener> repeats = new List<Listener>();
 
         List<Listener> executing = new List<Listener>();
 
@@ -162,6 +163,22 @@ namespace GameCore
             return indentity;
         }
 
+        public ListenerIndentity ListenRepeat(float interval, int times, Action action)
+        {
+            Listener listener = new Listener()
+            {
+                interval = interval,
+                callTime = interval + Time.realtimeSinceStartup,
+                times = times,
+                action = action,
+            };
+            repeats.Add(listener);
+            return new ListenerIndentity()
+            {
+                listener = listener,
+                type = ListenerType.Repeat
+            };
+        }
         public void DisposeListener(ListenerIndentity handler)
         {
             List<Listener> collect = null;
@@ -172,6 +189,7 @@ namespace GameCore
                 case ListenerType.LateUpdate: collect = lateUpdates; break;
                 case ListenerType.Update: collect = updates; break;
                 case ListenerType.UpdateSecond: collect = updateSeconds; break;
+                case ListenerType.Repeat: collect = repeats; break;
             }
             if(collect != null)
             {
@@ -220,6 +238,28 @@ namespace GameCore
                 }
             }
             ClearNull(ref updateSeconds);
+            // repeat
+            for(int i = 0;i < repeats.Count; i++)
+            {
+                if(now >= repeats[i].callTime && repeats[i].times != 0)
+                {
+                    executing.Add(repeats[i]);
+                    if (repeats[i].times > 0)
+                    {
+                        repeats[i].times--;
+                        repeats[i].callTime += repeats[i].interval;
+                    }
+                }
+                else
+                {
+                    if (repeats[i].times == 0)
+                    {
+                        repeats[i] = null;
+                    }
+                    
+                }
+            }
+            ClearNull(ref repeats);
 
             for(int i = 0; i < executing.Count; i++)
             {

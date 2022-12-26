@@ -15,4 +15,12 @@ namespace GameCore
         Red,
     }
 
+    [LuaCallCSharp]
+    public enum ToolType
+    {
+        Shuffle,
+        RandomLine,
+        RandomType,
+    }
+
 }

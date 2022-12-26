@@ -10,6 +10,9 @@ namespace GameCore
         public bool isDelete;
         public int leftFrames;
         public float callTime;
+
+        public float interval;
+        public int times;
         public void Invoke()
         {
             if (!isDelete)

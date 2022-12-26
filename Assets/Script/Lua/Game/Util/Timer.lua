@@ -53,11 +53,23 @@ function Timer:ListenLateUpdate(func)
     end)
 end
 
+function Timer:ListenRepeat(func, interval, times)
+    if not func then
+        return
+    end
+    return Scheduler:ListenRepeat(interval, times, function ()
+        func()
+    end)
+end
+
 function Timer:Dispose(identity)
     if not identity then
         return
     end
     Scheduler:DisposeListener(identity)
 end
+
+---@type Timer
+Timer.global = Timer.New()
 
 return Timer

@@ -14,7 +14,7 @@ namespace GameCore
                 && GameObjectPool.Instane != null
                 && Scheduler.Instance != null;
             });
-            string cmd = string.Format("local t = require('{0}'); return t;", "Boot");
+            string cmd = "require('Core.Global'); require('Boot');";
             ProjectLuaEnv.Instance.DoString(cmd);
         }
 

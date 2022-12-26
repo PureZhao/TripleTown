@@ -208,6 +208,70 @@ namespace XLua.CSObjectWrap
 		}
 	}
     
+    public class GameCoreToolTypeWrap
+    {
+		public static void __Register(RealStatePtr L)
+        {
+		    ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+		    Utils.BeginObjectRegister(typeof(GameCore.ToolType), L, translator, 0, 0, 0, 0);
+			Utils.EndObjectRegister(typeof(GameCore.ToolType), L, translator, null, null, null, null, null);
+			
+			Utils.BeginClassRegister(typeof(GameCore.ToolType), L, null, 4, 0, 0);
+
+            
+            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "Shuffle", GameCore.ToolType.Shuffle);
+            
+            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "RandomLine", GameCore.ToolType.RandomLine);
+            
+            Utils.RegisterObject(L, translator, Utils.CLS_IDX, "RandomType", GameCore.ToolType.RandomType);
+            
+
+			Utils.RegisterFunc(L, Utils.CLS_IDX, "__CastFrom", __CastFrom);
+            
+            Utils.EndClassRegister(typeof(GameCore.ToolType), L, translator);
+        }
+		
+		[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int __CastFrom(RealStatePtr L)
+		{
+			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+			LuaTypes lua_type = LuaAPI.lua_type(L, 1);
+            if (lua_type == LuaTypes.LUA_TNUMBER)
+            {
+                translator.PushGameCoreToolType(L, (GameCore.ToolType)LuaAPI.xlua_tointeger(L, 1));
+            }
+			
+            else if(lua_type == LuaTypes.LUA_TSTRING)
+            {
+
+			    if (LuaAPI.xlua_is_eq_str(L, 1, "Shuffle"))
+                {
+                    translator.PushGameCoreToolType(L, GameCore.ToolType.Shuffle);
+                }
+				else if (LuaAPI.xlua_is_eq_str(L, 1, "RandomLine"))
+                {
+                    translator.PushGameCoreToolType(L, GameCore.ToolType.RandomLine);
+                }
+				else if (LuaAPI.xlua_is_eq_str(L, 1, "RandomType"))
+                {
+                    translator.PushGameCoreToolType(L, GameCore.ToolType.RandomType);
+                }
+				else
+                {
+                    return LuaAPI.luaL_error(L, "invalid string for GameCore.ToolType!");
+                }
+
+            }
+			
+            else
+            {
+                return LuaAPI.luaL_error(L, "invalid lua type for GameCore.ToolType! Expect number or string, got + " + lua_type);
+            }
+
+            return 1;
+		}
+	}
+    
     public class TutorialDerivedClassTestEnumInnerWrap
     {
 		public static void __Register(RealStatePtr L)

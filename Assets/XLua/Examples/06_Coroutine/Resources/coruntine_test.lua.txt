@@ -8,7 +8,10 @@ local cs_coroutine = (require 'cs_coroutine')
 
 local a = cs_coroutine.start(function()
     print('coroutine a started')
-
+	coroutine.yield(CS.UnityEngine.WaitUntil(function()
+		print('Wait Util')
+		return true
+	end))
 	coroutine.yield(cs_coroutine.start(function() 
 		print('coroutine b stated inside cotoutine a')
 		coroutine.yield(CS.UnityEngine.WaitForSeconds(1))

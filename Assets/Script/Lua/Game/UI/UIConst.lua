@@ -2,7 +2,7 @@ local UIConst = {}
 
 UIConst.UIUpdateType = {
     TimeLeft = "TimeLeft",
-    UseTool = "UseTool",
+    Inventory = "Inventory",
     Score = "Score",
     Combo = "Combo",
 }

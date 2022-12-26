@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(GameCore.Scheduler);
-			Utils.BeginObjectRegister(type, L, translator, 0, 7, 0, 0);
+			Utils.BeginObjectRegister(type, L, translator, 0, 8, 0, 0);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Delay", _m_Delay);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "DelayFrame", _m_DelayFrame);
@@ -29,6 +29,7 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ListenUpdate", _m_ListenUpdate);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ListenLateUpdate", _m_ListenLateUpdate);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ListenUpdateSeconds", _m_ListenUpdateSeconds);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "ListenRepeat", _m_ListenRepeat);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "DisposeListener", _m_DisposeListener);
 			
 			
@@ -243,6 +244,37 @@ namespace XLua.CSObjectWrap
                     System.Action _action = translator.GetDelegate<System.Action>(L, 3);
                     
                         var gen_ret = gen_to_be_invoked.ListenUpdateSeconds( _time, _action );
+                        translator.Push(L, gen_ret);
+                    
+                    
+                    
+                    return 1;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_ListenRepeat(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                GameCore.Scheduler gen_to_be_invoked = (GameCore.Scheduler)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    float _interval = (float)LuaAPI.lua_tonumber(L, 2);
+                    int _times = LuaAPI.xlua_tointeger(L, 3);
+                    System.Action _action = translator.GetDelegate<System.Action>(L, 4);
+                    
+                        var gen_ret = gen_to_be_invoked.ListenRepeat( _interval, _times, _action );
                         translator.Push(L, gen_ret);
                     
                     

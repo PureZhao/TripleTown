@@ -23,11 +23,11 @@ function EventListener:_AddEvent(type, func)
     
 end
 
-function EventListener:ListenOnce()
+function EventListener:ListenOnce(type, func)
     
 end
 
-function EventListener:Listen()
+function EventListener:Listen(type, func)
     
 end
 

@@ -6,6 +6,12 @@ local LuaBehaviour = require('Core.LuaBehaviour')
 local UIRoot = Class('UIRoot', LuaBehaviour)
 UIRoot.Instance = nil
 
+function UIRoot:__Define()
+    self.timeText = CSType.Text
+    self.comboText = CSType.Text
+    self.scoreText = CSType.Text
+end
+
 function UIRoot:__init()
     if not UIRoot.Instance then
         UIRoot.Instance = self
@@ -22,7 +28,7 @@ function UIRoot:UpdateUI(updateType, ...)
 end
 
 function UIRoot:Registry(func)
-    table.insert()
+    table.insert(self.uiUpdateFuncs, func)
 end
 
 function UIRoot:Unregistry()

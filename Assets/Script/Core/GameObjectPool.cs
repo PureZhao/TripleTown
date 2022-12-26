@@ -30,7 +30,7 @@ namespace GameCore
             }
         }
 
-        public GameObject PushOutPull(string key)
+        public GameObject PullOutPool(string key)
         {
             if (pool.ContainsKey(key))
             {

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 509036268
+CRC: 2504078083
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -19,4 +19,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_5:
       Name: elements/yellow
+      Dependencies: {}
+    Info_6:
+      Name: ui
       Dependencies: {}

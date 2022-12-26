@@ -11,4 +11,17 @@ DataConst.ElementSpriteSplitPos = {
     [8] = {x = 100, y = 0},
 }
 
+DataConst.ComboBonus = {
+     
+}
+
+DataConst.TownBonus = {
+    [3] = 100,
+    [4] = 300,
+    [5] = 500,
+    [6] = 800,
+    [7] = 1200,
+}
+
+
 return DataConst
