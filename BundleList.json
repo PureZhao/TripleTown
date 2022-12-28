@@ -1,0 +1,21 @@
+
+[
+    "v0.0.1",
+    "Bundle",
+    "Bundle.manifest",
+    "BundleList.json",
+    "main",
+    "main.manifest",
+    "ui",
+    "ui.manifest",
+    "elements\\blue",
+    "elements\\blue.manifest",
+    "elements\\brown",
+    "elements\\brown.manifest",
+    "elements\\purple",
+    "elements\\purple.manifest",
+    "elements\\red",
+    "elements\\red.manifest",
+    "elements\\yellow",
+    "elements\\yellow.manifest"
+]

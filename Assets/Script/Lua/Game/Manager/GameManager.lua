@@ -16,6 +16,7 @@ function GameManager:__init()
     self.score = 0
     self.time = 0
     self.container = nil
+    ResManager.LoadGameObject(ResConst.UIRoot, CSE.Vector3.zero, CSE.Quaternion.identity)
     ResManager.LoadGameObject(ResConst.Container, CSE.Vector3.zero, CSE.Quaternion.identity, function (go)
         self.container = LuaBehaviour.GetLua(go)
     end)

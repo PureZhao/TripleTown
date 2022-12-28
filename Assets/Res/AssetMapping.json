@@ -13,5 +13,5 @@
     "Assets/Res/Elements/Yellow/Yellow.png"           : "elements/yellow",
     "Assets/Res/Elements/Yellow/YellowElement.prefab" : "elements/yellow",
     "Assets/Res/UI/BtnItem.prefab"                    : "ui",
-    "Assets/Res/UI/Canvas.prefab"                     : "ui"
+    "Assets/Res/UI/UIRoot.prefab"                     : "ui"
 }

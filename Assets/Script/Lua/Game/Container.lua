@@ -142,6 +142,13 @@ function Container:_SwapCoroutine(r1, c1, r2, c2)
         yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
     else
         local townList = table.merge(list1, list2)
+        local routine = Coroutine.Create(bind(self._LoopCheckCoroutine, self), townList)
+        self.host:StartCoroutine(routine)
+    end
+end
+
+function Container:_LoopCheckCoroutine(townList)
+        self.tweenCount = table.len(townList)
         self:_DoTown(townList)
         -- 等待动画播放完毕
         yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
@@ -149,26 +156,25 @@ function Container:_SwapCoroutine(r1, c1, r2, c2)
         yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
         self:_ResumeColumn()
         yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
-        -- 开始循环检查 自动消除
-        while true do
-            townList = self:_CheckAll()
-            self.tweenCount = table.len(townList)
-            if self.tweenCount == 0 then
-                break
-            end
-            self:_ResetColumnLack()
-            self:_DoTown(townList)
-            yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
-            self:_ElementDropDown()
-            yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
-            self:_ResumeColumn()
-            yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+    -- 开始循环检查 自动消除
+    while true do
+        local townList = self:_CheckAll()
+        self.tweenCount = table.len(townList)
+        if self.tweenCount == 0 then
+            break
         end
-        logInfo("Check Over")
-        if self:_CheckIsDead() then
-        -- if true then
-            self:DOShuffle()
-        end
+        self:_ResetColumnLack()
+        self:_DoTown(townList)
+        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+        self:_ElementDropDown()
+        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+        self:_ResumeColumn()
+        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+    end
+    logInfo("Check Over")
+    if self:_CheckIsDead() then
+    -- if true then
+        self:DOShuffle()
     end
 end
 
@@ -384,11 +390,41 @@ function Container:_ResumeColumn()
 end
 
 function Container:DODismissRandomLine()
-    
+    local n = 0
+    local t = math.random()
+    local elements = {}
+    if t >= 0.5 then
+        self.tweenCount = self.col
+        n = math.random(self.row)
+        for i = 1, self.col do
+            table.insert(elements, {n, i})
+        end
+    else
+        self.tweenCount = self.row
+        n = math.random(self.col)
+        for i = 1, self.row do
+            table.insert(elements, {i ,n})
+        end
+    end
+    local routine = Coroutine.Create(bind(self._LoopCheckCoroutine, self), elements)
+    self.host:StartCoroutine(routine)
 end
 
 function Container:DODismissRandomType()
-    
+    math.randomseed(os.time())
+    local r = math.random(self.row)
+    local c = math.random(self.col)
+    local type = self.elementMatrix[r][c].type
+    local elements = {}
+    for i = 1, self.row do
+        for j = 1, self.col do
+            if self.elementMatrix[i][j].type == type then
+                table.insert(elements, {i, j})
+            end
+        end
+    end
+    local routine = Coroutine.Create(bind(self._LoopCheckCoroutine, self), elements)
+    self.host:StartCoroutine(routine)
 end
 
 ---@return boolean
@@ -400,10 +436,6 @@ function Container:_CheckIsDead()
             for _, collection in pairs(townPointCollection) do
                 local r1, c1 = collection[1][1], collection[1][2]
                 local r2, c2 = collection[2][1], collection[2][2]
-                print(i, j)
-                print(r1, c1)
-                print(r2, c2)
-                print("---------------")
                 if self.elementMatrix[r1][c1].type == type and self.elementMatrix[r2][c2].type == type then
                     return false
                 end

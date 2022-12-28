@@ -4,6 +4,14 @@
 
 **Unity Version**: 2020.3.33f1
 
+2022.12.18 Update
+
+Finished Tools RandomLine and RandomType
+
+Updated bundls
+
+Added BundleList.json to Test Bundle Hotfix
+
 ---
 
 #### 2022.12.27 Update
@@ -12,11 +20,11 @@
 
 - Added Start Button to Start up
 
-- Deleted useless script DataConst.cs
+- Deleted useless script `DataConst.cs`
 
-- Modified LuaBehaviourInspector.cs to let child node do not display button Save on inspector
+- Modified `LuaBehaviourInspector.cs` to let child node do not display button Save on inspector
 
-- Added start game flow in GameManager.lua
+- Added start game flow in `GameManager.lua`
 
 ---
 

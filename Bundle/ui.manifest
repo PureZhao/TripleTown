@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1087792748
+CRC: 3169839526
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 310d6127eddb47811fea3bc8dc28c62d
+    Hash: ae0d8cdc4efffcbdd31d928036a67cf2
   TypeTreeHash:
     serializedVersion: 2
     Hash: 52c5e91a7d4eb90f610532e95c7cdede
@@ -65,6 +65,6 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.SpriteState
 Assets:
-- Assets/Res/UI/Canvas.prefab
+- Assets/Res/UI/UIRoot.prefab
 - Assets/Res/UI/BtnItem.prefab
 Dependencies: []

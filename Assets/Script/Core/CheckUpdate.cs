@@ -12,6 +12,12 @@ public class CheckUpdate : MonoBehaviour
 {
     IEnumerator Start()
     {
+        yield return new WaitUntil(() =>
+        {
+            return AssetsManager.Instance != null
+            && GameObjectPool.Instane != null
+            && Scheduler.Instance != null;
+        });
         if (!Directory.Exists(GlobalConfig.AssetBundleDir))
         {
             Directory.CreateDirectory(GlobalConfig.AssetBundleDir);

@@ -208,6 +208,7 @@ namespace PureOdinTools {
         [Button("Export Version Control File")]
         public void ExportVersionControlBundle()
         {
+            Debug.Log(111111);
             JsonData data = new JsonData();
             data.SetJsonType(JsonType.Array);
             List<string> path = new List<string>();
