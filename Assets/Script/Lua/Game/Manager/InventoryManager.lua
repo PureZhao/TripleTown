@@ -13,8 +13,6 @@ function InventoryManager:__init()
     self.inventoryInfos = self:_InitInventoryInfo()
     ---@type table<GameConst.InventoryType, Inventory>
     self.inventories = {}
-    -- Timer.global:Delay(3, bind(self._RandomGenerateItems, self))
-    self:_RandomGenerateItems()
 end
 
 function InventoryManager:_InitInventoryInfo()
@@ -27,7 +25,7 @@ function InventoryManager:_InitInventoryInfo()
     }
 end
 
-function InventoryManager:_RandomGenerateItems()
+function InventoryManager:RandomGenerateItems()
     math.randomseed(os.time())
     for i = 1, 10 do
         local type = table.randomInPair(GameConst.InventoryType)

@@ -85,4 +85,9 @@
 		
 	</assembly>
 
+	<assembly fullname="Assembly-CSharp-firstpass">
+	    <type fullname="DG.Tweening.DOTweenModuleUI" preserve="all"/>
+		
+	</assembly>
+
 </linker>

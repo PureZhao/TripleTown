@@ -16,13 +16,7 @@ public class CheckUpdate : MonoBehaviour
         {
             Directory.CreateDirectory(GlobalConfig.AssetBundleDir);
         }
-        //yield return StartCoroutine(DownloadBundleList());
-        yield return new WaitUntil(() =>
-        {
-            return AssetsManager.Instance != null
-            && GameObjectPool.Instane != null
-            && Scheduler.Instance != null;
-        });
+        yield return StartCoroutine(DownloadBundleList());
         SceneManager.LoadScene("Game");
     }
 

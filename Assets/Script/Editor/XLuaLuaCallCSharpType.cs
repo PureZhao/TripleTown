@@ -15,5 +15,6 @@ public static class XLuaLuaCallCSharpType
         typeof(Sprite),
         typeof(ShortcutExtensions),
         typeof(TweenSettingsExtensions),
+        typeof(DOTweenModuleUI),
     };
 }

@@ -141,9 +141,12 @@ public class LuaBehaviourInspector : Editor
         {
             LoadLua();
         }
-        if (GUILayout.Button("Save"))
+        if(behaviour.transform.parent == null)
         {
-            behaviour.Rebuild();
+            if (GUILayout.Button("Save"))
+            {
+                behaviour.Rebuild();
+            }
         }
         behaviour.luaScript = EditorGUILayout.ObjectField("Lua Script", behaviour.luaScript, typeof(DefaultAsset)) as DefaultAsset;
         EditorGUILayout.LabelField("Require Path", behaviour.requirePath);

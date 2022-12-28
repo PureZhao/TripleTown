@@ -6,7 +6,21 @@
 
 ---
 
-#### 2020.12.26 Update
+#### 2022.12.27 Update
+
+- Adjust startup sequence of UI node
+
+- Added Start Button to Start up
+
+- Deleted useless script DataConst.cs
+
+- Modified LuaBehaviourInspector.cs to let child node do not display button Save on inspector
+
+- Added start game flow in GameManager.lua
+
+---
+
+#### 2022.12.26 Update
 
 - Tided `Container.lua`
 

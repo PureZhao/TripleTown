@@ -118,6 +118,7 @@ namespace GameCore
         public void Rebuild()
         {
 #if UNITY_EDITOR
+            if (transform.parent != null) return;
             string assetPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(gameObject);
             if (string.IsNullOrEmpty(assetPath)) return;
             if (File.Exists(assetPath))

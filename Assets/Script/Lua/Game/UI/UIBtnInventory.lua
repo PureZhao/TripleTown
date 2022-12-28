@@ -5,6 +5,8 @@ local GameConst = require('Game.Const.GameConst')
 local ResConst  = require('Game.Const.ResConst')
 local ResManager= require('Game.Manager.ResManager')
 local Timer = require('Game.Util.Timer')
+local UIRoot = require('Game.UI.UIRoot')
+local UIConst = require('Game.UI.UIConst')
 
 ---@class UIBtnInventory : LuaBehaviour
 local UIBtnInventory = Class("UIBtnInventory", LuaBehaviour)
@@ -18,10 +20,13 @@ function UIBtnInventory:__init()
     self.button = self.transform:GetComponent(CSType.Button)
     -- 注册OnClick函数
     self.button.onClick:AddListener(bind(self.OnClick, self))
-    Timer.global:Delay(2, bind(self._InitItems, self))
+    UIRoot.Instance:Registry(bind(self._InitItems, self))
+    self.itemsGenerated = false
 end
 
-function UIBtnInventory:_InitItems()
+function UIBtnInventory:_InitItems(type, ...)
+    if type ~= UIConst.UIUpdateType.InitItems or self.itemsGenerated then return end
+    self.itemsGenerated = true
     self.inventoryRoot.gameObject:SetActive(false)
     local inventories = require('Game.Manager.InventoryManager').inventories
     ResManager.LoadGameObject(ResConst.BtnItem, nil, nil, function (go)
