@@ -4,13 +4,35 @@
 
 **Unity Version**: 2020.3.33f1
 
-2022.12.18 Update
+---
 
-Finished Tools RandomLine and RandomType
+#### 2022.12.30 Update
 
-Updated bundls
+- Preparation for lua scripts updating
 
-Added BundleList.json to Test Bundle Hotfix
+- Modified `ProjectEnv.cs` to fit XLua loader to load lua script from different path
+
+- Modifed Odin tools of assets and lua scripts exporting to convert `.lua` to `.lua.bytes`
+
+- Deleted `Test.lua` and `Test.cs`
+
+---
+
+#### 2022.12.29 Update
+
+- Added `TweenExtensions` to `LuaCallCSharp`
+
+- Simple calculation for combo and score
+
+---
+
+#### 2022.12.28 Update
+
+- Finished Tools RandomLine and RandomType
+
+- Updated bundles
+
+- Added `BundleList.json` to Test Bundle Hotfix
 
 ---
 

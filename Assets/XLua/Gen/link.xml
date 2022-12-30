@@ -82,6 +82,7 @@
 	<assembly fullname="DOTween">
 	    <type fullname="DG.Tweening.ShortcutExtensions" preserve="all"/>
 		<type fullname="DG.Tweening.TweenSettingsExtensions" preserve="all"/>
+		<type fullname="DG.Tweening.TweenExtensions" preserve="all"/>
 		
 	</assembly>
 

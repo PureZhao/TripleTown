@@ -19,17 +19,18 @@ public class CheckUpdate : MonoBehaviour
         {
             Directory.CreateDirectory(GlobalConfig.AssetBundleDir);
         }
-        yield return StartCoroutine(DownloadBundleList());
+        yield return StartCoroutine(DownloadAssetsBundleList());
+        yield return StartCoroutine(DownloadLuaBundleList());
         SceneManager.LoadScene("Game");
     }
 
-    IEnumerator DownloadBundleList()
+    IEnumerator DownloadAssetsBundleList()
     {
-        Debug.Log("Check Version");
-        tip.text = "Check Version";
+        Debug.Log("Check Assets Version");
+        tip.text = "Check Assets Version";
         counter.text = "";
         float progress = 0f;
-        UnityWebRequest request = UnityWebRequest.Get(GlobalConfig.BundleListUrl);
+        UnityWebRequest request = UnityWebRequest.Get(GlobalConfig.AssetBundleListUrl);
         request.SendWebRequest();
         if (request.isNetworkError || request.isHttpError)
         {
@@ -48,10 +49,11 @@ public class CheckUpdate : MonoBehaviour
                 progress = 1;
                 byte[] bytes = request.downloadHandler.data;
                 string content = Encoding.UTF8.GetString(bytes);
+                Debug.Log(content);
                 JsonData data = JsonMapper.ToObject(content);
                 // 对版本
                 string version = data[0].ToString();
-                if (IsVersionEqual(version))
+                if (IsVersionEqual(version, GlobalConfig.AssetVersionControlFile))
                 {
                     Debug.Log("Version is latest, need not update");
                     tip.text = "Version is latest, need not update";
@@ -110,11 +112,11 @@ public class CheckUpdate : MonoBehaviour
             }
         }
         // 更新版本控制文件
-        if (File.Exists(GlobalConfig.VersionControlFile))
+        if (File.Exists(GlobalConfig.AssetVersionControlFile))
         {
-            File.Delete(GlobalConfig.VersionControlFile);
+            File.Delete(GlobalConfig.AssetVersionControlFile);
         }
-        FileStream stream = File.Create(GlobalConfig.VersionControlFile);
+        FileStream stream = File.Create(GlobalConfig.AssetVersionControlFile);
         byte[] versionContent = data[0].ToString().ToByteArray();
         stream.Write(versionContent, 0, versionContent.Length);
         Debug.Log("Update Finished");
@@ -122,11 +124,109 @@ public class CheckUpdate : MonoBehaviour
         yield return new WaitForSeconds(2f);
     }
 
-    private bool IsVersionEqual(string netVersion)
+    IEnumerator DownloadLuaBundleList()
     {
-        if (!File.Exists(GlobalConfig.VersionControlFile))
+        Debug.Log("Check Scripts Version");
+        tip.text = "Check Scripts Version";
+        counter.text = "";
+        float progress = 0f;
+        UnityWebRequest request = UnityWebRequest.Get(GlobalConfig.LuaBundleListUrl);
+        request.SendWebRequest();
+        if (request.isNetworkError || request.isHttpError)
+        {
+
+            Debug.LogError(request.error);
+        }
+        else
+        {
+            while (!request.isDone)
+            {
+                progress = request.downloadProgress * 100f;
+                yield return 0;
+            }
+            if (request.isDone)
+            {
+                progress = 1;
+                byte[] bytes = request.downloadHandler.data;
+                string content = Encoding.UTF8.GetString(bytes);
+                JsonData data = JsonMapper.ToObject(content);
+                // 对版本
+                string version = data[0].ToString();
+                if (IsVersionEqual(version, GlobalConfig.LuaVersionControlFile))
+                {
+                    Debug.Log("Version is latest, need not update");
+                    tip.text = "Version is latest, need not update";
+                    yield return new WaitForSeconds(1f);
+                    yield break;
+                }
+                else
+                {
+                    Debug.Log("Version is not latest, run update");
+                    tip.text = "Version is not latest, run update";
+                    counter.text = "0/" + data.Count.ToString();
+                    // 调用前还需要对MD5码，减轻下载压力
+                    yield return StartCoroutine(DownloadLua(data));
+                }
+
+            }
+        }
+    }
+
+    IEnumerator DownloadLua(JsonData data)
+    {
+        // 获取所有lua路径
+        for (int i = 1; i < data.Count; i++)
+        {
+            // 用Gitee，raw.githubusercontent.com有时候抽风连不上
+            string httpUrl = Path.Combine(GlobalConfig.LuaBundleServerUrlGitee, data[i].ToString());
+            string filename = Path.GetFileName(httpUrl);
+            string localUrl = Path.Combine(GlobalConfig.LuaBundleDir, data[i].ToString());
+            string localDir = Path.GetDirectoryName(localUrl);
+            // 后面做一个进度条界面
+            float progress = 0f;
+            UnityWebRequest request = UnityWebRequest.Get(httpUrl);
+            //Debug.Log("下载 " + httpUrl);
+            request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+            {
+
+                Debug.LogError(request.error);
+            }
+            else
+            {
+                while (!request.isDone)
+                {
+                    progress = request.downloadProgress * 100f;
+                    yield return 0;
+                }
+                if (request.isDone)
+                {
+                    //Debug.Log("下载完成 " + httpUrl);
+                    counter.text = (i + 1).ToString() + "/" + data.Count.ToString();
+                    progress = 1;
+                    byte[] bytes = request.downloadHandler.data;
+                    SaveAsset(localDir, filename, bytes);
+                }
+            }
+        }
+        // 更新版本控制文件
+        if (File.Exists(GlobalConfig.LuaVersionControlFile))
+        {
+            File.Delete(GlobalConfig.LuaVersionControlFile);
+        }
+        FileStream stream = File.Create(GlobalConfig.LuaVersionControlFile);
+        byte[] versionContent = data[0].ToString().ToByteArray();
+        stream.Write(versionContent, 0, versionContent.Length);
+        Debug.Log("Update Finished");
+        tip.text = "Update Finished";
+        yield return new WaitForSeconds(2f);
+    }
+
+    private bool IsVersionEqual(string netVersion, string versionControlFile)
+    {
+        if (!File.Exists(versionControlFile))
             return false;
-        return File.ReadAllText(GlobalConfig.VersionControlFile) == netVersion;
+        return File.ReadAllText(versionControlFile) == netVersion;
     }
 
     /// <summary>

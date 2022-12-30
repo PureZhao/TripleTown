@@ -148,22 +148,29 @@ function Container:_SwapCoroutine(r1, c1, r2, c2)
 end
 
 function Container:_LoopCheckCoroutine(townList)
-        self.tweenCount = table.len(townList)
-        self:_DoTown(townList)
-        -- 等待动画播放完毕
-        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
-        self:_ElementDropDown()
-        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
-        self:_ResumeColumn()
-        yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+    local gameManager = require('Game.Manager.GameManager')
+    self.tweenCount = table.len(townList)
+    local combo = 1
+    gameManager:AddScore(self.tweenCount * 10 + combo * 100)
+    gameManager:AddCombo(combo)
+    self:_DoTown(townList)
+    -- 等待动画播放完毕
+    yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+    self:_ElementDropDown()
+    yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+    self:_ResumeColumn()
+    yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
     -- 开始循环检查 自动消除
     while true do
-        local townList = self:_CheckAll()
+        townList = self:_CheckAll()
         self.tweenCount = table.len(townList)
         if self.tweenCount == 0 then
             break
         end
+        combo = combo + 1
+        gameManager:AddCombo(combo)
         self:_ResetColumnLack()
+        gameManager:AddScore(self.tweenCount * 10 + combo * 100)
         self:_DoTown(townList)
         yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
         self:_ElementDropDown()
@@ -173,7 +180,6 @@ function Container:_LoopCheckCoroutine(townList)
     end
     logInfo("Check Over")
     if self:_CheckIsDead() then
-    -- if true then
         self:DOShuffle()
     end
 end
@@ -449,8 +455,6 @@ function Container:DOShuffle()
     local routine = Coroutine.Create(bind(self._ShuffleCoroutine, self))
     self.host:StartCoroutine(routine)
 end
-
-
 
 function Container:_ShuffleCoroutine()
     -- 保证至少有一处可以消除

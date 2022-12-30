@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace GameCore
             });
             string cmd = "require('Core.Global'); require('Boot');";
             ProjectLuaEnv.Instance.DoString(cmd);
+
         }
 
 

@@ -29,8 +29,12 @@ public class ProjectLuaEnv
 
     private byte[] ProjectLoader(ref string path)
     {
-        string relativePath = path.Replace('.', '/') + ".lua";
-        string fullPath = Path.Combine(GlobalConfig.LuaScriptDir, relativePath);
+        string relativePath = path.Replace('.', '/') + ".lua.bytes";
+        string fullPath = Path.Combine(GlobalConfig.LuaBundleDir, relativePath);
+#if UNITY_EDITOR
+        relativePath = path.Replace('.', '/') + ".lua";
+        fullPath = Path.Combine(GlobalConfig.EditorLuaScriptDir, relativePath);
+#endif
         //Debug.Log(fullPath);
         if (File.Exists(fullPath))
         {

@@ -47,4 +47,14 @@ function GameManager:UseInventory(type)
     end
 end
 
+function GameManager:AddCombo(combos)
+    self.combo = combos
+    UIRoot.Instance:UpdateUI(UIConst.UIUpdateType.Combo, self.combo)
+end
+
+function GameManager:AddScore(score)
+    self.score = self.score + score
+    UIRoot.Instance:UpdateUI(UIConst.UIUpdateType.Score, self.score)
+end
+
 return GameManager.New()
