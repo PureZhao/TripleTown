@@ -7,17 +7,14 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CheckUpdate : MonoBehaviour
 {
+    public Text tip;
+    public Text counter;
     IEnumerator Start()
     {
-        yield return new WaitUntil(() =>
-        {
-            return AssetsManager.Instance != null
-            && GameObjectPool.Instane != null
-            && Scheduler.Instance != null;
-        });
         if (!Directory.Exists(GlobalConfig.AssetBundleDir))
         {
             Directory.CreateDirectory(GlobalConfig.AssetBundleDir);
@@ -29,6 +26,8 @@ public class CheckUpdate : MonoBehaviour
     IEnumerator DownloadBundleList()
     {
         Debug.Log("Check Version");
+        tip.text = "Check Version";
+        counter.text = "";
         float progress = 0f;
         UnityWebRequest request = UnityWebRequest.Get(GlobalConfig.BundleListUrl);
         request.SendWebRequest();
@@ -55,13 +54,17 @@ public class CheckUpdate : MonoBehaviour
                 if (IsVersionEqual(version))
                 {
                     Debug.Log("Version is latest, need not update");
+                    tip.text = "Version is latest, need not update";
+                    yield return new WaitForSeconds(1f);
                     yield break;
                 }
                 else
                 {
                     Debug.Log("Version is not latest, run update");
+                    tip.text = "Version is not latest, run update";
+                    counter.text = "0/" + data.Count.ToString();
                     // 调用前还需要对MD5码，减轻下载压力
-                    StartCoroutine(DownloadAssets(data));
+                    yield return StartCoroutine(DownloadAssets(data));
                 }
                 
             }
@@ -99,6 +102,7 @@ public class CheckUpdate : MonoBehaviour
                 if (request.isDone)
                 {
                     //Debug.Log("下载完成 " + httpUrl);
+                    counter.text = (i+1).ToString() + "/" + data.Count.ToString();
                     progress = 1;
                     byte[] bytes = request.downloadHandler.data;
                     SaveAsset(localDir, filename, bytes);
@@ -114,6 +118,7 @@ public class CheckUpdate : MonoBehaviour
         byte[] versionContent = data[0].ToString().ToByteArray();
         stream.Write(versionContent, 0, versionContent.Length);
         Debug.Log("Update Finished");
+        tip.text = "Update Finished";
         yield return new WaitForSeconds(2f);
     }
 
