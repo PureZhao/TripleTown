@@ -1,3 +1,4 @@
+using LitJson;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using System;
@@ -6,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using Util;
+
 namespace PureOdinTools
 {
     [GlobalConfig(assetPath: "Odin")]
@@ -58,8 +61,7 @@ namespace PureOdinTools
                 {
                     continue;
                 }
-                string relativePath = "Assets" + file.FullName.Remove(0, Application.dataPath.Length);
-                paths.Add(relativePath);
+                paths.Add(file.FullName);
             }
             DirectoryInfo[] subDirs = root.GetDirectories();
             foreach (DirectoryInfo directory in subDirs)
@@ -68,5 +70,28 @@ namespace PureOdinTools
             }
         }
 
+        [Button("Export Version Control File")]
+        public void ExportVersionControlBundle(string version)
+        {
+            JsonData data = new JsonData();
+            data.SetJsonType(JsonType.Array);
+            List<string> path = new List<string>();
+            GetAllFile(GlobalConfig.LuaBundleDir, ref path);
+            string key = "LuaBundle";
+            int keyPos = -1;
+            data.Add("v" + version);
+            foreach (string p in path)
+            {
+                if(keyPos == -1)
+                {
+                    keyPos = p.IndexOf(key);
+                }
+                //Debug.Log(p);
+                string realPath = p.Substring(keyPos);
+                data.Add(realPath);
+            }
+            string jsonStorePath = Application.dataPath + "/../LuaBundleList.json";
+            JsonHelper.WriteJson2File(data, jsonStorePath);
+        }
     }
 }

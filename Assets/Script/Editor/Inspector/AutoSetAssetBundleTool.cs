@@ -206,20 +206,19 @@ namespace PureOdinTools {
             }
         }
         [Button("Export Version Control File")]
-        public void ExportVersionControlBundle()
+        public void ExportVersionControlBundle(string version)
         {
-            Debug.Log(111111);
             JsonData data = new JsonData();
             data.SetJsonType(JsonType.Array);
             List<string> path = new List<string>();
             GetAllFile(GlobalConfig.AssetBundleDir, ref path);
-            data.Add("v0.0.1");
+            data.Add("v" + version);
             foreach(string p in path)
             {
                 string realPath = p.Remove("Assets\\");
                 data.Add(realPath);
             }
-            string jsonStorePath = Path.Combine(GlobalConfig.AssetBundleDir, "BundleList.json");
+            string jsonStorePath = Application.dataPath + "/../AssetBundleList.json";
             JsonHelper.WriteJson2File(data, jsonStorePath);
         }
 
