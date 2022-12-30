@@ -215,7 +215,7 @@ namespace PureOdinTools {
             data.Add("v" + version);
             foreach(string p in path)
             {
-                string realPath = p.Remove("Assets\\");
+                string realPath = p.Remove("Assets\\").Replace('\\', '/');
                 data.Add(realPath);
             }
             string jsonStorePath = Application.dataPath + "/../AssetBundleList.json";

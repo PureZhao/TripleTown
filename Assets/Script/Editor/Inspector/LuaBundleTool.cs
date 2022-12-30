@@ -18,15 +18,14 @@ namespace PureOdinTools
         public string luaScriptPath;
         private void OnEnable()
         {
-            luaScriptPath = GlobalConfig.LuaScriptDir;
+            luaScriptPath = GlobalConfig.EditorLuaScriptDir;
         }
 
         [Button("Export LuaBundle", ButtonSizes.Large)]
         public void ExportLuaBundle()
         {
-
             List<string> paths = new List<string>();
-            GetAllFile(GlobalConfig.LuaScriptDir, ref paths);
+            GetAllFile(GlobalConfig.EditorLuaScriptDir, ref paths);
             if (Directory.Exists(GlobalConfig.LuaBundleDir))
             {
                 Directory.Delete(GlobalConfig.LuaBundleDir, true);
@@ -34,7 +33,9 @@ namespace PureOdinTools
             Directory.CreateDirectory(GlobalConfig.LuaBundleDir);
             foreach(string path in paths)
             {
-                string relativePath = path.Remove("Assets\\Script\\Lua\\");
+
+                string relativePath = path.Remove(0, GlobalConfig.EditorLuaScriptDir.Length);
+                //Debug.Log(relativePath);
                 string filepath = Path.Combine(GlobalConfig.LuaBundleDir, relativePath + ".bytes");
                 string dir = Path.GetDirectoryName(filepath);
                 if (!Directory.Exists(dir))
@@ -76,18 +77,12 @@ namespace PureOdinTools
             JsonData data = new JsonData();
             data.SetJsonType(JsonType.Array);
             List<string> path = new List<string>();
-            GetAllFile(GlobalConfig.LuaBundleDir, ref path);
-            string key = "LuaBundle";
-            int keyPos = -1;
+            GetAllFile(GlobalConfig.EditorLuaScriptDir, ref path);
             data.Add("v" + version);
             foreach (string p in path)
             {
-                if(keyPos == -1)
-                {
-                    keyPos = p.IndexOf(key);
-                }
                 //Debug.Log(p);
-                string realPath = p.Substring(keyPos);
+                string realPath = p.Remove(0, GlobalConfig.EditorLuaScriptDir.Length).Replace('\\', '/') + ".bytes";
                 data.Add(realPath);
             }
             string jsonStorePath = Application.dataPath + "/../LuaBundleList.json";
