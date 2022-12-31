@@ -2,7 +2,8 @@ local Class = require('Core.Class')
 local CSType = require('Core.CSType')
 local LuaBehaviour = require('Core.LuaBehaviour')
 local UIRoot = require('Game.UI.UIRoot')
-local UIConst= require('Game.UI.UIConst')
+local UIConst = require('Game.UI.UIConst')
+local Timer = require('Game.Util.Timer')
 
 ---@class UIBtnItem : LuaBehaviour
 local UIBtnItem = Class("UIBtnItem", LuaBehaviour)
@@ -13,6 +14,8 @@ function UIBtnItem:__Define()
 end
 
 function UIBtnItem:__init()
+    self.useGap = 1.5
+    self.canUse = true
     self.button = self.transform:GetComponent(CSType.Button)
     self.type = UIConst.UIUpdateType.Inventory
     self.inventoryType = nil
@@ -39,6 +42,13 @@ function UIBtnItem:_UpdateUI(type, ...)
 end
 
 function UIBtnItem:OnClick()
+    if not self.canUse then
+        return
+    end
+    self.canUse = false
+    Timer.global:Delay(self.useGap, function ()
+        self.canUse = true
+    end)
     local InventoryManager = require('Game.Manager.InventoryManager')
     InventoryManager:UseItem(self.inventoryType, 1)
 end
