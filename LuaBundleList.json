@@ -1,8 +1,7 @@
 
 [
-    "v0.0.1",
+    "v0.0.2",
     "Boot.lua.bytes",
-    "Test.lua.bytes",
     "Core/Class.lua.bytes",
     "Core/Coroutine.lua.bytes",
     "Core/CSType.lua.bytes",
