@@ -112,11 +112,21 @@ function Container:DOJudge(row, col)
     end
 end
 
+function Container:EnableSelect(flag)
+    for i = 1, self.row do
+        for j = 1, self.col do
+            self.elementMatrix[i][j]:EnableMouseClick(flag)
+        end
+    end
+end
+
 ---@param r1 number
 ---@param c1 number
 ---@param r2 number
 ---@param c2 number
 function Container:_SwapCoroutine(r1, c1, r2, c2)
+    -- 先禁用所有元素的按下
+    self:EnableSelect(false)
     local e1 = self.elementMatrix[r1][c1]
     local e2 = self.elementMatrix[r2][c2]
     self.elementMatrix[r1][c1] = e2
@@ -140,6 +150,7 @@ function Container:_SwapCoroutine(r1, c1, r2, c2)
         e1:SetPos(r1, c1)
         e2:SetPos(r2, c2)
         yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
+        self:EnableSelect(true)
     else
         local townList = table.merge(list1, list2)
         local routine = Coroutine.Create(bind(self._LoopCheckCoroutine, self), townList)
@@ -181,6 +192,8 @@ function Container:_LoopCheckCoroutine(townList)
     logInfo("Check Over")
     if self:_CheckIsDead() then
         self:DOShuffle()
+    else
+        self:EnableSelect(true)
     end
 end
 
@@ -412,6 +425,7 @@ function Container:DODismissRandomLine()
             table.insert(elements, {i ,n})
         end
     end
+    self:EnableSelect(false)
     local routine = Coroutine.Create(bind(self._LoopCheckCoroutine, self), elements)
     self.host:StartCoroutine(routine)
 end
@@ -430,6 +444,7 @@ function Container:DODismissRandomType()
         end
     end
     local routine = Coroutine.Create(bind(self._LoopCheckCoroutine, self), elements)
+    self:EnableSelect(false)
     self.host:StartCoroutine(routine)
 end
 
@@ -470,6 +485,7 @@ function Container:_ShuffleCoroutine()
         self:_AddIntoElementTable(e)
     end
     yield(CSE.WaitUntil(function() return self.tweenCount == 0 end))
+    self:EnableSelect(true)
 end
 
 function Container:_GenShuffleElementSequence()

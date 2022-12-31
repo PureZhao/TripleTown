@@ -4,6 +4,12 @@
 
 **Unity Version**: 2020.3.33f1
 
+#### 2022.12.31 Update(Happy New Year)
+
+- Modified `Container.lua` to enable/disable mouse click on elements when judge start
+
+- Modified `UIBtnItem.lua` to control time interval of using items
+
 ---
 
 #### 2022.12.30 Update

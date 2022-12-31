@@ -6,6 +6,8 @@ UIConst.UIUpdateType = {
     Inventory = "Inventory",
     Score = "Score",
     Combo = "Combo",
+    EnableItem = "EnableItem",
+    DisableItem = "DisableItem",
 }
 
 return UIConst
