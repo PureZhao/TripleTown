@@ -23,7 +23,7 @@ namespace GameCore
 
         private void OnDestroy()
         {
-            ProjectLuaEnv.Instance.Dispose();
+            //ProjectLuaEnv.Instance.Dispose();
         }
     }
 }

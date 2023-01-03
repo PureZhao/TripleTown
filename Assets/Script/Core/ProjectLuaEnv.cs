@@ -80,4 +80,9 @@ public class ProjectLuaEnv
         luaEnv.Tick();
     }
 
+    ~ProjectLuaEnv()
+    {
+        instance?.Dispose();
+    }
+
 }

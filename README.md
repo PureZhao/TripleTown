@@ -4,6 +4,34 @@
 
 **Unity Version**: 2020.3.33f1
 
+#### 2023.1.3 Update
+
+- Completed `LuaTimer.lua` with simple test
+
+- Fixed bug of `Scheduler.cs` that lateupdates do not execute
+
+- Removed function `ListenUpdateSeconds` in `Scheduler.cs`
+
+- Deleted some XLua tutorial scripts
+
+- Updated lua byte files
+
+- Updated XLua Wrap
+
+---
+
+#### 2023.1.2 Update
+
+- Used 64bit luac to convert `.lua` to `.lua.bytes`
+
+- Modified `LuaBundleTool.cs`
+
+- Deleted some XLua tutorial scripts
+
+- Added `LuaTimer.lua`
+
+---
+
 #### 2022.12.31 Update(Happy New Year)
 
 - Modified `Container.lua` to enable/disable mouse click on elements when judge start

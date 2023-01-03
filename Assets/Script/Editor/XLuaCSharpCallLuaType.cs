@@ -9,6 +9,7 @@ public static class XLuaCSharpCallLuaType
     [CSharpCallLua]
     public static List<Type> CSCallLua = new List<Type>()
     {
+        typeof(Action),
         typeof(Func<bool>),
     };
 }

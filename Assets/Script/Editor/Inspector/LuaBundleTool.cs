@@ -24,20 +24,21 @@ namespace PureOdinTools
         [Button("Export LuaBundle", ButtonSizes.Large)]
         public void ExportLuaBundle()
         {
+            string originDir = GlobalConfig.LuaBundleDir + "Origin";
             List<string> paths = new List<string>();
             GetAllFile(GlobalConfig.EditorLuaScriptDir, ref paths);
-            if (Directory.Exists(GlobalConfig.LuaBundleDir))
+            if (Directory.Exists(originDir))
             {
-                Directory.Delete(GlobalConfig.LuaBundleDir, true);
+                Directory.Delete(originDir, true);
             }
-            Directory.CreateDirectory(GlobalConfig.LuaBundleDir);
+            Directory.CreateDirectory(originDir);
 
             foreach (string path in paths)
             {
 
                 string relativePath = path.Remove(0, GlobalConfig.EditorLuaScriptDir.Length);
                 //Debug.Log(relativePath);
-                string filepath = Path.Combine(GlobalConfig.LuaBundleDir, relativePath + ".bytes");
+                string filepath = Path.Combine(originDir, relativePath + ".bytes");
                 string dir = Path.GetDirectoryName(filepath);
                 if (!Directory.Exists(dir))
                 {
@@ -93,19 +94,19 @@ namespace PureOdinTools
         public void Conver2ByteCode()
         {
             List<string> paths = new List<string>();
-            string byteCodeDir = GlobalConfig.LuaBundleDir + "ByteCode";
-            GetAllFile(GlobalConfig.LuaBundleDir, ref paths);
-            if (Directory.Exists(byteCodeDir))
+            string originDir = GlobalConfig.LuaBundleDir + "Origin";
+            GetAllFile(originDir, ref paths);
+            if (Directory.Exists(GlobalConfig.LuaBundleDir))
             {
-                Directory.Delete(byteCodeDir, true);
+                Directory.Delete(GlobalConfig.LuaBundleDir, true);
             }
-            Directory.CreateDirectory(byteCodeDir);
-            DirectoryInfo directoryInfo = new DirectoryInfo(GlobalConfig.LuaBundleDir);
+            Directory.CreateDirectory(GlobalConfig.LuaBundleDir);
+            DirectoryInfo directoryInfo = new DirectoryInfo(originDir);
             string cmds = "";
             foreach (string path in paths)
             {
                 string relativePath = path.Remove(0, directoryInfo.FullName.Length + 1);
-                string filepath = byteCodeDir + "/" + relativePath;
+                string filepath = GlobalConfig.LuaBundleDir + "/" + relativePath;
                 string dir = Path.GetDirectoryName(filepath);
                 if (!Directory.Exists(dir))
                 {

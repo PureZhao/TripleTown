@@ -28,7 +28,6 @@ namespace GameCore
         public static Scheduler Instance { get => instance; }
 
         List<Listener> updates = new List<Listener>();
-        List<Listener> updateSeconds = new List<Listener>();
         List<Listener> lateUpdates = new List<Listener>();
         List<Listener> curFrame = new List<Listener>();
         List<Listener> lastFrame = new List<Listener>();
@@ -147,22 +146,6 @@ namespace GameCore
             return indentity;
         }
 
-        public ListenerIndentity ListenUpdateSeconds(float time, Action action)
-        {
-            Listener update = new Listener()
-            {
-                callTime = time + Time.realtimeSinceStartup,
-                action = action,
-            };
-            updateSeconds.Add(update);
-            ListenerIndentity indentity = new ListenerIndentity()
-            {
-                listener = update,
-                type = ListenerType.UpdateSecond,
-            };
-            return indentity;
-        }
-
         public ListenerIndentity ListenRepeat(float interval, int times, Action action)
         {
             Listener listener = new Listener()
@@ -188,7 +171,6 @@ namespace GameCore
                 case ListenerType.DelayFrame: collect = curFrame; break;
                 case ListenerType.LateUpdate: collect = lateUpdates; break;
                 case ListenerType.Update: collect = updates; break;
-                case ListenerType.UpdateSecond: collect = updateSeconds; break;
                 case ListenerType.Repeat: collect = repeats; break;
             }
             if(collect != null)
@@ -225,19 +207,6 @@ namespace GameCore
 
             // update
             executing.AddRange(updates);
-            // updateSeconds
-            for(int i = 0; i < updateSeconds.Count; i++)
-            {
-                if(now < updateSeconds[i].callTime)
-                {
-                    executing.Add(updateSeconds[i]);
-                }
-                else
-                {
-                    updateSeconds[i] = null;
-                }
-            }
-            ClearNull(ref updateSeconds);
             // repeat
             for(int i = 0;i < repeats.Count; i++)
             {
@@ -272,7 +241,10 @@ namespace GameCore
         {
             executing.Clear();
             executing.AddRange(lateUpdates);
-
+            for (int i = 0; i < executing.Count; i++)
+            {
+                executing[i]?.Invoke();
+            }
             lastFrame.Clear();
             for(int i = 0; i < curFrame.Count; i++)
             {
@@ -289,7 +261,6 @@ namespace GameCore
         private void OnDisable()
         {
             updates.Clear();
-            updateSeconds.Clear();
             lateUpdates.Clear();
             curFrame.Clear();
             lastFrame.Clear();
