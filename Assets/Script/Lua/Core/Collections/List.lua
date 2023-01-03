@@ -16,9 +16,11 @@ function List:Add(val)
         local node = {prev = self.tail, value = val, next = nil}
         self.tail.next = node
         self.tail = node
+        return node
     else
         self.head = {prev = nil, value = val, next = nil}
         self.tail = self.head
+        return self.head
     end
 end
 

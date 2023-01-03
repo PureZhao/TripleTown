@@ -31,7 +31,8 @@ namespace PureOdinTools
                 Directory.Delete(GlobalConfig.LuaBundleDir, true);
             }
             Directory.CreateDirectory(GlobalConfig.LuaBundleDir);
-            foreach(string path in paths)
+
+            foreach (string path in paths)
             {
 
                 string relativePath = path.Remove(0, GlobalConfig.EditorLuaScriptDir.Length);
@@ -87,6 +88,64 @@ namespace PureOdinTools
             }
             string jsonStorePath = Application.dataPath + "/../LuaBundleList.json";
             JsonHelper.WriteJson2File(data, jsonStorePath);
+        }
+        [Button("Conver To ByteCode", ButtonSizes.Large)]
+        public void Conver2ByteCode()
+        {
+            List<string> paths = new List<string>();
+            string byteCodeDir = GlobalConfig.LuaBundleDir + "ByteCode";
+            GetAllFile(GlobalConfig.LuaBundleDir, ref paths);
+            if (Directory.Exists(byteCodeDir))
+            {
+                Directory.Delete(byteCodeDir, true);
+            }
+            Directory.CreateDirectory(byteCodeDir);
+            DirectoryInfo directoryInfo = new DirectoryInfo(GlobalConfig.LuaBundleDir);
+            string cmds = "";
+            foreach (string path in paths)
+            {
+                string relativePath = path.Remove(0, directoryInfo.FullName.Length + 1);
+                string filepath = byteCodeDir + "/" + relativePath;
+                string dir = Path.GetDirectoryName(filepath);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+                string input = "\"" + path + "\"";
+                string output = "\"" + filepath.Remove("Assets/../") + "\"";
+                cmds += string.Format("luac53 -o {0} {1}\n", output, input).Replace('\\', '/');
+                //Debug.Log(cmd);
+                //Encrypt(cmd);
+            }
+            string cmdFile = Application.dataPath + "/../cmd.txt";
+            byte[] cmdsBytes = cmds.ToByteArray();
+            FileStream stream = File.Create(cmdFile);
+            stream.Write(cmdsBytes, 0, cmdsBytes.Length);
+            stream.Close();
+            stream.Dispose();
+        }
+
+        public void Encrypt(string cmd)
+        {
+            System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo()
+            {
+                FileName = "cmd.exe",
+                UseShellExecute = false,
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+            System.Diagnostics.Process p = new System.Diagnostics.Process()
+            {
+                StartInfo = info,
+            };
+            p.Start();
+            p.StandardInput.WriteLine(cmd + " &exit");
+            p.StandardInput.AutoFlush = true;
+            p.WaitForExit();
+            p.Close();
+            
         }
     }
 }
