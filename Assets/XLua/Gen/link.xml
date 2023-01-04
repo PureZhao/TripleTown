@@ -5,17 +5,6 @@
 	<assembly fullname="Assembly-CSharp">
 	    <type fullname="GameObjectEx" preserve="all"/>
 		<type fullname="ObjectEx" preserve="all"/>
-		<type fullname="XLuaTest.Pedding" preserve="all"/>
-		<type fullname="XLuaTest.MyStruct" preserve="all"/>
-		<type fullname="XLuaTest.MyEnum" preserve="all"/>
-		<type fullname="XLuaTest.NoGc" preserve="all"/>
-		<type fullname="XLuaTest.BaseTest" preserve="all"/>
-		<type fullname="XLuaTest.Foo1Parent" preserve="all"/>
-		<type fullname="XLuaTest.Foo2Parent" preserve="all"/>
-		<type fullname="XLuaTest.Foo1Child" preserve="all"/>
-		<type fullname="XLuaTest.Foo2Child" preserve="all"/>
-		<type fullname="XLuaTest.Foo" preserve="all"/>
-		<type fullname="XLuaTest.FooExtension" preserve="all"/>
 		<type fullname="GameCore.AssetsManager" preserve="all"/>
 		<type fullname="GameCore.ElementType" preserve="all"/>
 		<type fullname="GameCore.ToolType" preserve="all"/>

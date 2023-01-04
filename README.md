@@ -4,6 +4,16 @@
 
 **Unity Version**: 2020.3.33f1
 
+#### 2023.1.4 Update
+
+- Removed unnecessary scripts like XLua examples
+
+- Regenerated XLua Warps
+
+- Rebuild application
+
+---
+
 #### 2023.1.3 Update
 
 - Completed `LuaTimer.lua` with simple test

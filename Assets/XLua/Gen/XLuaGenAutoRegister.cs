@@ -28,6 +28,21 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(ObjectEx), ObjectExWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(GameCore.AssetsManager), GameCoreAssetsManagerWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(GameCore.ElementType), GameCoreElementTypeWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(GameCore.ToolType), GameCoreToolTypeWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(GameCore.LuaBehaviour), GameCoreLuaBehaviourWrap.__Register);
+        
+        
+            translator.DelayWrapLoader(typeof(GameCore.Scheduler), GameCoreSchedulerWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(object), SystemObjectWrap.__Register);
         
         
@@ -112,54 +127,6 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(UnityEngine.Debug), UnityEngineDebugWrap.__Register);
         
         
-            translator.DelayWrapLoader(typeof(XLuaTest.Pedding), XLuaTestPeddingWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.MyStruct), XLuaTestMyStructWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.MyEnum), XLuaTestMyEnumWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.NoGc), XLuaTestNoGcWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.BaseTest), XLuaTestBaseTestWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.Foo1Parent), XLuaTestFoo1ParentWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.Foo2Parent), XLuaTestFoo2ParentWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.Foo1Child), XLuaTestFoo1ChildWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.Foo2Child), XLuaTestFoo2ChildWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.Foo), XLuaTestFooWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(XLuaTest.FooExtension), XLuaTestFooExtensionWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(GameCore.AssetsManager), GameCoreAssetsManagerWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(GameCore.ElementType), GameCoreElementTypeWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(GameCore.ToolType), GameCoreToolTypeWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(GameCore.LuaBehaviour), GameCoreLuaBehaviourWrap.__Register);
-        
-        
-            translator.DelayWrapLoader(typeof(GameCore.Scheduler), GameCoreSchedulerWrap.__Register);
-        
-        
             translator.DelayWrapLoader(typeof(UnityEngine.WaitForSeconds), UnityEngineWaitForSecondsWrap.__Register);
         
         
@@ -174,10 +141,6 @@ namespace XLua.CSObjectWrap
         
             translator.DelayWrapLoader(typeof(DG.Tweening.ShortcutExtensions), DGTweeningShortcutExtensionsWrap.__Register);
         
-        }
-        
-        static void wrapInit1(LuaEnv luaenv, ObjectTranslator translator)
-        {
         
             translator.DelayWrapLoader(typeof(DG.Tweening.TweenSettingsExtensions), DGTweeningTweenSettingsExtensionsWrap.__Register);
         
@@ -196,14 +159,8 @@ namespace XLua.CSObjectWrap
             
             wrapInit0(luaenv, translator);
             
-            wrapInit1(luaenv, translator);
-            
             
             translator.AddInterfaceBridgeCreator(typeof(System.Collections.IEnumerator), SystemCollectionsIEnumeratorBridge.__Create);
-            
-            translator.AddInterfaceBridgeCreator(typeof(XLuaTest.IExchanger), XLuaTestIExchangerBridge.__Create);
-            
-            translator.AddInterfaceBridgeCreator(typeof(XLuaTest.InvokeLua.ICalc), XLuaTestInvokeLuaICalcBridge.__Create);
             
         }
         
