@@ -12,6 +12,8 @@
 
 - Rebuild application
 
+- Added Text.RegularExpressions test function in Odin Inspector
+
 ---
 
 #### 2023.1.3 Update
