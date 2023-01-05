@@ -6,7 +6,7 @@ local ResConst = require('Game.Const.ResConst')
 local DataConst = require('Game.Const.DataConst')
 local Coroutine = require('Core.Coroutine')
 local Container = require('Game.Container')
-local Timer = require('Game.Util.Timer')
+local LuaTimer = require('Game.Util.LuaTimer')
 
 ---@class Element : LuaBehaviour
 local Element = Class('Element', LuaBehaviour)
@@ -20,6 +20,7 @@ function Element:__init()
     self.col = -1
     self.renderer = self.transform:GetComponent(CSType.SpriteRenderer)
     self.sprites = {}
+    self.spriteCount = 0
     ResManager.LoadAsset(ResConst.ElementSprites[self.type], CSType.Texture2D, function (texture)
 
         local rect = CSE.Rect(0, 0, 100, 100)
@@ -31,6 +32,7 @@ function Element:__init()
         end
         self.sprites = sprites
         self.renderer.sprite = sprites[1]
+        self.spriteCount = table.len(self.sprites)
     end)
 end
 
@@ -48,11 +50,6 @@ function Element:SetPos(row, col)
     self.host:StartCoroutine(routine)
 end
 
-function Element:PlayTown()
-    local routine = Coroutine.Create(bind(self._TownCoroutine, self))
-    self.host:StartCoroutine(routine)
-end
-
 function Element:BeOnSeleted(isSelected)
     if isSelected then
         self.renderer.sprite = self.sprites[2]
@@ -61,14 +58,18 @@ function Element:BeOnSeleted(isSelected)
     end
 end
 
-function Element:_TownCoroutine()
-    for _, v in pairs(self.sprites) do
-        self.renderer.sprite = v
-        coroutine.yield(CSE.WaitForSeconds(0.1))
-    end
-    self.renderer.sprite = nil
-    Container.Instance:TweenCountMinus()
-    ResManager.FreeObject(self.gameObject)
+function Element:PlayTownAnimation()
+    local cur = 1
+    LuaTimer.global:ListenRepeat(function ()
+        if cur <= self.spriteCount then
+            self.renderer.sprite = self.sprites[cur]
+        else
+            self.renderer.sprite = nil
+            Container.Instance:TweenCountMinus()
+            ResManager.FreeObject(self.gameObject)
+        end
+        cur = cur + 1
+    end, 0.1, self.spriteCount + 1)
 end
 
 function Element:_MoveCoroutine(pos)

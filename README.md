@@ -4,6 +4,18 @@
 
 **Unity Version**: 2020.3.33f1
 
+#### 2023.1.5 Update
+
+- Fixed that regenerated elements did not set Container as parent
+
+- Used LuaTimer.lua to replace Timer.lua
+
+- Used LuaTimer:ListenRepeat to replace Coroutine to control element town animation
+
+- Updated LuaBundle
+
+---
+
 #### 2023.1.4 Update
 
 - Removed unnecessary scripts like XLua examples

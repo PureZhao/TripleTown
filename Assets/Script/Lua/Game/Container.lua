@@ -358,7 +358,7 @@ function Container:_DoTown(elements)
         local c = v[2]
         local element = self.elementMatrix[r][c]
         self:_RemoveElementFromTable(element)
-        element:PlayTown()
+        element:PlayTownAnimation()
     end
 end
 
@@ -394,6 +394,7 @@ function Container:_ResumeColumn()
             local pos = CSE.Vector3(x, 6, 0)
             local row = self.row - count + i
             ResManager.LoadGameObject(assetPath, pos, CSE.Quaternion.identity, function (go)
+                go:SetParent(self.transform)
                 ---@type Element
                 local lua = LuaBehaviour.GetLua(go)
                 if lua then

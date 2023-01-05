@@ -5,7 +5,7 @@ local Container = require('Game.Container')
 local GameConst = require('Game.Const.GameConst')
 local LuaBehaviour = require('Core.LuaBehaviour')
 local UIRoot = require('Game.UI.UIRoot')
-local Timer = require('Game.Util.Timer')
+local LuaTimer = require('Game.Util.LuaTimer')
 local UIConst = require('Game.UI.UIConst')
 
 ---@class GameManager
@@ -30,7 +30,7 @@ function GameManager:StartGame()
     im:RandomGenerateItems()
     self.container:Generate()
     UIRoot.Instance:OnGameStart(self.time)
-    Timer.global:ListenRepeat(function ()
+    LuaTimer.global:ListenRepeat(function ()
         self.time = self.time - 1
         UIRoot.Instance:UpdateUI(UIConst.UIUpdateType.TimeLeft, self.time)
     end, 1, self.time)

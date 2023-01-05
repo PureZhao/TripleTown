@@ -3,7 +3,6 @@ local GameConst = require('Game.Const.GameConst')
 local Inventory = require('Game.Inventory')
 local UIRoot = require('Game.UI.UIRoot')
 local UIConst= require('Game.UI.UIConst')
-local Timer = require('Game.Util.Timer')
 require('Core.polyfill')
 
 ---@class InventoryManager

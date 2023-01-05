@@ -4,7 +4,7 @@ local LuaBehaviour = require('Core.LuaBehaviour')
 local GameConst = require('Game.Const.GameConst')
 local ResConst  = require('Game.Const.ResConst')
 local ResManager= require('Game.Manager.ResManager')
-local Timer = require('Game.Util.Timer')
+local LuaTimer = require('Game.Util.LuaTimer')
 local UIRoot = require('Game.UI.UIRoot')
 local UIConst = require('Game.UI.UIConst')
 
@@ -58,7 +58,7 @@ function UIBtnInventory:OnClick()
     self.inventoryRoot.localScale = CSE.Vector3.zero
     self.inventoryRoot.gameObject:SetActive(true)
     self.inventoryRoot:DOScale(1, 0.5)
-    self.handler = Timer.global:ListenUpdate(bind(self._OnMouseClickOut, self))
+    self.handler = LuaTimer.global:ListenUpdate(bind(self._OnMouseClickOut, self))
 end
 
 function UIBtnInventory:_OnMouseClickOut()
@@ -74,7 +74,7 @@ function UIBtnInventory:_OnMouseClickOut()
             self.inventoryRoot:DOScale(0, 0.5):OnComplete(function ()
                 self.inventoryRoot.gameObject:SetActive(false)
                 self.button.interactable = true
-                Timer.global:Dispose(self.handler)
+                LuaTimer.global:Dispose(self.handler)
             end)
         end
     end

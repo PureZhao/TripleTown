@@ -3,7 +3,7 @@ local CSType = require('Core.CSType')
 local LuaBehaviour = require('Core.LuaBehaviour')
 local UIRoot = require('Game.UI.UIRoot')
 local UIConst = require('Game.UI.UIConst')
-local Timer = require('Game.Util.Timer')
+local LuaTimer = require('Game.Util.LuaTimer')
 
 ---@class UIBtnItem : LuaBehaviour
 local UIBtnItem = Class("UIBtnItem", LuaBehaviour)
@@ -46,7 +46,7 @@ function UIBtnItem:OnClick()
         return
     end
     self.canUse = false
-    Timer.global:Delay(self.useGap, function ()
+    LuaTimer.global:Delay(self.useGap, function ()
         self.canUse = true
     end)
     local InventoryManager = require('Game.Manager.InventoryManager')
