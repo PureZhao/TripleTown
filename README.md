@@ -4,13 +4,25 @@
 
 **Unity Version**: 2020.3.33f1
 
+#### 2023.1.6 Update
+
+- Added UI node ResultPanel
+
+- Fixed bug in LuaTimer.lua that funtion still run after disposing
+
+- Added Retry and Quit button and scrips
+
+- Updated LuaBundles and Bundles
+
+---
+
 #### 2023.1.5 Update
 
 - Fixed that regenerated elements did not set Container as parent
 
-- Used LuaTimer.lua to replace Timer.lua
+- Used `LuaTimer.lua` to replace `Timer.lua`
 
-- Used LuaTimer:ListenRepeat to replace Coroutine to control element town animation
+- Used `LuaTimer:ListenRepeat` to replace Coroutine to control element town animation
 
 - Updated LuaBundle
 

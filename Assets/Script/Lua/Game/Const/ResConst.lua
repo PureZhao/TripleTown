@@ -29,5 +29,6 @@ ResConst.ElementSprites = {
 ResConst.Container = AssetsDir .. "Container.prefab"
 ResConst.UIRoot = AssetsDir .. "UI/UIRoot.prefab"
 ResConst.BtnItem = AssetsDir .. "UI/BtnItem.prefab"
+ResConst.PanelResult = AssetsDir .. "UI/Result.prefab"
 
 return ResConst

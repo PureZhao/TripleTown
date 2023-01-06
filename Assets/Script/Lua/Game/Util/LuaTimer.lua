@@ -81,7 +81,7 @@ function LuaTimer:Dispose(node)
     if not node then
         return
     end
-    node.deprecated = true
+    node.value.deprecated = true
 end
 
 function LuaTimer:_Update()

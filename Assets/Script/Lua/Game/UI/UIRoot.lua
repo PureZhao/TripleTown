@@ -10,6 +10,7 @@ UIRoot.Instance = nil
 function UIRoot:__Define()
     self.displayBar = CSType.RectTransform
     self.inventoryBar = CSType.RectTransform
+    self.resultBar = CSType.RectTransform
 end
 
 function UIRoot:__init()
@@ -34,10 +35,17 @@ function UIRoot:OnGameStart(...)
     self:UpdateUI(UIConst.UIUpdateType.InitItems)
     self:OpenBars()
     self:ResetDisplay(param[1])
+    self.resultBar.gameObject:SetActive(false)
 end
 
-function UIRoot:OnGameEnd()
+function UIRoot:OnGameEnd(score, combo)
     self:CloseBars()
+    self.resultBar.localScale = CSE.Vector3.zero
+    self.resultBar.transform:DOScale(CSE.Vector3.one, 1)
+    self.resultBar.gameObject:SetActive(true)
+    ---@type UIPanelResult
+    local resultBarLua = LuaBehaviour.GetLua(self.resultBar)
+    resultBarLua:SetData(score, combo)
 end
 
 function UIRoot:OpenBars()

@@ -50,10 +50,6 @@ function InventoryManager:UseItem(type, count)
     end
 end
 
-function InventoryManager:Up()
-    
-end
-
 function InventoryManager:__delete()
     
 end

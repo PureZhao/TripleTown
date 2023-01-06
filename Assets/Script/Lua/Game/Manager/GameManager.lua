@@ -16,6 +16,8 @@ function GameManager:__init()
     self.score = 0
     self.time = 0
     self.container = nil
+    self.timeCounter = nil
+    self.allowTimeFlow = true
     ResManager.LoadGameObject(ResConst.UIRoot, CSE.Vector3.zero, CSE.Quaternion.identity)
     ResManager.LoadGameObject(ResConst.Container, CSE.Vector3.zero, CSE.Quaternion.identity, function (go)
         self.container = LuaBehaviour.GetLua(go)
@@ -23,19 +25,49 @@ function GameManager:__init()
 end
 
 function GameManager:StartGame()
-    self.time = 120
+    self.time = 20
     self.score = 0
     self.combo = 0
     local im = require('Game.Manager.InventoryManager')
     im:RandomGenerateItems()
     self.container:Generate()
     UIRoot.Instance:OnGameStart(self.time)
-    LuaTimer.global:ListenRepeat(function ()
-        self.time = self.time - 1
-        UIRoot.Instance:UpdateUI(UIConst.UIUpdateType.TimeLeft, self.time)
-    end, 1, self.time)
+    self.timeCounter = LuaTimer.global:ListenRepeat(bind(self._TimeFlow, self), 1, self.time)
 end
 
+function GameManager:_TimeFlow()
+    if not self.allowTimeFlow then return end
+    self.time = self.time - 1
+    if self.time < 1 then
+        self:EngGame()
+    else
+        UIRoot.Instance:UpdateUI(UIConst.UIUpdateType.TimeLeft, self.time)
+    end
+    
+end
+
+function GameManager:EngGame()
+    LuaTimer.global:Dispose(self.timeCounter)
+    -- 清理元素
+    Container.Instance:ClearAllElements()
+    ResManager.ClearPool()
+    -- 弹出结算界面
+    UIRoot.Instance:OnGameEnd(self.score, self.combo)
+
+end
+
+function GameManager:StopTimeFlow(flag)
+    print('StopTimeFlow ' .. tostring(flag))
+    if flag then
+        if self.timeCounter then
+            LuaTimer.global:Dispose(self.timeCounter)
+        end
+        self.timeCounter = nil
+    else
+        if self.timeCounter then return end
+        self.timeCounter = LuaTimer.global:ListenRepeat(bind(self._TimeFlow, self), 1, self.time)
+    end
+end
 
 function GameManager:UseInventory(type)
     if type == GameConst.InventoryType.Shuffle then

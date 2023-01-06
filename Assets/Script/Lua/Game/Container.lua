@@ -127,6 +127,9 @@ end
 function Container:_SwapCoroutine(r1, c1, r2, c2)
     -- 先禁用所有元素的按下
     self:EnableSelect(false)
+    -- 时间停止流动
+    local gameManager = require('Game.Manager.GameManager')
+    gameManager:StopTimeFlow(true)
     local e1 = self.elementMatrix[r1][c1]
     local e2 = self.elementMatrix[r2][c2]
     self.elementMatrix[r1][c1] = e2
@@ -151,6 +154,7 @@ function Container:_SwapCoroutine(r1, c1, r2, c2)
         e2:SetPos(r2, c2)
         yield(CSE.WaitUntil(function () return self.tweenCount == 0 end))
         self:EnableSelect(true)
+        gameManager:StopTimeFlow(false)
     else
         local townList = table.merge(list1, list2)
         local routine = Coroutine.Create(bind(self._LoopCheckCoroutine, self), townList)
@@ -160,6 +164,7 @@ end
 
 function Container:_LoopCheckCoroutine(townList)
     local gameManager = require('Game.Manager.GameManager')
+    gameManager:StopTimeFlow(true)
     self.tweenCount = table.len(townList)
     local combo = 1
     gameManager:AddScore(self.tweenCount * 10 + combo * 100)
@@ -193,6 +198,7 @@ function Container:_LoopCheckCoroutine(townList)
     if self:_CheckIsDead() then
         self:DOShuffle()
     else
+        gameManager:StopTimeFlow(false)
         self:EnableSelect(true)
     end
 end
@@ -586,6 +592,18 @@ function Container:_GenTownPointCollection(r, c)
         end
     end
     return res
+end
+
+function Container:ClearAllElements()
+    for i = 1, self.row do
+        for j = 1, self.col do
+            local element = self.elementMatrix[i][j]
+            if element then
+                ResManager.FreeObject(element.gameObject)
+            end
+        end
+    end
+    self.elementMatrix = {}
 end
 
 return Container

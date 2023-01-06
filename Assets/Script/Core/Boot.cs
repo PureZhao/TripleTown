@@ -15,7 +15,6 @@ namespace GameCore
             });
             string cmd = "require('Core.Global'); require('Boot');";
             ProjectLuaEnv.Instance.DoString(cmd);
-
         }
 
 

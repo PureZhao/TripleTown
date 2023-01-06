@@ -1,4 +1,5 @@
 local AssetsManager = CS.GameCore.AssetsManager.Instance
+local GameObjectPool = CS.GameCore.GameObjectPool.Instane
 
 ---@class ResManager
 local ResManager = {}
@@ -29,6 +30,10 @@ function ResManager.LoadGameObject(assetPath, position, rotation, onSuccess)
             onSuccess(go)
         end
     end)
+end
+
+function ResManager.ClearPool()
+    GameObjectPool:Clear()
 end
 
 ---@param UnityEngine.Object
